@@ -1,0 +1,153 @@
+{
+  "y44_github": {
+    "total_runs": 1,
+    "total_collected": 5,
+    "total_passed": 3,
+    "total_injected": 3,
+    "last_run": "2026-06-11 14:24:01",
+    "streak": 1,
+    "streak_best": 1,
+    "streak_worst": 0,
+    "temporary_demotion": false
+  },
+  "juejin_search": {
+    "total_runs": 85,
+    "total_collected": 260,
+    "total_passed": 192,
+    "total_injected": 192,
+    "last_run": "2026-06-17 22:07:08",
+    "streak": 3,
+    "streak_best": 30,
+    "streak_worst": -2,
+    "temporary_demotion": false
+  },
+  "csdn_search": {
+    "total_runs": 60,
+    "total_collected": 186,
+    "total_passed": 144,
+    "total_injected": 144,
+    "last_run": "2026-06-17 22:08:44",
+    "streak": 14,
+    "streak_best": 17,
+    "streak_worst": -2,
+    "temporary_demotion": false
+  },
+  "github_llm_interview": {
+    "total_runs": 12,
+    "total_collected": 43,
+    "total_passed": 33,
+    "total_injected": 33,
+    "streak": 1,
+    "streak_best": 10,
+    "streak_worst": -1,
+    "last_run": "2026-06-10 04:15:58",
+    "temporary_demotion": false
+  },
+  "zhihu": {
+    "total_runs": 1,
+    "total_collected": 3,
+    "total_passed": 3,
+    "total_injected": 3,
+    "streak": 1,
+    "streak_best": 1,
+    "streak_worst": 0,
+    "last_run": "2026-06-09 17:40:23",
+    "temporary_demotion": false
+  },
+  "github_raw": {
+    "total_runs": 44,
+    "total_collected": 167,
+    "total_passed": 122,
+    "total_injected": 122,
+    "streak": 2,
+    "streak_best": 16,
+    "streak_worst": -1,
+    "last_run": "2026-06-16 06:10:09",
+    "temporary_demotion": false
+  },
+  "outcomeschool_blog": {
+    "total_runs": 2,
+    "total_collected": 8,
+    "total_passed": 8,
+    "total_injected": 8,
+    "streak": 2,
+    "streak_best": 2,
+    "streak_worst": 0,
+    "last_run": "2026-06-11 07:54:25",
+    "temporary_demotion": false
+  },
+  "github_ai_engineering": {
+    "total_runs": 2,
+    "total_collected": 7,
+    "total_passed": 4,
+    "total_injected": 4,
+    "streak": 2,
+    "streak_best": 2,
+    "streak_worst": 0,
+    "last_run": "2026-06-11 07:58:18",
+    "temporary_demotion": false
+  },
+  "javaguide": {
+    "total_runs": 6,
+    "total_collected": 10,
+    "total_passed": 10,
+    "total_injected": 10,
+    "streak": 6,
+    "streak_best": 6,
+    "streak_worst": 0,
+    "last_run": "2026-06-11 18:38:59",
+    "temporary_demotion": false
+  },
+  "kamacoder": {
+    "total_runs": 6,
+    "total_collected": 13,
+    "total_passed": 12,
+    "total_injected": 12,
+    "streak": 6,
+    "streak_best": 6,
+    "streak_worst": 0,
+    "last_run": "2026-06-13 03:12:13",
+    "temporary_demotion": false
+  },
+  "nowcoder_search": {
+    "total_runs": 12,
+    "total_collected": 42,
+    "total_passed": 18,
+    "total_injected": 18,
+    "streak": 1,
+    "streak_best": 8,
+    "streak_worst": -1,
+    "last_run": "2026-06-15 12:09:01",
+    "temporary_demotion": false
+  },
+  "n1n_ai": {
+    "total_runs": 1,
+    "total_collected": 2,
+    "total_passed": 2,
+    "total_injected": 2,
+    "streak": 1,
+    "streak_best": 1,
+    "streak_worst": 0,
+    "last_run": "2026-06-12 16:23:45",
+    "temporary_demotion": false
+  },
+  "last_collection": "2026-06-14T00:41:08.049414",
+  "last_added": 7,
+  "total_collected_all_time": 7,
+  "total_collected": 12,
+  "source_scores": {
+    "github_raw_Awesome-LLM-Interview": 0.8500000000000001,
+    "juejin_微调与RAG选用逻辑": 0.85
+  },
+  "github_ai_eng": {
+    "total_runs": 6,
+    "total_collected": 9,
+    "total_passed": 8,
+    "total_injected": 8,
+    "streak": 6,
+    "streak_best": 6,
+    "streak_worst": 0,
+    "last_run": "2026-06-15 06:08:53",
+    "temporary_demotion": false
+  }
+}

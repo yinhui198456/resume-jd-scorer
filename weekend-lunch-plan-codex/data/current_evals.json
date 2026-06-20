@@ -1,0 +1,5 @@
+{
+  "validator": {"role":"validator","status":"PASS","issues":[],"suggestions":[],"details":{"structure_check":"通过","ingredient_clash":"通过","spicy_check":"通过","bitter_melon_check":"通过","vegetarian_purity":"通过","seasonal_creative":"通过","inventory_label":"通过","blacklist_check":"通过","popular_verify":"通过"}},
+  "chef": {"role":"chef","status":"PASS","issues":[],"suggestions":["测虾温时从最厚处确认达到60°C并维持至少1分钟，同时肉质完全不透明、刚卷成C形。"],"details":{"time_check":"通过","pressure_cooker_chain":"通过","appliance_conflict":"通过","pot_reuse":"通过","human_load":"通过","hidden_time":"通过","cooking_common_sense":"通过","food_safety":"通过","prep_step":"通过"}},
+  "redteam": {"role":"redteam","status":"PASS","issues":[],"suggestions":[],"details":{"ingredient_consistency":"通过","category_consistency":"通过","creative_authenticity":"通过","technique_dedup":"通过","cross_plan_dedup":"通过","positioning_match":"通过","staple_dedup":"通过","egg_frequency":"通过","name_standard":"通过"}}
+}

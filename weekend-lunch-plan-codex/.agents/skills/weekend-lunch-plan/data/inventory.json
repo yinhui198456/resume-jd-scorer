@@ -1,0 +1,184 @@
+[
+  {
+    "name": "豚骨拉面",
+    "quantity": "4份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-06-05",
+    "status": "expired"
+  },
+  {
+    "name": "干虾",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-06-05",
+    "status": "expired"
+  },
+  {
+    "name": "干鱼块",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-06-05",
+    "status": "expired"
+  },
+  {
+    "name": "小龙虾虾球",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-06",
+    "status": "expired"
+  },
+  {
+    "name": "豌豆粒",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "鱼丸",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "槐花",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-07",
+    "status": "expired"
+  },
+  {
+    "name": "藕",
+    "quantity": "2节",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-12",
+    "status": "expired"
+  },
+  {
+    "name": "丝瓜",
+    "quantity": "2根",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-07",
+    "status": "expired"
+  },
+  {
+    "name": "蚕豆",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "贝贝南瓜",
+    "quantity": "2个",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-19",
+    "status": "expired"
+  },
+  {
+    "name": "红薯",
+    "quantity": "2个",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-19",
+    "status": "expired"
+  },
+  {
+    "name": "卤味鸭胗",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "卤味猪心",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "卤味猪肝",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-07",
+    "status": "expired"
+  },
+  {
+    "name": "卤味猪舌",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "卤味香干",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "蛤蜊肉",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-06",
+    "status": "expired"
+  },
+  {
+    "name": "腊肠",
+    "quantity": "3根",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-19",
+    "status": "expired"
+  },
+  {
+    "name": "有机混合蔬菜丁",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "卤猪耳朵",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "卤牛肉",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-08",
+    "status": "expired"
+  },
+  {
+    "name": "青花鱼",
+    "quantity": "2条",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-06",
+    "status": "expired"
+  },
+  {
+    "name": "腊鸡",
+    "quantity": "半只",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-12",
+    "status": "expired"
+  },
+  {
+    "name": "烟熏肉",
+    "quantity": "1份",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-12",
+    "status": "expired"
+  },
+  {
+    "name": "鸡汤",
+    "quantity": "1大碗",
+    "added_date": "2026-05-05",
+    "expire_date": "2026-05-07",
+    "status": "expired"
+  }
+]

@@ -1,0 +1,6 @@
+[
+  {"name": "鸡腿", "quantity": "2个", "added_date": "2026-06-18", "expire_date": "2026-06-20", "status": "available"},
+  {"name": "鸡蛋", "quantity": "6个", "added_date": "2026-06-16", "expire_date": "2026-06-28", "status": "available"},
+  {"name": "苋菜", "quantity": "1把", "added_date": "2026-06-18", "expire_date": "2026-06-20", "status": "available"},
+  {"name": "虾仁", "quantity": "200g", "added_date": "2026-06-17", "expire_date": "2026-06-18", "status": "expired"}
+]

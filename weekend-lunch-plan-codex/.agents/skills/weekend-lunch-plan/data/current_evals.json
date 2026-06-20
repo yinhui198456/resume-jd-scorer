@@ -1,0 +1,60 @@
+{
+  "validator": {
+    "role": "validator",
+    "status": "PASS",
+    "issues": [],
+    "suggestions": [
+      "本菜单中的虾、丝瓜和鸡蛋触发30天主料重复，但用户在收到提醒后再次确认，按显式覆盖例外处理。"
+    ],
+    "details": {
+      "structure_check": "通过：2大荤+1素+1汤+1主食",
+      "ingredient_clash": "通过：同餐非主食主材无重复",
+      "spicy_check": "通过：无辣味或麻味",
+      "bitter_melon_check": "通过：无苦瓜",
+      "vegetarian_purity": "通过：蒜蓉炒苋菜不含肉蛋海鲜",
+      "seasonal_creative": "通过：苋菜、丝瓜、六月黄均为6月时令；六月黄蒸年糕具分层摆盘和揭盖仪式感",
+      "inventory_label": "通过：库存无可用食材，全部标注需采购",
+      "blacklist_check": "例外通过：用户明确覆盖虾、丝瓜、鸡蛋的30天重复限制",
+      "popular_verify": "通过：蒜蓉炒苋菜在本地热门表有记录，其余均为常见流传菜"
+    }
+  },
+  "chef": {
+    "role": "chef",
+    "status": "PASS",
+    "issues": [],
+    "suggestions": [
+      "丝瓜蛋汤完成后立即转入带盖保温容器，洗净汤锅再白灼斑节虾。",
+      "斑节虾须在水重新沸腾后继续煮至少1分钟，并确认虾肉完全转为乳白色。"
+    ],
+    "details": {
+      "time_check": "通过：电饭煲与电蒸锅并行，人工器具串行，总流程约40至43分钟",
+      "pressure_cooker_chain": "通过：未使用电压锅",
+      "appliance_conflict": "通过：电饭煲煮饭、电蒸锅蒸蟹可并行；炒锅和汤锅串行使用",
+      "pot_reuse": "通过：汤先转入保温容器，再洗锅白灼虾",
+      "human_load": "通过：自动器具错峰启动，人工操作按汤、虾、苋菜顺序完成",
+      "hidden_time": "通过：计入汤锅清洗和重新烧水约4分钟",
+      "cooking_common_sense": "通过：丝瓜去皮后立即入锅，苋菜大火快炒",
+      "food_safety": "通过：蟹蒸熟、虾沸水加热至少1分钟、蛋液完全凝固",
+      "prep_step": "通过：无超过10分钟的泡发、腌制或解冻步骤"
+    }
+  },
+  "redteam": {
+    "role": "redteam",
+    "status": "PASS",
+    "issues": [],
+    "suggestions": [
+      "本餐两道海鲜，斑节虾蘸汁保持薄盐，避免整体钠摄入偏高。"
+    ],
+    "details": {
+      "ingredient_consistency": "通过：菜名、主材和做法描述一致",
+      "category_consistency": "通过：蟹和虾为大荤，苋菜为纯素，汤与主食标注正确",
+      "creative_authenticity": "通过：六月黄蒸年糕具时令组合、分层摆盘和揭盖仪式感",
+      "technique_dedup": "通过：两道大荤分别为清蒸和白灼",
+      "cross_plan_dedup": "例外通过：单套确认菜单，历史重复已由用户明确覆盖",
+      "positioning_match": "通过：菜单为清淡时令海鲜餐",
+      "staple_dedup": "通过：玉米快煮饭未形成连续三次同主食",
+      "egg_frequency": "通过：仅汤中使用一次鸡蛋",
+      "name_standard": "通过：均为常见菜名"
+    }
+  }
+}

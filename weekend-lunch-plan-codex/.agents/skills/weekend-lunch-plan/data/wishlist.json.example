@@ -1,0 +1,6 @@
+[
+  {"name": "红烧黄鳝", "added_date": "2026-06-10", "priority": "high"},
+  {"name": "盐焗乳鸽", "added_date": "2026-06-12", "priority": "high"},
+  {"name": "蒜蓉粉丝蒸鲈鱼", "added_date": "2026-06-15", "priority": "medium"},
+  {"name": "冬瓜虾仁汤", "added_date": "2026-06-16", "priority": "low"}
+]

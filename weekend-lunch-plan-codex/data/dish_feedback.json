@@ -1,0 +1,26 @@
+[
+  {
+    "dish_name": "清炒秋葵",
+    "rating": "dislike",
+    "date": "2026-06-20",
+    "note": "不喜欢秋葵，后续排除秋葵类"
+  },
+  {
+    "dish_name": "番茄土豆汤",
+    "rating": "dislike",
+    "date": "2026-06-20",
+    "note": "用户判断不好喝，不再推荐"
+  },
+  {
+    "dish_name": "萝卜海带汤",
+    "rating": "dislike",
+    "date": "2026-06-20",
+    "note": "组合不接受；汤品应改为萝卜排骨汤或海带排骨汤"
+  },
+  {
+    "dish_name": "蒜蓉小龙虾",
+    "rating": "dislike",
+    "date": "2026-06-20",
+    "note": "处理太麻烦，不再推荐"
+  }
+]

@@ -1,0 +1,4 @@
+# Example: remind for dish feedback every Sunday at 19:30.
+# Replace /path/to/weekend-lunch-plan-codex and /path/to/recipe-data before installing.
+
+30 19 * * 0 cd /path/to/weekend-lunch-plan-codex/.agents/skills/weekend-lunch-plan && RECIPE_DATA_DIR=/path/to/recipe-data python3 scripts/feedback_reminder.py --days 7

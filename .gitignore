@@ -6,3 +6,6 @@ dist/
 build/
 .env
 .env.local
+
+# temporary files
+0620tmp/

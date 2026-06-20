@@ -1,0 +1,17 @@
+{
+  "current_qid": "Q-M05_FunctionCalling70",
+  "current_mod": "M05_FunctionCalling",
+  "cmd": "NEXT",
+  "timestamp": "2026-06-20",
+  "q_hash": "4dd103de",
+  "q_question": "在 Function Calling 的四步工作流程中，哪一步是由应用程序（而非 LLM）执行的？",
+  "q_options": [
+    "定义函数的 JSON 描述结构",
+    "分析用户意图并决定调用哪个函数",
+    "实际执行 API 调用并获取结果数据",
+    "将真实数据转换为自然语言回复用户"
+  ],
+  "locked_module": "M05_FunctionCalling",
+  "module_question_count": 2,
+  "question_snapshot": null
+}

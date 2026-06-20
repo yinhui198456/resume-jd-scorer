@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 数据文件（体积大，按需下载）
+# data/question-bank/bank.json
+# data/tracking/progress.json
+
+# 备份文件
+*.bak*
+*.tmp
+
+# 日志
+*.jsonl
+
+# 临时文件
+*.swp
+.DS_Store
