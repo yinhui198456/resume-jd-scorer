@@ -14,3 +14,27 @@
 5. 不允许删除历史数据文件；如需清理，只能先生成清理建议。
 6. 不要跨项目混用上下文：处理 ai-quiz 时只读取 ai-quiz-codex-package；处理 lunch 时只读取 weekend-lunch-plan-codex。
 7. 所有结论必须基于当前工作区文件，不要凭空假设已有文件内容。
+
+## Shared Skills
+
+### AI刷题
+Skill目录：
+/opt/personal-agent-workspace/ai-quiz-codex-package
+
+涉及题库、学习进度、错题、学习日志写入时，必须使用锁：
+/opt/personal-agent-workspace/.locks/ai-quiz.lock
+
+### 周末午餐推荐
+Skill目录：
+/opt/personal-agent-workspace/weekend-lunch-plan-codex
+
+涉及库存、偏好、历史菜单、复盘记录写入时，必须使用锁：
+/opt/personal-agent-workspace/.locks/weekend-lunch.lock
+
+### Multi-session Rules
+飞书多个会话可以并行读取同一工作区，但写共享数据前必须：
+1. 说明写入文件；
+2. 说明写入原因；
+3. 等待用户确认；
+4. 使用 flock 锁；
+5. 写入后提示 git status 摘要。
