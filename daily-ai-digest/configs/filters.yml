@@ -1,0 +1,20 @@
+allowed_languages:
+  - en
+  - zh
+max_age_hours: 72
+thresholds:
+  digest: 0.70
+  candidate: 0.55
+weights:
+  source_trust: 0.30
+  topic_match: 0.25
+  information_density: 0.15
+  recency: 0.15
+  originality: 0.10
+  evidence: 0.05
+quotas:
+  top_stories: 8
+  codex_cc: 5
+  overseas: 5
+  domestic: 5
+  candidates: 3

@@ -1,0 +1,1 @@
+"""Daily AI digest pipeline."""

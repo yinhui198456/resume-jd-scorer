@@ -1,0 +1,18 @@
+primary:
+  - Agent
+  - RAG
+  - MCP
+  - Function Calling
+  - Tool Calling
+  - Evaluation
+  - Observability
+  - Code assistants
+  - Codex
+  - Claude Code
+secondary:
+  - Model releases
+  - Inference
+  - Open source frameworks
+  - Product launches
+  - Policy
+  - Funding

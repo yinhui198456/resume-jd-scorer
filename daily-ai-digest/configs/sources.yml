@@ -1,0 +1,26 @@
+blocked_domains:
+  - csdn.com
+  - blog.csdn.net
+allowed_tier3_domains:
+  - 36kr.com
+html_indexes:
+  - id: openai-news
+    tier: 1
+    url: https://openai.com/news/rss.xml
+  - id: openai-codex-changelog
+    tier: 1
+    url: https://developers.openai.com/codex/changelog
+  - id: anthropic-news
+    tier: 1
+    url: https://www.anthropic.com/news
+github_releases:
+  - id: openai-codex
+    tier: 1
+    repository: openai/codex
+  - id: anthropics-claude-code
+    tier: 1
+    repository: anthropics/claude-code
+  - id: mcp-python-sdk
+    tier: 1
+    repository: modelcontextprotocol/python-sdk
+tier2: []

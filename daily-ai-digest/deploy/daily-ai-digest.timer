@@ -1,0 +1,10 @@
+[Unit]
+Description=Start Daily AI Digest at 08:45 Asia/Shanghai
+
+[Timer]
+OnCalendar=*-*-* 08:45:00 Asia/Shanghai
+Persistent=true
+Unit=daily-ai-digest.service
+
+[Install]
+WantedBy=timers.target

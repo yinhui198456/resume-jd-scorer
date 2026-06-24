@@ -1,0 +1,11 @@
+[
+  {
+    "id": 42,
+    "html_url": "https://github.com/openai/codex/releases/tag/v1.2.3",
+    "name": "Codex v1.2.3",
+    "tag_name": "v1.2.3",
+    "body": "Adds MCP support and evaluation improvements.",
+    "published_at": "2026-06-22T00:45:00Z",
+    "author": {"login": "openai"}
+  }
+]

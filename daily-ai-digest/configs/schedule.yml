@@ -1,0 +1,8 @@
+timezone: Asia/Shanghai
+start_time: "08:45"
+catch_up_window_hours: 6
+delivery_attempts: 3
+delivery_backoff_seconds:
+  - 2
+  - 5
+  - 10

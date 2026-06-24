@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily AI Digest
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/personal-agent-workspace/daily-ai-digest
+ExecStart=/opt/personal-agent-workspace/daily-ai-digest/scripts/run_daily.sh
+# The application loads MiniMax and target settings from the shared workspace
+# environment, and Feishu Bot credentials from ~/.claude-to-im/config.env.

@@ -9,3 +9,12 @@ build/
 
 # temporary files
 0620tmp/
+
+# shared secrets and Python runtime artifacts
+.env
+.venv/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+daily-ai-digest/data/
+daily-ai-digest/.superpowers/
