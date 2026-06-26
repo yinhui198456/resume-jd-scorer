@@ -112,8 +112,15 @@ SYSTEM_PROMPT = """你是一个专业的招聘评估专家。请根据提供的 
   "weaknesses": [],
   "red_flags": [],
   "follow_up_questions": [
-    {"question": "", "dimension": "", "intent": "", "type": "technical|verification"}
+    {"question": "", "dimension": "", "intent": "", "type": "technical|verification|scenario|comprehensive"}
   ],
+
+**强制要求：follow_up_questions 必须包含以下类型，缺一不可：**
+- 至少 3 题 type="verification"（验证简历疑点）
+- 至少 4 题 type="technical"（覆盖JD技术要求）
+- 至少 3 题 type="scenario"（驻场/运维/上手场景）
+- 至少 3 题 type="comprehensive"（沟通/出差/对客/强度/文档）
+- 总数 15-20 题
   "summary": ""
 }
 """
