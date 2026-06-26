@@ -31,30 +31,28 @@
 
 ## 输出格式
 
-```
-姓名	录入时间	联系方式	学历	工作年限	硬性	技能	经验	潜力	可信系数	合计
-吕蜜	2026/6/25	189xxxxx	大专+本科	10年+	38	28	18	7	0.6	55
-```
+| 姓名 | 录入时间 | 联系方式 | 学历 | 工作年限 | 硬性 | 技能 | 经验 | 潜力 | 可信系数 | 合计 |
+|------|---------|---------|------|---------|------|------|------|------|---------|------|
+| 吕蜜 | 2026/6/25 | 189xxxxx | 大专+本科 | 10年+ | 38 | 28 | 18 | 7 | 0.6 | 55 |
 
 ## 项目结构
 
-```
-resume-jd-scorer/
-├── README.md                 # 项目说明
-├── SKILL.md                  # Skill 使用指南
-├── requirements.txt          # Python 依赖
-├── .gitignore
-├── data/
-│   └── current_jd.json       # 已保存的 JD（自动创建）
-├── scripts/                  # 核心脚本
-│   ├── evaluate.py           # LLM 评估核心逻辑
-│   ├── parse_file.py         # PDF/DOCX/图片解析
-│   ├── find_uploads.py       # 搜索上传文件
-│   ── save_jd.py            # JD 持久化
-├── main.py                   # FastAPI 入口
-├── models.py                 # Pydantic 模型
-├── scorer.py                 # 评分逻辑
-└── test_*.py                 # 单元测试
+```text
+.
+├── .agents/skills/resume-jd-scorer/  # Skill 配置
+│   ├── SKILL.md                      # Skill 使用说明
+│   ├── scripts/
+│   │   ├── evaluate.py               # LLM 评估核心逻辑
+│   │   ├── parse_file.py             # PDF/DOCX/图片解析
+│   │   ├── find_uploads.py           # 搜索上传文件
+│   │   └── save_jd.py                # JD 持久化
+│   └── data/
+│       └── current_jd.json           # 已保存的 JD
+└── resume-jd-scorer/                 # API 服务
+    ├── main.py                       # FastAPI 入口
+    ├── models.py                     # Pydantic 模型
+    ├── scorer.py                     # 评分逻辑
+    └── test_*.py                     # 单元测试
 ```
 
 ## 快速开始
@@ -91,6 +89,7 @@ curl -X POST http://localhost:8000/evaluate \
 ## 测试
 
 ```bash
+cd resume-jd-scorer
 pytest test_api.py test_parse.py test_save_jd.py -v
 ```
 
