@@ -15,6 +15,9 @@
 
 import os
 import re
+
+# 水印/乱码模式（PDF解析常见噪声）
+_WATERMARK_PATTERN = re.compile(r'[0-9a-f]{16,}HF[0-9a-zA-Z]{10,}WOelmv7WPxBh')
 import sys
 
 import magic
@@ -112,7 +115,8 @@ def parse_image(path: str) -> str:
     img = Image.open(path).convert("L")
     # 纯 Pillow 二值化，无需 numpy
     img = img.point(lambda x: 255 if x > OCR_THRESHOLD else 0, mode="1").convert("L")
-    return pytesseract.image_to_string(img, lang="chi_sim+eng")
+    raw = pytesseract.image_to_string(img, lang="chi_sim+eng")
+    return _WATERMARK_PATTERN.sub('', raw)
 
 
 # ---- 主流程 ----
