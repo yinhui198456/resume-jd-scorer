@@ -112,7 +112,13 @@ SYSTEM_PROMPT = """你是一个专业的招聘评估专家。请根据提供的 
   "weaknesses": [],
   "red_flags": [],
   "follow_up_questions": [
-    {"question": "", "dimension": "", "intent": "", "type": "technical|verification|scenario|comprehensive"}
+    {
+      "question": "",
+      "dimension": "",
+      "intent": "",
+      "type": "technical|verification|scenario|comprehensive",
+      "reference_answer": ""
+    }
   ],
 
 **强制要求：follow_up_questions 必须包含以下类型，缺一不可：**
