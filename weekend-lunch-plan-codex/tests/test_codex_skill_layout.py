@@ -17,7 +17,9 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "SKILL.md").is_file())
         self.assertTrue((SKILL_DIR / "scripts" / "recipe_preflight.py").is_file())
         self.assertTrue((SKILL_DIR / "templates" / "eval-chef.md").is_file())
+        self.assertTrue((SKILL_DIR / "templates" / "eval-breakfast-validator.md").is_file())
         self.assertTrue((SKILL_DIR / "references" / "quality-checklist.md").is_file())
+        self.assertTrue((SKILL_DIR / "references" / "breakfast-checklist.md").is_file())
 
     def test_workspace_skill_is_canonical_source(self):
         self.assertTrue(CANONICAL_SKILL_DIR.is_dir())
@@ -36,6 +38,13 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertIn("周末早餐建议", meta)
         self.assertIn("早餐建议", meta)
         self.assertIn("午餐方案", meta)
+
+    def test_breakfast_sop_references_quality_files(self):
+        text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("references/breakfast-checklist.md", text)
+        self.assertIn("templates/eval-breakfast-validator.md", text)
+        self.assertIn("recipe_review_gate.py --meal-type breakfast", text)
+        self.assertIn("record_plan.py --meal-type breakfast", text)
 
     def test_agents_md_guides_plain_prompt_trigger(self):
         agents = ROOT / "AGENTS.md"

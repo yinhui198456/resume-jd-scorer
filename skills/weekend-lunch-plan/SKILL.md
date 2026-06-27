@@ -28,12 +28,14 @@ merged_skills:
 - `templates/eval-validator.md` — 校验官（9项检查：结构/排重/黑名单/口味/热门/当季创意）
 - `templates/eval-chef.md` — 厨师（8项检查：时间/器具/人力/并行/烹饪常识/食品安全）
 - `templates/eval-redteam.md` — 红队（10项检查：成分/类别/创意真实性/去重/定位）
+- `templates/eval-breakfast-validator.md` — 早餐校验官（结构/时间/营养/低油低糖/儿童友好/食品安全）
 - `templates/feedback-cron.example` — 反馈提醒 cron 示例
 
 ### References（参考文档）
 - `references/popular-dishes.md` — 热门菜品验证表（7月时令+全年常备）
 - `references/dish-technique-notes.md` — 详细做法参考
 - `references/quality-checklist.md` — 主 agent 自检前置清单（16节）
+- `references/breakfast-checklist.md` — 早餐质量清单（meal_type=breakfast 专用）
 - `references/cooking-research-notes.md` — 烹饪研究笔记（网友教训汇总）
 - `references/chef-review-cases.md` — 厨师审核实战案例（6个案例）
 - `references/consistency-audit.md` — 一致性审计日志
@@ -98,6 +100,8 @@ meal_type = breakfast
 
 早餐推荐使用轻量结构，不套用午餐的“大荤/汤/创意菜”要求。
 
+早餐生成和审核必须参考 `references/breakfast-checklist.md`。
+
 每套早餐必须包含：
 
 - **1 主食**：蛋饼、饭团、馄饨、贝果、杂粮粥、蒸点等
@@ -113,6 +117,14 @@ meal_type = breakfast
 - 优先使用豆浆机、电蒸锅、电饭煲、空气炸锅等可离开器具
 - 允许前一晚预处理
 - 不要求“餐厅感”和复杂摆盘
+
+早餐审核流程：
+
+```bash
+RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/recipe_review_gate.py --meal-type breakfast --input plan.json
+```
+
+自动审核门通过后，使用 `templates/eval-breakfast-validator.md` 做早餐专项审核。早餐不强制启动午餐三方审核模板，除非方案里包含复杂烹饪或高风险食材。
 
 ## 🍳 厨房器具清单
 
@@ -224,6 +236,8 @@ cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/review_pipeline.py --
 ```bash
 cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --selected 方案A --meal-type lunch
 cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --selected 方案A --meal-type breakfast
+RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --input plan.json --selected 方案A --meal-type breakfast
+RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --meal-type breakfast --input plan.json --selected 方案A
 ```
 
 该脚本按日期 upsert `history.json`，避免同一天重复记录。
