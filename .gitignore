@@ -18,3 +18,11 @@ __pycache__/
 *.py[cod]
 daily-ai-digest/data/
 daily-ai-digest/.superpowers/
+
+# local agent runtime files
+.claude/settings.local.json
+.codepilot-uploads/
+.locks/
+
+# generated analysis caches
+daily-ai-digest/output/**/cache/
