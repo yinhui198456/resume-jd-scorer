@@ -36,6 +36,7 @@ merged_skills:
 - `references/dish-technique-notes.md` — 详细做法参考
 - `references/quality-checklist.md` — 主 agent 自检前置清单（16节）
 - `references/breakfast-checklist.md` — 早餐质量清单（meal_type=breakfast 专用）
+- `references/breakfast-ideas.md` — 早餐候选库（叮咚买菜/半成品快手早餐/预约器具）
 - `references/cooking-research-notes.md` — 烹饪研究笔记（网友教训汇总）
 - `references/chef-review-cases.md` — 厨师审核实战案例（6个案例）
 - `references/consistency-audit.md` — 一致性审计日志
@@ -100,7 +101,9 @@ meal_type = breakfast
 
 早餐推荐使用轻量结构，不套用午餐的“大荤/汤/创意菜”要求。
 
-早餐生成和审核必须参考 `references/breakfast-checklist.md`。
+早餐生成优先参考 `references/breakfast-ideas.md`；审核必须参考 `references/breakfast-checklist.md`。
+
+用户偏好：优先选择叮咚买菜等渠道可直接购买的快手早餐/半成品，如煎饺、玉米卷、肉粽、烧麦、窝窝头、生煎、汤包、小笼包、花卷、手抓饼、牛奶、米酒等；优先电蒸锅预约、豆浆机预约、煎锅快煎。
 
 每套早餐必须包含：
 

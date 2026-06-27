@@ -20,6 +20,7 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "templates" / "eval-breakfast-validator.md").is_file())
         self.assertTrue((SKILL_DIR / "references" / "quality-checklist.md").is_file())
         self.assertTrue((SKILL_DIR / "references" / "breakfast-checklist.md").is_file())
+        self.assertTrue((SKILL_DIR / "references" / "breakfast-ideas.md").is_file())
 
     def test_workspace_skill_is_canonical_source(self):
         self.assertTrue(CANONICAL_SKILL_DIR.is_dir())
@@ -42,9 +43,17 @@ class CodexSkillLayoutTests(unittest.TestCase):
     def test_breakfast_sop_references_quality_files(self):
         text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("references/breakfast-checklist.md", text)
+        self.assertIn("references/breakfast-ideas.md", text)
         self.assertIn("templates/eval-breakfast-validator.md", text)
         self.assertIn("recipe_review_gate.py --meal-type breakfast", text)
         self.assertIn("record_plan.py --meal-type breakfast", text)
+
+    def test_breakfast_ideas_capture_user_fast_breakfast_preferences(self):
+        text = (SKILL_DIR / "references" / "breakfast-ideas.md").read_text(encoding="utf-8")
+        for keyword in ["叮咚买菜", "煎饺", "玉米卷", "肉粽", "烧麦", "窝窝头", "生煎", "汤包", "小笼包", "米酒", "花卷", "手抓饼"]:
+            self.assertIn(keyword, text)
+        for method in ["电蒸锅预约", "豆浆机预约", "煎锅快煎"]:
+            self.assertIn(method, text)
 
     def test_agents_md_guides_plain_prompt_trigger(self):
         agents = ROOT / "AGENTS.md"
