@@ -24,135 +24,137 @@
   },
   "modules_progress": {
     "M01_LLM基础": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
+      "last_studied": "2026-06-24",
       "topics_done": 77,
       "total_topics": 81
     },
     "M02_Transformer": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 8,
+      "last_studied": "2026-06-25",
+      "topics_done": 9,
       "total_topics": 75
     },
     "M03_Prompt工程": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
+      "last_studied": "2026-06-24",
       "topics_done": 72,
       "total_topics": 72
     },
     "M04_Context工程": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-05-27",
+      "last_studied": "2026-06-24",
       "topics_done": 71,
       "total_topics": 71
     },
     "M05_FunctionCalling": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-05-23",
+      "last_studied": "2026-06-25",
       "topics_done": 68,
       "total_topics": 76
     },
     "M06_MCP协议": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-05-25",
-      "topics_done": 37,
+      "last_studied": "2026-06-25",
+      "topics_done": 38,
       "total_topics": 73
     },
     "M07_Skills": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-05-25",
-      "topics_done": 35,
+      "last_studied": "2026-06-25",
+      "topics_done": 36,
       "total_topics": 70
     },
     "M08_Agent架构": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-05-30",
+      "last_studied": "2026-06-25",
       "topics_done": 38,
       "total_topics": 88
     },
     "M09_框架选型": {
       "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 9,
+      "last_studied": "2026-06-25",
+      "topics_done": 10,
       "total_topics": 73
     },
     "M10_MultiAgent": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 35,
+      "last_studied": "2026-06-25",
+      "topics_done": 36,
       "total_topics": 70
     },
     "M11_RAG": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 19,
+      "last_studied": "2026-06-25",
+      "topics_done": 20,
       "total_topics": 80
     },
     "M12_Memory": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 7,
+      "last_studied": "2026-06-25",
+      "topics_done": 10,
       "total_topics": 74
     },
     "M13_安全评估": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 5,
+      "last_studied": "2026-06-25",
+      "topics_done": 6,
       "total_topics": 74
     },
     "M14_推理部署": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 3,
+      "last_studied": "2026-06-25",
+      "topics_done": 15,
       "total_topics": 74
     },
     "M15_成本优化": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 3,
+      "last_studied": "2026-06-25",
+      "topics_done": 15,
       "total_topics": 72
     },
     "M16_AgenticCoding": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 6,
+      "last_studied": "2026-06-24",
+      "topics_done": 8,
       "total_topics": 72
     },
     "M17_工程化": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 3,
+      "last_studied": "2026-06-25",
+      "topics_done": 4,
       "total_topics": 72
     },
     "M18_系统设计": {
-      "started": false,
+      "started": true,
       "completed": false,
-      "last_studied": null,
-      "topics_done": 8,
+      "last_studied": "2026-06-25",
+      "topics_done": 9,
       "total_topics": 70
     },
     "M19_VLM多模态": {
       "total_topics": 72,
-      "topics_done": 5,
-      "completed": false
+      "topics_done": 6,
+      "completed": false,
+      "started": true,
+      "last_studied": "2026-06-25"
     }
   },
   "question_tracking": {
@@ -203,10 +205,10 @@
     "Q-M04_Context工程31": {
       "module": "M04_Context工程",
       "first_learned": "2026-05-18",
-      "last_reviewed": "2026-05-27",
-      "review_count": 3,
-      "next_review": "2026-06-10",
-      "confidence": 2,
+      "last_reviewed": "2026-06-23",
+      "review_count": 4,
+      "next_review": "2026-07-23",
+      "confidence": 3,
       "status": "reviewing",
       "review_history": [
         {
@@ -217,6 +219,11 @@
         {
           "date": "2026-05-27",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 3,
           "result": "pass"
         }
       ],
@@ -237,10 +244,10 @@
     "Q-M04_Context工程32": {
       "module": "M04_Context工程",
       "first_learned": "2026-05-19",
-      "last_reviewed": "2026-05-27",
-      "review_count": 3,
-      "next_review": "2026-06-03",
-      "confidence": 4,
+      "last_reviewed": "2026-06-24",
+      "review_count": 4,
+      "next_review": "2026-07-24",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
@@ -261,6 +268,11 @@
         {
           "date": "2026-05-27",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -423,15 +435,20 @@
     "Q-M05_FunctionCalling36": {
       "module": "M05_FunctionCalling",
       "first_learned": "2026-05-19",
-      "last_reviewed": "2026-05-21",
-      "review_count": 1,
-      "next_review": "2026-05-24",
-      "confidence": 4,
+      "last_reviewed": "2026-06-24",
+      "review_count": 2,
+      "next_review": "2026-07-01",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-21",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -481,10 +498,10 @@
     "Q-M06_MCP协议30": {
       "module": "M06_MCP协议",
       "first_learned": "2026-05-21",
-      "last_reviewed": "2026-05-25",
-      "review_count": 4,
-      "next_review": "2026-06-08",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 5,
+      "next_review": "2026-09-20",
+      "confidence": 2,
       "status": "reviewing",
       "review_history": [
         {
@@ -511,6 +528,11 @@
           "date": "2026-05-25",
           "confidence": 1,
           "result": "wrong"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -545,10 +567,10 @@
     "Q-M07_Skills27": {
       "module": "M07_Skills",
       "first_learned": "2026-05-21",
-      "last_reviewed": "2026-05-25",
-      "review_count": 4,
-      "next_review": "2026-06-08",
-      "confidence": 1,
+      "last_reviewed": "2026-06-24",
+      "review_count": 6,
+      "next_review": "2026-09-22",
+      "confidence": 3,
       "status": "reviewing",
       "review_history": [
         {
@@ -570,6 +592,16 @@
           "date": "2026-05-25",
           "confidence": 1,
           "result": "wrong"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 2,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 3,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -599,10 +631,10 @@
     "Q-M07_Skills28": {
       "module": "M07_Skills",
       "first_learned": "2026-05-24",
-      "last_reviewed": "2026-06-02",
-      "review_count": 2,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-24",
+      "review_count": 3,
+      "next_review": "2026-07-08",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
@@ -618,6 +650,11 @@
         {
           "date": "2026-06-02",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -643,10 +680,10 @@
     "Q-M08_Agent架构26": {
       "module": "M08_Agent架构",
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-27",
-      "review_count": 2,
-      "next_review": "2026-05-30",
-      "confidence": 4,
+      "last_reviewed": "2026-06-24",
+      "review_count": 3,
+      "next_review": "2026-07-08",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
@@ -667,6 +704,11 @@
         {
           "date": "2026-05-27",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -788,10 +830,10 @@
     },
     "Q-M05_FunctionCalling38": {
       "first_learned": "2026-05-23",
-      "last_reviewed": "2026-06-02",
-      "review_count": 2,
-      "next_review": "2026-05-30",
-      "confidence": 4,
+      "last_reviewed": "2026-06-25",
+      "review_count": 3,
+      "next_review": "2026-07-09",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
@@ -807,6 +849,11 @@
         {
           "date": "2026-06-02",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-25",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -833,10 +880,10 @@
     "Q-M08_Agent架构35": {
       "module": "M08_Agent架构",
       "first_learned": "2026-05-27",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-25",
+      "review_count": 2,
+      "next_review": "2026-07-02",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
@@ -847,6 +894,11 @@
         {
           "date": "2026-05-30",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-25",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -866,15 +918,20 @@
     },
     "Q-M08_Agent架构28": {
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-25",
+      "review_count": 2,
+      "next_review": "2026-07-02",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-25",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -890,15 +947,20 @@
     },
     "Q-M08_Agent架构29": {
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-25",
+      "review_count": 2,
+      "next_review": "2026-07-02",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-25",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -914,15 +976,20 @@
     },
     "Q-M08_Agent架构30": {
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-25",
+      "review_count": 2,
+      "next_review": "2026-07-02",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-25",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -938,16 +1005,21 @@
     },
     "Q-M08_Agent架构31": {
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 3,
+      "last_reviewed": "2026-06-23",
+      "review_count": 2,
+      "next_review": "2026-06-30",
+      "confidence": 4,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 3,
           "result": "wrong"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 4,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -962,16 +1034,21 @@
     },
     "Q-M08_Agent架构32": {
       "first_learned": "2026-05-25",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 3,
+      "last_reviewed": "2026-06-23",
+      "review_count": 2,
+      "next_review": "2026-06-30",
+      "confidence": 4,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 3,
           "result": "wrong"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 4,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -1855,10 +1932,10 @@
     "Q-M01_LLM基础14": {
       "module": "M01_LLM基础",
       "first_learned": "2026-05-31",
-      "last_reviewed": "2026-05-31",
-      "review_count": 2,
-      "next_review": "2026-06-07",
-      "confidence": 3,
+      "last_reviewed": "2026-06-24",
+      "review_count": 3,
+      "next_review": "2026-07-08",
+      "confidence": 4,
       "status": "reviewing",
       "review_history": [
         {
@@ -1869,6 +1946,11 @@
         {
           "date": "2026-05-31",
           "confidence": 3,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 4,
           "result": "pass"
         }
       ],
@@ -1937,10 +2019,10 @@
     "Q-M01_LLM基础03": {
       "module": "M01_LLM基础",
       "first_learned": "2026-05-31",
-      "last_reviewed": "2026-05-31",
-      "review_count": 2,
-      "next_review": "2026-06-07",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 3,
+      "next_review": "2026-07-06",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
@@ -1952,6 +2034,11 @@
           "date": "2026-05-31",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -4900,10 +4987,10 @@
     "Q-M01_LLM基础27": {
       "module": "M01_LLM基础",
       "first_learned": "2026-06-03",
-      "last_reviewed": "2026-06-07",
-      "review_count": 2,
-      "next_review": "2026-06-10",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 3,
+      "next_review": "2026-07-06",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
@@ -4915,6 +5002,11 @@
           "date": "2026-06-07",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -8497,10 +8589,10 @@
     },
     "Q-M03_Prompt工程01": {
       "first_learned": "2026-06-10",
-      "last_reviewed": "2026-06-10",
-      "review_count": 2,
-      "next_review": "2026-06-17",
-      "confidence": 2,
+      "last_reviewed": "2026-06-23",
+      "review_count": 3,
+      "next_review": "2026-07-07",
+      "confidence": 3,
       "status": "reviewing",
       "review_history": [
         {
@@ -8511,6 +8603,11 @@
         {
           "date": "2026-06-10",
           "confidence": 2,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 3,
           "result": "pass"
         }
       ],
@@ -8532,15 +8629,30 @@
     },
     "Q-M03_Prompt工程02": {
       "first_learned": "2026-06-10",
-      "last_reviewed": "2026-06-10",
-      "review_count": 1,
-      "next_review": "2026-06-13",
-      "confidence": 1,
+      "last_reviewed": "2026-06-24",
+      "review_count": 4,
+      "next_review": "2026-07-24",
+      "confidence": 3,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-10",
           "confidence": 1,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 1,
+          "result": "fail"
+        },
+        {
+          "date": "2026-06-23",
+          "confidence": 2,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-24",
+          "confidence": 3,
           "result": "pass"
         }
       ],
@@ -8557,15 +8669,20 @@
     },
     "Q-M03_Prompt工程03": {
       "first_learned": "2026-06-10",
-      "last_reviewed": "2026-06-10",
-      "review_count": 1,
-      "next_review": "2026-06-13",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-10",
           "confidence": 1,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
           "result": "pass"
         }
       ],
@@ -11370,16 +11487,21 @@
     },
     "Q-M05_FunctionCalling03": {
       "first_learned": "2026-06-18",
-      "last_reviewed": "2026-06-18",
-      "review_count": 1,
-      "next_review": "2026-06-21",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-18",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "module": "M05_FunctionCalling",
@@ -11395,16 +11517,21 @@
     },
     "Q-M05_FunctionCalling04": {
       "first_learned": "2026-06-18",
-      "last_reviewed": "2026-06-18",
-      "review_count": 1,
-      "next_review": "2026-06-21",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-18",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "module": "M05_FunctionCalling",
@@ -11420,16 +11547,21 @@
     },
     "Q-M05_FunctionCalling05": {
       "first_learned": "2026-06-18",
-      "last_reviewed": "2026-06-18",
-      "review_count": 1,
-      "next_review": "2026-06-21",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-18",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "module": "M05_FunctionCalling",
@@ -11445,15 +11577,20 @@
     },
     "Q-M05_FunctionCalling06": {
       "first_learned": "2026-06-18",
-      "last_reviewed": "2026-06-18",
-      "review_count": 1,
-      "next_review": "2026-06-21",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-18",
           "confidence": 1,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
           "result": "pass"
         }
       ],
@@ -11470,15 +11607,20 @@
     },
     "Q-M05_FunctionCalling07": {
       "first_learned": "2026-06-18",
-      "last_reviewed": "2026-06-18",
-      "review_count": 1,
-      "next_review": "2026-06-21",
-      "confidence": 1,
+      "last_reviewed": "2026-06-22",
+      "review_count": 2,
+      "next_review": "2026-06-29",
+      "confidence": 2,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-18",
           "confidence": 1,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-22",
+          "confidence": 2,
           "result": "pass"
         }
       ],
