@@ -79,6 +79,7 @@ class WorkflowScriptTests(unittest.TestCase):
         history = json.loads((self.data_dir / "history.json").read_text(encoding="utf-8"))
         self.assertEqual(len(history), 1)
         self.assertEqual(history[0]["date"], "2026-06-20")
+        self.assertEqual(history[0]["meal_type"], "lunch")
         self.assertEqual(
             history[0]["dishes"],
             ["清蒸多宝鱼", "白灼鲜虾", "上汤空心菜", "冬瓜瑶柱汤", "杂粮饭"],
@@ -96,6 +97,104 @@ class WorkflowScriptTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
         history = json.loads((self.data_dir / "history.json").read_text(encoding="utf-8"))
         self.assertEqual(len(history), 1)
+
+    def test_record_plan_keeps_breakfast_and_lunch_separate_on_same_date(self):
+        breakfast_plan = {
+            "方案A": {
+                "label": "方案A",
+                "dishes": [
+                    {"name": "虾仁蛋饼", "category": "主食"},
+                    {"name": "水煮蛋", "category": "蛋白"},
+                    {"name": "无糖豆浆", "category": "饮品"},
+                    {"name": "小番茄", "category": "果蔬"},
+                ],
+            }
+        }
+
+        lunch = run_script(
+            "record_plan.py",
+            "--selected",
+            "方案A",
+            "--date",
+            "2026-06-20",
+            data_dir=self.data_dir,
+            stdin_data=json.dumps(self.plan, ensure_ascii=False),
+        )
+        self.assertEqual(lunch.returncode, 0, lunch.stderr + lunch.stdout)
+
+        breakfast = run_script(
+            "record_plan.py",
+            "--selected",
+            "方案A",
+            "--date",
+            "2026-06-20",
+            "--meal-type",
+            "breakfast",
+            data_dir=self.data_dir,
+            stdin_data=json.dumps(breakfast_plan, ensure_ascii=False),
+        )
+        self.assertEqual(breakfast.returncode, 0, breakfast.stderr + breakfast.stdout)
+
+        history = json.loads((self.data_dir / "history.json").read_text(encoding="utf-8"))
+        self.assertEqual(
+            [(entry["date"], entry["meal_type"]) for entry in history],
+            [("2026-06-20", "breakfast"), ("2026-06-20", "lunch")],
+        )
+        self.assertEqual(history[0]["dishes"], ["虾仁蛋饼", "水煮蛋", "无糖豆浆", "小番茄"])
+        self.assertEqual(history[1]["dishes"], ["清蒸多宝鱼", "白灼鲜虾", "上汤空心菜", "冬瓜瑶柱汤", "杂粮饭"])
+
+    def test_review_gate_accepts_breakfast_structure(self):
+        breakfast_plan = {
+            "方案A": {
+                "label": "方案A",
+                "meal_type": "breakfast",
+                "dishes": [
+                    {"name": "虾仁蛋饼", "category": "主食", "time": "12分钟", "description": "平底锅少油；【需采购】"},
+                    {"name": "水煮蛋", "category": "蛋白", "time": "10分钟", "description": "高蛋白；【需采购】"},
+                    {"name": "无糖豆浆", "category": "饮品", "time": "20分钟", "description": "豆浆机制作；【需采购】"},
+                    {"name": "小番茄", "category": "果蔬", "time": "3分钟", "description": "清洗即食；【需采购】"},
+                ],
+            }
+        }
+
+        result = run_script(
+            "recipe_review_gate.py",
+            "--meal-type",
+            "breakfast",
+            data_dir=self.data_dir,
+            stdin_data=json.dumps(breakfast_plan, ensure_ascii=False),
+        )
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "PASS")
+
+    def test_review_pipeline_uses_breakfast_history_blacklist_for_breakfast_plans(self):
+        write_json(
+            self.data_dir / "history.json",
+            [{"date": "2026-06-18", "meal_type": "lunch", "dishes": ["虾仁蛋饼"]}],
+        )
+        breakfast_plan = {
+            "方案A": {
+                "label": "方案A",
+                "meal_type": "breakfast",
+                "dishes": [
+                    {"name": "虾仁蛋饼", "category": "主食", "time": "12分钟", "description": "少油快手；【需采购】"},
+                    {"name": "水煮蛋", "category": "蛋白", "time": "10分钟", "description": "高蛋白；【需采购】"},
+                    {"name": "无糖豆浆", "category": "饮品", "time": "20分钟", "description": "豆浆机制作；【需采购】"},
+                    {"name": "小番茄", "category": "果蔬", "time": "3分钟", "description": "清洗即食；【需采购】"},
+                ],
+            }
+        }
+
+        result = run_script(
+            "review_pipeline.py",
+            data_dir=self.data_dir,
+            stdin_data=json.dumps(breakfast_plan, ensure_ascii=False),
+        )
+        self.assertEqual(result.returncode, 2, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "NEEDS_EVAL")
+        self.assertEqual(payload["gate"]["status"], "PASS")
 
     def test_record_feedback_and_reminder_close_the_loop(self):
         write_json(

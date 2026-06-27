@@ -1,6 +1,6 @@
 ---
 name: weekend-lunch-plan
-description: 当用户说“周末午餐建议”、询问周末吃什么、午餐方案、家庭备餐计划、提供现有食材、确认菜单或饭后反馈时使用。生成 3 套健康周末午餐方案，并按 SOP 执行数据预检、自动审核门、3 subagent 模板审核、聚合裁决、历史记录和反馈闭环。
+description: 当用户说“周末午餐建议”、“周末早餐建议”、“早餐建议”、询问周末吃什么、早饭/早餐吃什么、午餐方案、家庭备餐计划、提供现有食材、确认菜单或饭后反馈时使用。支持健康周末午餐与早餐推荐，并按 SOP 执行数据预检、自动审核门、3 subagent 模板审核、聚合裁决、历史记录和反馈闭环。
 version: "4.1-codex"
 base_skill: "weekend-lunch-plan v4.1"
 merged_skills:
@@ -45,7 +45,23 @@ merged_skills:
 **⚠️ 维护纪律**：新增 SOP 步骤时，必须同步创建对应的 script/template 文件。
 
 ## 触发场景
-用户询问周末吃什么、午餐方案、备餐计划、提供现有食材、确认菜单、或表达想吃某道菜。
+用户询问周末吃什么、午餐方案、早餐建议、早饭吃什么、备餐计划、提供现有食材、确认菜单、或表达想吃某道菜。
+
+## 餐次模式
+
+默认餐次：
+
+```text
+meal_type = lunch
+```
+
+当用户明确说“早餐建议 / 周末早餐 / 早饭吃什么”时：
+
+```text
+meal_type = breakfast
+```
+
+历史记录必须写入 `meal_type`。旧记录缺少 `meal_type` 时按 `lunch` 兼容处理，避免早餐和午餐排重互相污染。
 
 ## 核心约束
 - **健康基线**：中度脂肪肝（低油低糖）、儿童高钙/高锌/高蛋白。
@@ -77,6 +93,26 @@ merged_skills:
   - 表内标记 ✅ 的菜品为已验证热门，直接通过
   - 参考表没有的候选菜，通过浏览器访问下厨房/美食天下/豆果等平台验证
   - 无法验证的冷门组合直接淘汰，换经典款
+
+## 早餐模式约束
+
+早餐推荐使用轻量结构，不套用午餐的“大荤/汤/创意菜”要求。
+
+每套早餐必须包含：
+
+- **1 主食**：蛋饼、饭团、馄饨、贝果、杂粮粥、蒸点等
+- **1 蛋白**：鸡蛋、虾仁、鸡胸、奶酪、酸奶等
+- **1 饮品**：牛奶、无糖豆浆、玉米汁、米糊等
+- **1 果蔬**：小番茄、黄瓜条、蓝莓、香蕉、时令水果等
+
+早餐质量要求：
+
+- 总体制作时间建议 ≤ 20-30 分钟
+- 低油、低糖、少油烟
+- 儿童友好，兼顾高蛋白、高钙
+- 优先使用豆浆机、电蒸锅、电饭煲、空气炸锅等可离开器具
+- 允许前一晚预处理
+- 不要求“餐厅感”和复杂摆盘
 
 ## 🍳 厨房器具清单
 
@@ -186,7 +222,8 @@ cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/review_pipeline.py --
 用户确认某套方案后，运行：
 
 ```bash
-cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --selected 方案A
+cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --selected 方案A --meal-type lunch
+cat plan.json | RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/record_plan.py --selected 方案A --meal-type breakfast
 ```
 
 该脚本按日期 upsert `history.json`，避免同一天重复记录。

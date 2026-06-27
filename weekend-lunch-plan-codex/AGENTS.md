@@ -1,6 +1,6 @@
 # Weekend Lunch Plan Codex Instructions
 
-当用户在本仓库中发出“周末午餐建议”、询问周末吃什么、午餐方案、家庭备餐计划、现有食材推荐、确认菜单或饭后菜品反馈时，优先使用 `$weekend-lunch-plan` skill。
+当用户在本仓库中发出“周末午餐建议”、“周末早餐建议”、“早餐建议”、询问周末吃什么、早饭吃什么、午餐方案、家庭备餐计划、现有食材推荐、确认菜单或饭后菜品反馈时，优先使用 `$weekend-lunch-plan` skill。
 
 Skill主源位于 `/opt/personal-agent-workspace/skills/weekend-lunch-plan/`。
 
@@ -12,6 +12,7 @@ Skill主源位于 `/opt/personal-agent-workspace/skills/weekend-lunch-plan/`。
 
 ```text
 $weekend-lunch-plan 周末午餐建议
+$weekend-lunch-plan 周末早餐建议
 ```
 
 日常使用时不要要求用户手工运行脚本。由 Codex 按 skill SOP 调用预检、审核、记录和反馈脚本；只有在调试或验收时才手工运行脚本。

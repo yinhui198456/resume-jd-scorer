@@ -33,6 +33,8 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertIn("name: weekend-lunch-plan", meta)
         self.assertIn("description:", meta)
         self.assertIn("周末午餐建议", meta)
+        self.assertIn("周末早餐建议", meta)
+        self.assertIn("早餐建议", meta)
         self.assertIn("午餐方案", meta)
 
     def test_agents_md_guides_plain_prompt_trigger(self):
@@ -40,6 +42,8 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertTrue(agents.is_file())
         text = agents.read_text(encoding="utf-8")
         self.assertIn("周末午餐建议", text)
+        self.assertIn("周末早餐建议", text)
+        self.assertIn("早餐建议", text)
         self.assertIn("Skill主源", text)
         self.assertIn("/opt/personal-agent-workspace/skills/weekend-lunch-plan", text)
         self.assertIn("项目内 `.agents/skills/weekend-lunch-plan` 只能是指向主源目录的 symlink", text)

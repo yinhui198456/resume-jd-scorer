@@ -19,6 +19,7 @@
 退出码：0=PASS, 1=FAIL
 """
 
+import argparse
 import json
 import sys
 import re
@@ -122,7 +123,11 @@ def extract_technique(dish_name):
     return "未知技法"
 
 
-def load_history_blacklist():
+def normalized_meal_type(entry):
+    return entry.get("meal_type", "lunch")
+
+
+def load_history_blacklist(meal_type="lunch"):
     """从 history.json 加载 30 天黑名单。"""
     data_dir = os.environ.get("RECIPE_DATA_DIR", "/root/.hermes/profiles/life/data")
     history_file = Path(data_dir) / "history.json"
@@ -137,7 +142,10 @@ def load_history_blacklist():
 
     # 清洗未来日期
     cleaned = [h for h in history if h.get("date", "9999") <= today]
-    recent = [h for h in cleaned if h.get("date", "0") >= thirty_days_ago]
+    recent = [
+        h for h in cleaned
+        if h.get("date", "0") >= thirty_days_ago and normalized_meal_type(h) == meal_type
+    ]
 
     dish_names = set()
     main_ingredients = set()
@@ -176,6 +184,29 @@ def check_structure(plan_label, dishes):
         issues.append(f"【{plan_label}】汤不足 {categories['汤']}/1")
     if categories["主食"] < 1:
         issues.append(f"【{plan_label}】主食不足 {categories['主食']}/1")
+
+    return issues
+
+
+def check_breakfast_structure(plan_label, dishes):
+    """早餐结构检查：1主食+1蛋白+1饮品+1果蔬。"""
+    issues = []
+    categories = {"主食": 0, "蛋白": 0, "饮品": 0, "果蔬": 0}
+
+    for dish in dishes:
+        cat = dish.get("category", "")
+        if "主食" in cat:
+            categories["主食"] += 1
+        elif "蛋白" in cat or "鸡蛋" in cat or "肉蛋" in cat:
+            categories["蛋白"] += 1
+        elif "饮品" in cat or "奶" in cat or "豆浆" in cat or "米糊" in cat:
+            categories["饮品"] += 1
+        elif "果蔬" in cat or "水果" in cat or "蔬菜" in cat:
+            categories["果蔬"] += 1
+
+    for category, count in categories.items():
+        if count < 1:
+            issues.append(f"【{plan_label}】早餐{category}不足 {count}/1")
 
     return issues
 
@@ -358,36 +389,44 @@ def check_technique_dup(plan_label, dishes):
 
 # ─── 主入口 ───
 
-def review_plan(plan_data, blacklist):
+def review_plan(plan_data, blacklist, meal_type="lunch"):
     """对单套方案执行全部检查。"""
     all_issues = []
 
     label = plan_data.get("label", "未知方案")
+    meal_type = plan_data.get("meal_type", meal_type)
     dishes = plan_data.get("dishes", [])
     explicit_overrides = plan_data.get("explicit_overrides", [])
 
-    all_issues.extend(check_structure(label, dishes))
+    if meal_type == "breakfast":
+        all_issues.extend(check_breakfast_structure(label, dishes))
+    else:
+        all_issues.extend(check_structure(label, dishes))
     all_issues.extend(check_main_ingredient_clash(label, dishes))
     all_issues.extend(check_spicy(label, dishes))
     all_issues.extend(check_bitter_melon(label, dishes))
     all_issues.extend(check_vegetarian_purity(label, dishes))
     all_issues.extend(check_time(label, dishes))
     all_issues.extend(check_inventory_label(label, dishes))
-    all_issues.extend(check_seasonal_creative(label, dishes))
+    if meal_type != "breakfast":
+        all_issues.extend(check_seasonal_creative(label, dishes))
     all_issues.extend(check_30day_blacklist(label, dishes, blacklist, explicit_overrides))
-    all_issues.extend(check_technique_dup(label, dishes))
+    if meal_type != "breakfast":
+        all_issues.extend(check_technique_dup(label, dishes))
 
     return all_issues
 
 
 def main():
-    # 读取输入
-    input_data = None
-    if len(sys.argv) > 1 and sys.argv[1] == "--input":
-        with open(sys.argv[2], "r", encoding="utf-8") as f:
+    parser = argparse.ArgumentParser(description="周末家庭餐饮方案自动审核门")
+    parser.add_argument("--input", help="方案 JSON 文件；省略时从 stdin 读取")
+    parser.add_argument("--meal-type", choices=["breakfast", "lunch"], default="lunch", help="餐次类型，默认 lunch")
+    args = parser.parse_args()
+
+    if args.input:
+        with open(args.input, "r", encoding="utf-8") as f:
             input_data = json.load(f)
     else:
-        # 从 stdin 读取
         raw = sys.stdin.read()
         if not raw.strip():
             print(json.dumps({"status": "FAIL", "issues": ["无输入数据"]}, ensure_ascii=False))
@@ -395,7 +434,7 @@ def main():
         input_data = json.loads(raw)
 
     # 加载黑名单
-    blacklist = load_history_blacklist()
+    blacklist = load_history_blacklist(args.meal_type)
 
     # 逐套检查
     all_issues = []
@@ -409,7 +448,8 @@ def main():
             plan_data = plan
 
         label = plan_data.get("label", key)
-        issues = review_plan(plan_data, blacklist)
+        meal_type = plan_data.get("meal_type", args.meal_type)
+        issues = review_plan(plan_data, blacklist, meal_type)
 
         plan_results[label] = "PASS" if not issues else "FAIL"
         all_issues.extend(issues)

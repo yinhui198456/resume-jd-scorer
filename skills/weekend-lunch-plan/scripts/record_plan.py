@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record a confirmed lunch plan into history.json.
+"""Record a confirmed meal plan into history.json.
 
 Input plan format matches recipe_review_gate.py:
 { "方案A": {"label": "方案A", "dishes": [{"name": "..."}] } }
@@ -77,18 +77,23 @@ def select_plan(plan_data, selected):
     return label, names
 
 
-def upsert_history(history, date, dishes):
+def normalized_meal_type(entry):
+    return entry.get("meal_type", "lunch")
+
+
+def upsert_history(history, date, dishes, meal_type):
     next_history = []
     replaced = False
     for entry in history:
-        if entry.get("date") == date:
-            next_history.append({"date": date, "dishes": dishes})
+        if entry.get("date") == date and normalized_meal_type(entry) == meal_type:
+            next_history.append({"date": date, "meal_type": meal_type, "dishes": dishes})
             replaced = True
         else:
             next_history.append(entry)
     if not replaced:
-        next_history.append({"date": date, "dishes": dishes})
-    next_history.sort(key=lambda x: x.get("date", ""))
+        next_history.append({"date": date, "meal_type": meal_type, "dishes": dishes})
+    meal_order = {"breakfast": 0, "lunch": 1, "dinner": 2}
+    next_history.sort(key=lambda x: (x.get("date", ""), meal_order.get(normalized_meal_type(x), 99)))
     return next_history, replaced
 
 
@@ -97,13 +102,14 @@ def main():
     parser.add_argument("--input", help="方案 JSON 文件；省略时从 stdin 读取")
     parser.add_argument("--selected", help="选中的方案 key，例如 方案A")
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"), help="记录日期，默认今天")
+    parser.add_argument("--meal-type", choices=["breakfast", "lunch"], default="lunch", help="餐次类型，默认 lunch")
     args = parser.parse_args()
 
     try:
         plan_data = read_plan(args)
         label, dishes = select_plan(plan_data, args.selected)
         history = load_json(HISTORY_FILE)
-        updated, replaced = upsert_history(history, args.date, dishes)
+        updated, replaced = upsert_history(history, args.date, dishes, args.meal_type)
         save_json(HISTORY_FILE, updated)
     except Exception as exc:
         print(json.dumps({"status": "FAIL", "error": str(exc)}, ensure_ascii=False), file=sys.stderr)
@@ -112,6 +118,7 @@ def main():
     print(json.dumps({
         "status": "PASS",
         "date": args.date,
+        "meal_type": args.meal_type,
         "selected": label,
         "dishes": dishes,
         "dish_count": len(dishes),
