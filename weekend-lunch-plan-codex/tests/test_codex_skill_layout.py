@@ -1,3 +1,4 @@
+import json
 import re
 import unittest
 from pathlib import Path
@@ -22,6 +23,35 @@ class CodexSkillLayoutTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "references" / "breakfast-checklist.md").is_file())
         self.assertTrue((SKILL_DIR / "references" / "breakfast-ideas.md").is_file())
 
+    def test_breakfast_product_pool_exists_for_dingdong_style_items(self):
+        path = ROOT / "data" / "breakfast_products.json"
+        self.assertTrue(path.is_file())
+
+        products = json.loads(path.read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(products), 12)
+
+        required_fields = {
+            "name",
+            "category",
+            "source",
+            "method",
+            "meal_type",
+            "health_tags",
+            "risk_note",
+            "update_mode",
+            "last_verified",
+            "keywords",
+        }
+        for product in products:
+            self.assertTrue(required_fields.issubset(product.keys()), product)
+            self.assertEqual(product["meal_type"], "breakfast")
+            self.assertEqual(product["source"], "叮咚买菜")
+            self.assertIn(product["update_mode"], ["manual_screenshot", "manual_entry", "future_scheduled_enrichment"])
+
+        names = {product["name"] for product in products}
+        for expected in ["烧麦", "小笼包", "肉粽", "手抓饼", "牛奶", "无糖豆浆"]:
+            self.assertIn(expected, names)
+
     def test_workspace_skill_is_canonical_source(self):
         self.assertTrue(CANONICAL_SKILL_DIR.is_dir())
         self.assertTrue((CANONICAL_SKILL_DIR / "SKILL.md").is_file())
@@ -44,6 +74,8 @@ class CodexSkillLayoutTests(unittest.TestCase):
         text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("references/breakfast-checklist.md", text)
         self.assertIn("references/breakfast-ideas.md", text)
+        self.assertIn("data/breakfast_products.json", text)
+        self.assertIn("定时自动完善", text)
         self.assertIn("templates/eval-breakfast-validator.md", text)
         self.assertIn("recipe_review_gate.py --meal-type breakfast", text)
         self.assertIn("record_plan.py --meal-type breakfast", text)

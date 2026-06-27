@@ -154,8 +154,11 @@ RECIPE_DATA_DIR=<DATA_DIR> python3 scripts/recipe_review_gate.py --meal-type bre
 | **inventory.json** | `data/inventory.json` | 冰箱存量食材（优先消耗） |
 | **wishlist.json** | `data/wishlist.json` | 意向菜品池（推荐优先） |
 | **dish_feedback.json** | `data/dish_feedback.json` | 菜品使用反馈 |
+| **breakfast_products.json** | `data/breakfast_products.json` | 叮咚买菜风格早餐商品池（半成品/快手/预约器具） |
 
 **⚠️ 文件不存在时**：创建空数组 `[]`，禁止跳过。
+
+早餐场景额外规则：生成早餐候选时优先读取 `data/breakfast_products.json`。该文件当前以截图和手工录入维护为主，字段保留 `update_mode`、`last_verified`、`keywords`，用于后续定时自动完善。
 
 ---
 
