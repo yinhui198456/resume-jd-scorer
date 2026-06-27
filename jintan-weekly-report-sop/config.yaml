@@ -1,0 +1,219 @@
+# 金坛二期项目周报模板配置
+# 此文件定义了周报的结构、格式、过滤规则、章节内容等
+# 新项目只需复制此文件并修改配置，无需改动代码
+
+project:
+  name: "常州市金坛第一人民医院数据指挥中心二期项目"
+  short_name: "金坛二期"
+  
+# Excel 数据源配置
+source:
+  xlsx_path: "./data/金坛二期项目跟进表.xlsx"
+  template_path: "./templates/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260420-0424.docx"
+  output_dir: "./output"
+  
+  sheets:
+    plan: "1"            # 01-项目计划 (sheet ID 1)
+    milestone: "2"       # 02-项目里程碑 (sheet ID 2)
+    issues: "3"          # 04-应用问题跟踪表 (sheet ID 3)
+  
+  # 列名映射
+  columns:
+    work_unit: "工作单元"
+    stage: "任务阶段"
+    task: "任务"
+    notes: "备注"
+    progress: "进度"
+    status: "状态"
+    plan_start: "计划开始"
+    plan_end: "计划完成"
+    responsible: "负责人-内"
+  
+  # 里程碑列映射（xlsx 实际列名）
+  milestone_columns:
+    number: "编号"  # 编号列
+    name: "里程碑名称"
+    description: "里程碑标志"
+    deadline: "里程碑时点"
+    deliverables: "交付件"
+    status: "状态"
+    payment: "付款比例"
+  
+  # 里程碑截图列名 → 数据列名映射（用于图片生成）
+  milestone_display_map:
+    "编号": "编号"
+    "里程碑": "里程碑名称"
+    "里程碑标志": "里程碑标志"
+    "里程碑时点": "里程碑时点"
+    "交付件": "交付件"
+    "状态": "状态"
+    "付款比例": "付款比例"
+
+# 日期配置
+date:
+  report_date: "friday"  # 报告日期使用周五: "friday" | "today" | "monday"
+  filename_pattern: "{project_name}-工作周报-{monday_ymd}-{friday_md}.docx"
+
+# 格式配置
+format:
+  font: "微软雅黑"
+  font_size_body: 10.5    # 五号
+  font_size_level1: 11    # 一级标题
+  font_size_header: 12    # 总标题
+  
+  # 编号格式
+  numbering:
+    level1: "chinese"     # 一、二、三、
+    level2: "decimal_dot" # 1. 2. 3.
+    level3: "decimal_paren" # 1) 2) 3)
+
+# 过滤规则
+filter:
+  # 本周计划过滤
+  this_week:
+    exclude_statuses: ["完成"]
+    exclude_work_units: ["项目管理"]
+    # 排除历史已完成任务
+    exclude_if:
+      - actual_end_before: "monday"
+        status_equals: "完成"
+  
+  # 下周计划过滤
+  next_week:
+    exclude_statuses: ["完成"]
+    exclude_work_units: ["项目管理"]
+    # 计划开始 <= 下周五
+    plan_start_before: "next_friday"
+  
+  # 空任务过滤
+  empty_task:
+    conditions:
+      - progress_empty_or_zero: true
+      - notes_empty: true
+      - status_equals: "未开始"
+    match: "all"  # "all" = 所有条件都满足才过滤
+
+# 需要协调的事务配置
+coordination:
+  enabled: true
+  # 延期判断
+  delayed:
+    plan_end_before: "today"
+    progress_less_than: 1.0
+    # 或状态为进行中但进度低
+    or:
+      - status_equals: "进行中"
+        progress_less_than: 0.3
+  # 外部原因关键词
+  external_keywords:
+    - "调研"
+    - "确认"
+    - "反馈"
+    - "待定"
+    - "业务方"
+    - "医管中心"
+    - "科室"
+    - "用户"
+    - "原型"
+    - "评审"
+    - "源数据"
+    - "数据接入"
+    - "对接"
+    - "口径"
+    - "明确"
+    - "约时间"
+    - "沟通"
+    - "协商"
+    - "审批"
+  # 输出格式
+  output_format: "{num}) {work_unit} - {task}：{issue}（当前进度 {progress}%）"
+
+# 章节配置
+sections:
+  this_week:
+    enabled: true
+    table_row: 6
+    content:
+      - type: "header"
+        text: "项目总体进度"
+      - type: "milestone_image"
+      - type: "header"
+        text: "本周重点工作："
+      - type: "plan_items"
+        source: "this_week"
+  
+  next_week:
+    enabled: true
+    table_row: 8
+    content:
+      - type: "plan_items"
+        source: "next_week"
+        action_suffix: true  # 添加行动后缀（继续推进/启动准备）
+  
+  coordination:
+    enabled: true
+    table_row: 10
+    content:
+      - type: "coordination_items"
+  
+  issues:
+    enabled: true
+    table_row: 12
+    content:
+      - type: "issues_grouped"
+        group_by: ["数据应用", "模块"]
+        # 分组内的编号
+        numbering:
+          level1: "chinese"     # 一、二、三、（数据应用）
+          level2: "decimal_dot" # 1. 2. 3.（模块）
+          level3: "decimal_paren" # 1) 2) 3)（问题）
+
+# 里程碑截图配置
+milestone_image:
+  enabled: true
+  width: 1770
+  header_height: 60
+  row_height: 260
+  font_size: 26
+  font_size_bold: 28
+  
+  # 颜色（对齐原始 Sheet 02）
+  colors:
+    header_bg: "#5DC5F9"
+    header_border: "#00A3F5"
+    row_completed: "#EAFAF1"    # 已完成 - 绿色
+    row_active: "#FFF9E3"       # 进行中/活跃 - 黄色
+    row_future: "#F2F2F2"       # 未开始/未来 - 灰色
+    text: "#333333"
+    status_green: "#548235"
+    status_orange: "#BF8F00"
+    status_gray: "#999999"
+    border: "#B0B0B0"
+  
+  columns:
+    - name: "编号"
+      width: 60
+    - name: "里程碑"
+      width: 180
+    - name: "里程碑标志"
+      width: 350
+    - name: "里程碑时点"
+      width: 160
+    - name: "交付件"
+      width: 550
+    - name: "状态"
+      width: 140
+    - name: "付款比例"
+      width: 130
+
+# 邮件配置
+email:
+  enabled: false  # 设为 true 启用邮件发送
+  subject: "{project_name}-工作周报-{monday_ymd}-{friday_md}"
+  # SMTP 配置（从环境变量读取）
+  smtp_host: "${SMTP_HOST}"
+  smtp_port: "${SMTP_PORT}"
+  smtp_user: "${SMTP_USER}"
+  smtp_password: "${SMTP_PASSWORD}"
+  from: "${SMTP_USER}"
+  to: []  # 收件人列表
