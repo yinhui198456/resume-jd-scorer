@@ -114,6 +114,7 @@ SYSTEM_PROMPT = """你是一个专业的招聘评估专家。请根据提供的 
   "follow_up_questions": [
     {"question": "", "dimension": "", "intent": "", "type": "technical|verification"}
   ],
+
   "summary": ""
 }
 """
