@@ -34,3 +34,20 @@ def test_same_github_release_repository_versions_cluster():
     clusters = cluster_items([first, second, third])
 
     assert sorted(len(cluster) for cluster in clusters) == [1, 2]
+
+
+def test_same_product_version_titles_cluster():
+    first = item("https://example.com/claude-code-2-1-191")
+    second = item("https://example.com/claude-code-2-1-187")
+    third = item("https://example.com/codex-0-142-2")
+    fourth = item("https://example.com/codex-0-142-1")
+    unrelated = item("https://example.com/langgraph-1")
+    first.normalized_title = "Claude Code v2.1.191 released"
+    second.normalized_title = "Claude Code v2.1.187 released"
+    third.normalized_title = "Codex 0.142.2 released"
+    fourth.normalized_title = "Codex 0.142.1 released"
+    unrelated.normalized_title = "LangGraph 1.0 released"
+
+    clusters = cluster_items([first, second, third, fourth, unrelated])
+
+    assert sorted(len(cluster) for cluster in clusters) == [1, 2, 2]

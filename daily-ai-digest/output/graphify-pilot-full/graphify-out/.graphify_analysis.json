@@ -1,84 +1,20 @@
 {
   "communities": {
     "0": [
-      "compact_feishu_post_design",
-      "compact_feishu_post_plan",
-      "daily_ai_digest_design_cluster_stage",
-      "daily_ai_digest_design_collect_stage",
-      "daily_ai_digest_design_daily_ai_digest",
-      "daily_ai_digest_design_deduplicate_stage",
-      "daily_ai_digest_design_deliver_stage",
-      "daily_ai_digest_design_digest_item",
-      "daily_ai_digest_design_extract_stage",
-      "daily_ai_digest_design_feishu_delivery",
-      "daily_ai_digest_design_filter_stage",
-      "daily_ai_digest_design_filters_yml",
-      "daily_ai_digest_design_minimax_client",
-      "daily_ai_digest_design_news_item",
-      "daily_ai_digest_design_normalize_stage",
-      "daily_ai_digest_design_pipeline",
-      "daily_ai_digest_design_raw_item",
-      "daily_ai_digest_design_render_stage",
-      "daily_ai_digest_design_run_daily",
-      "daily_ai_digest_design_schedule_yml",
-      "daily_ai_digest_design_sources_yml",
-      "daily_ai_digest_design_summarize_stage",
-      "daily_ai_digest_design_topics_yml",
-      "daily_ai_digest_design_translate_stage",
-      "findings_current_evidence",
-      "findings_technical_decisions",
-      "operations_feishu_delivery",
-      "operations_mini_max_configuration",
-      "progress_phase_1_diagnose",
-      "progress_phase_2_tdd_implementation",
-      "source_policy_tier_1",
-      "source_policy_tier_2",
-      "source_policy_whitelist",
-      "task_plan_phase_1_diagnose",
-      "task_plan_phase_2_tdd_implementation"
-    ],
-    "1": [
-      "datetime",
-      "digest_models_appconfig",
-      "digest_models_newsitem",
-      "filter_quality_dedupe_exact",
-      "filter_quality_hard_filter",
-      "filter_quality_tag_topics",
-      "filter_quality_weighted_score",
-      "jobs_daily_candidate_flags",
-      "jobs_daily_cluster_candidate_allowed",
-      "jobs_daily_cluster_group",
-      "jobs_daily_cluster_text",
-      "jobs_daily_default_collector",
-      "jobs_daily_dependencies",
-      "jobs_daily_main",
-      "jobs_daily_practice_allowed",
-      "jobs_daily_published_at_requirements",
-      "jobs_daily_read_items",
-      "jobs_daily_requires_published_at",
-      "jobs_daily_run_daily",
-      "jobs_daily_runreport",
-      "jobs_daily_score",
-      "jobs_daily_source_groups",
-      "jobs_daily_within_catch_up_window",
-      "tmp_daily_ai_digest_graphify_input_src_digest_filter_quality_py",
-      "tmp_daily_ai_digest_graphify_input_src_digest_jobs_daily_py",
-      "tmp_daily_ai_digest_graphify_input_tests_unit_test_default_collector_py",
-      "tmp_daily_ai_digest_graphify_input_tests_unit_test_schedule_py",
-      "unit_test_default_collector_test_default_collector_includes_github_repository_search",
-      "unit_test_schedule_test_catch_up_window_rejects_late_start",
-      "unit_test_schedule_test_timer_starts_at_0845_project_timezone"
-    ],
-    "2": [
       "collect_github_collect_atom_releases",
       "collect_github_collect_github_releases",
       "collect_github_collect_github_repository_search",
       "collect_html_index_collect_html_index",
       "collect_html_index_extract_index_entries",
       "collect_html_index_published_at",
+      "datetime",
+      "jobs_daily_default_collector",
+      "jobs_daily_within_catch_up_window",
       "tmp_daily_ai_digest_graphify_input_src_digest_collect_github_py",
       "tmp_daily_ai_digest_graphify_input_src_digest_collect_html_index_py",
       "tmp_daily_ai_digest_graphify_input_tests_unit_test_collect_py",
+      "tmp_daily_ai_digest_graphify_input_tests_unit_test_default_collector_py",
+      "tmp_daily_ai_digest_graphify_input_tests_unit_test_schedule_py",
       "unit_test_collect_fakeresponse",
       "unit_test_collect_fakeresponse_init",
       "unit_test_collect_fakeresponse_json",
@@ -98,7 +34,78 @@
       "unit_test_collect_test_collect_html_index_uses_rss_description_as_raw_body",
       "unit_test_collect_test_extract_index_entries_accepts_openai_rss",
       "unit_test_collect_test_extract_index_entries_keeps_article_links",
-      "unit_test_collect_test_extract_index_entries_sorts_feed_entries_by_published_date_descending"
+      "unit_test_collect_test_extract_index_entries_sorts_feed_entries_by_published_date_descending",
+      "unit_test_default_collector_test_default_collector_includes_github_repository_search",
+      "unit_test_schedule_test_catch_up_window_rejects_late_start",
+      "unit_test_schedule_test_timer_starts_at_0845_project_timezone"
+    ],
+    "1": [
+      "cluster_group_cluster_items",
+      "cluster_group_cluster_key",
+      "cluster_group_release_family_key",
+      "cluster_group_title_key",
+      "digest_models_appconfig",
+      "digest_models_newsitem",
+      "filter_quality_dedupe_exact",
+      "filter_quality_hard_filter",
+      "filter_quality_tag_topics",
+      "filter_quality_weighted_score",
+      "jobs_daily_candidate_flags",
+      "jobs_daily_cluster_candidate_allowed",
+      "jobs_daily_cluster_group",
+      "jobs_daily_cluster_text",
+      "jobs_daily_practice_allowed",
+      "jobs_daily_published_at_requirements",
+      "jobs_daily_read_items",
+      "jobs_daily_requires_published_at",
+      "jobs_daily_run_daily",
+      "jobs_daily_score",
+      "jobs_daily_source_groups",
+      "tmp_daily_ai_digest_graphify_input_src_digest_cluster_group_py",
+      "tmp_daily_ai_digest_graphify_input_src_digest_filter_quality_py",
+      "tmp_daily_ai_digest_graphify_input_src_digest_jobs_daily_py",
+      "tmp_daily_ai_digest_graphify_input_tests_unit_test_cluster_py",
+      "tmp_daily_ai_digest_graphify_input_tests_unit_test_quality_py",
+      "unit_test_cluster_test_equal_normalized_titles_cluster",
+      "unit_test_cluster_test_same_github_release_repository_versions_cluster",
+      "unit_test_cluster_test_shared_topic_does_not_merge_unrelated_titles",
+      "unit_test_quality_item",
+      "unit_test_quality_test_dedupe_exact_keeps_first_stable_item",
+      "unit_test_quality_test_hard_filter_rejects_blocked_and_stale_items",
+      "unit_test_quality_test_hard_filter_rejects_missing_published_at_when_required",
+      "unit_test_quality_test_weighted_score_is_reproducible"
+    ],
+    "2": [
+      "architecture_architecture",
+      "compact_feishu_post_design_compact_feishu_post_design",
+      "compact_feishu_post_plan_compact_feishu_post_implementation_plan",
+      "daily_ai_digest_design_cluster_stage",
+      "daily_ai_digest_design_collect_stage",
+      "daily_ai_digest_design_daily_ai_digest",
+      "daily_ai_digest_design_deduplicate_stage",
+      "daily_ai_digest_design_deliver_stage",
+      "daily_ai_digest_design_digest_item",
+      "daily_ai_digest_design_extract_stage",
+      "daily_ai_digest_design_feishu_delivery",
+      "daily_ai_digest_design_filter_stage",
+      "daily_ai_digest_design_minimax_backend",
+      "daily_ai_digest_design_news_item",
+      "daily_ai_digest_design_normalize_stage",
+      "daily_ai_digest_design_pipeline",
+      "daily_ai_digest_design_raw_item",
+      "daily_ai_digest_design_render_stage",
+      "daily_ai_digest_design_scheduler",
+      "daily_ai_digest_design_summarize_stage",
+      "daily_ai_digest_design_translate_stage",
+      "filters_yml_filters",
+      "findings_findings",
+      "operations_operations",
+      "progress_progress",
+      "schedule_yml_schedule",
+      "source_policy_source_policy",
+      "sources_yml_sources",
+      "task_plan_task_plan",
+      "topics_yml_topics"
     ],
     "3": [
       "digest_models_rawitem",
@@ -134,12 +141,12 @@
       "digest_models_stagecheckpoint",
       "digest_models_stagestatus",
       "jobs_daily_checkpoint",
+      "jobs_daily_runreport",
       "storage_state_atomic_write_json",
       "storage_state_json_default",
       "storage_state_run_lock",
       "storage_state_statestore",
       "storage_state_statestore_create_run",
-      "storage_state_statestore_init",
       "storage_state_statestore_resume_stage",
       "storage_state_statestore_save_checkpoint",
       "strenum",
@@ -193,28 +200,13 @@
       "unit_test_render_test_normal_digest_keeps_source_link"
     ],
     "7": [
-      "cluster_group_cluster_items",
-      "cluster_group_cluster_key",
-      "cluster_group_release_family_key",
-      "cluster_group_title_key",
-      "tmp_daily_ai_digest_graphify_input_src_digest_cluster_group_py",
-      "tmp_daily_ai_digest_graphify_input_tests_unit_test_cluster_py",
-      "tmp_daily_ai_digest_graphify_input_tests_unit_test_quality_py",
-      "unit_test_cluster_test_equal_normalized_titles_cluster",
-      "unit_test_cluster_test_same_github_release_repository_versions_cluster",
-      "unit_test_cluster_test_shared_topic_does_not_merge_unrelated_titles",
-      "unit_test_quality_item",
-      "unit_test_quality_test_dedupe_exact_keeps_first_stable_item",
-      "unit_test_quality_test_hard_filter_rejects_blocked_and_stale_items",
-      "unit_test_quality_test_hard_filter_rejects_missing_published_at_when_required",
-      "unit_test_quality_test_weighted_score_is_reproducible"
-    ],
-    "8": [
       "generate_common_fallback_generation",
       "generate_common_parse_generation",
       "generate_minimax_minimaxgenerator",
       "generate_minimax_minimaxgenerator_generate_text",
       "generate_minimax_minimaxgenerator_init",
+      "jobs_daily_dependencies",
+      "jobs_daily_main",
       "tmp_daily_ai_digest_graphify_input_src_digest_generate_common_py",
       "tmp_daily_ai_digest_graphify_input_src_digest_generate_minimax_py",
       "tmp_daily_ai_digest_graphify_input_tests_unit_test_minimax_py",
@@ -226,10 +218,11 @@
       "unit_test_minimax_test_parse_generation_accepts_minimax_think_prefix",
       "unit_test_minimax_test_parse_generation_rejects_non_json"
     ],
-    "9": [
+    "8": [
       "digest_config_load_config",
       "monkeypatch",
       "path",
+      "storage_state_statestore_init",
       "tmp_daily_ai_digest_graphify_input_src_digest_config_py",
       "tmp_daily_ai_digest_graphify_input_tests_unit_test_config_py",
       "unit_test_config_set_required_environment",
@@ -237,7 +230,7 @@
       "unit_test_config_test_config_rejects_weights_that_do_not_sum_to_one",
       "unit_test_config_write_configs"
     ],
-    "10": [
+    "9": [
       "parse_normalize_canonicalize_url",
       "parse_normalize_normalize_raw_item",
       "parse_normalize_normalize_text",
@@ -247,41 +240,45 @@
       "unit_test_normalize_test_canonicalize_url_removes_tracking_parameters",
       "unit_test_normalize_test_normalize_raw_item_is_stable"
     ],
-    "11": [
+    "10": [
       "cluster_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_cluster_init_py"
     ],
-    "12": [
+    "11": [
       "collect_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_collect_init_py"
     ],
-    "13": [
+    "12": [
       "deliver_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_deliver_init_py"
     ],
-    "14": [
+    "13": [
       "digest_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_init_py"
     ],
-    "15": [
+    "14": [
       "filter_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_filter_init_py"
     ],
-    "16": [
+    "15": [
       "generate_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_generate_init_py"
     ],
-    "17": [
+    "16": [
       "jobs_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_jobs_init_py"
     ],
-    "18": [
+    "17": [
       "parse_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_parse_init_py"
     ],
-    "19": [
+    "18": [
       "storage_init_rationale_1",
       "tmp_daily_ai_digest_graphify_input_src_digest_storage_init_py"
+    ],
+    "19": [
+      "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh",
+      "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh__entry"
     ],
     "20": [
       "tmp_daily_ai_digest_graphify_input_scripts_run_daily_sh",
@@ -292,67 +289,41 @@
       "tmp_daily_ai_digest_graphify_input_scripts_validate_config_sh__entry"
     ],
     "22": [
+      "tmp_daily_ai_digest_graphify_input_tests_unit_test_graphify_refresh_py",
+      "unit_test_graphify_refresh_test_graphify_refresh_excludes_runtime_dirs_and_writes_mobile_summary"
+    ],
+    "23": [
       "tmp_daily_ai_digest_graphify_input_tests_unit_test_models_py",
       "unit_test_models_test_stage_status_contract"
     ],
-    "23": [
-      "feishu_app_options_a"
-    ],
     "24": [
-      "feishu_app_options_b"
+      "feishu_app_options_feishu_app_options"
     ],
     "25": [
-      "feishu_app_options_c"
+      "layout_options_layout_options"
     ],
     "26": [
-      "findings_requirements"
+      "openai_news_html_openai_news"
     ],
     "27": [
-      "layout_options_a"
-    ],
-    "28": [
-      "layout_options_b"
-    ],
-    "29": [
-      "layout_options_c"
-    ],
-    "30": [
-      "operations_manual_pipeline"
-    ],
-    "31": [
       "pkg_daily_ai_digest"
     ],
-    "32": [
-      "progress_phase_3_verification"
-    ],
-    "33": [
-      "progress_session_2026_06_23"
-    ],
-    "34": [
-      "readme_local_verification"
-    ],
-    "35": [
-      "task_plan_fix_digest_quota"
-    ],
-    "36": [
-      "task_plan_phase_3_verification"
-    ],
-    "37": [
-      "task_plan_phase_4_handoff"
+    "28": [
+      "readme_daily_ai_digest"
     ]
   },
   "cohesion": {
-    "0": 0.058823529411764705,
-    "1": 0.16091954022988506,
-    "2": 0.12561576354679804,
+    "0": 0.1036036036036036,
+    "1": 0.13725490196078433,
+    "2": 0.06896551724137931,
     "3": 0.24603174603174602,
-    "4": 0.16842105263157894,
+    "4": 0.17894736842105263,
     "5": 0.1871345029239766,
     "6": 0.2426470588235294,
-    "7": 0.22857142857142856,
-    "8": 0.18095238095238095,
-    "9": 0.5,
-    "10": 0.42857142857142855,
+    "7": 0.16176470588235295,
+    "8": 0.4222222222222222,
+    "9": 0.42857142857142855,
+    "10": 1.0,
     "11": 1.0,
     "12": 1.0,
     "13": 1.0,
@@ -370,16 +341,7 @@
     "25": 1.0,
     "26": 1.0,
     "27": 1.0,
-    "28": 1.0,
-    "29": 1.0,
-    "30": 1.0,
-    "31": 1.0,
-    "32": 1.0,
-    "33": 1.0,
-    "34": 1.0,
-    "35": 1.0,
-    "36": 1.0,
-    "37": 1.0
+    "28": 1.0
   },
   "gods": [
     {
@@ -468,22 +430,22 @@
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; peripheral node `test_extract_index_entries_sorts_feed_entries_by_published_date_descending()` unexpectedly reaches hub `extract_index_entries()`"
     },
     {
-      "source": "test_weighted_score_is_reproducible()",
-      "target": "weighted_score()",
+      "source": "test_digest_applies_top_story_quota_without_candidates()",
+      "target": "run_daily()",
       "source_files": [
-        "tests/unit/test_quality.py",
-        "src/digest/filter/quality.py"
+        "tests/integration/test_daily.py",
+        "src/digest/jobs/daily.py"
       ],
       "confidence": "INFERRED",
       "relation": "calls",
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities"
     },
     {
-      "source": "test_hard_filter_rejects_blocked_and_stale_items()",
-      "target": "hard_filter()",
+      "source": "test_digest_reserves_sections_for_github_and_practice_sources()",
+      "target": "run_daily()",
       "source_files": [
-        "tests/unit/test_quality.py",
-        "src/digest/filter/quality.py"
+        "tests/integration/test_daily.py",
+        "src/digest/jobs/daily.py"
       ],
       "confidence": "INFERRED",
       "relation": "calls",
@@ -492,6 +454,6 @@
   ],
   "tokens": {
     "input": 16522,
-    "output": 8013
+    "output": 6130
   }
 }

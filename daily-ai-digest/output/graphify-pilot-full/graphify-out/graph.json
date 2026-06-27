@@ -4,8 +4,8 @@
   "graph": {
     "hyperedges": [
       {
-        "id": "pipeline_stages_sequence",
-        "label": "Pipeline Stages Sequence",
+        "id": "pipeline_stages",
+        "label": "Daily AI Digest Pipeline Stages",
         "nodes": [
           "daily_ai_digest_design_collect_stage",
           "daily_ai_digest_design_extract_stage",
@@ -24,8 +24,8 @@
         "source_file": "2026-06-22-daily-ai-digest-design.md"
       },
       {
-        "id": "data_model_item_types",
-        "label": "Data Model Item Types",
+        "id": "data_models",
+        "label": "Daily AI Digest Data Models",
         "nodes": [
           "daily_ai_digest_design_raw_item",
           "daily_ai_digest_design_news_item",
@@ -37,18 +37,17 @@
         "source_file": "2026-06-22-daily-ai-digest-design.md"
       },
       {
-        "id": "configuration_files",
-        "label": "Configuration Files",
+        "id": "implementation_artifacts",
+        "label": "Implementation Artifacts",
         "nodes": [
-          "daily_ai_digest_design_filters_yml",
-          "daily_ai_digest_design_schedule_yml",
-          "daily_ai_digest_design_sources_yml",
-          "daily_ai_digest_design_topics_yml"
+          "findings_findings",
+          "progress_progress",
+          "task_plan_task_plan"
         ],
-        "relation": "configure",
+        "relation": "form",
         "confidence": "EXTRACTED",
         "confidence_score": 0.75,
-        "source_file": "2026-06-22-daily-ai-digest-design.md"
+        "source_file": "findings.md"
       }
     ]
   },
@@ -62,10 +61,10 @@
       "source_location": "L1",
       "version": "0.1.0",
       "_origin": "ast",
-      "community": 31,
+      "community": 27,
       "norm_label": "daily-ai-digest",
-      "id": "pkg_daily_ai_digest",
-      "community_name": "AI Digest"
+      "community_name": "Rich Text Briefing",
+      "id": "pkg_daily_ai_digest"
     },
     {
       "label": "run_daily.sh",
@@ -79,8 +78,8 @@
       "_origin": "ast",
       "community": 20,
       "norm_label": "run_daily.sh",
-      "id": "tmp_daily_ai_digest_graphify_input_scripts_run_daily_sh",
-      "community_name": "Daily Script Execution"
+      "community_name": "Daily Script Execution",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_run_daily_sh"
     },
     {
       "label": "run_daily.sh script",
@@ -94,8 +93,8 @@
       "_origin": "ast",
       "community": 20,
       "norm_label": "run_daily.sh script",
-      "id": "tmp_daily_ai_digest_graphify_input_scripts_run_daily_sh__entry",
-      "community_name": "Daily Script Execution"
+      "community_name": "Daily Script Execution",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_run_daily_sh__entry"
     },
     {
       "label": "validate_config.sh",
@@ -109,8 +108,8 @@
       "_origin": "ast",
       "community": 21,
       "norm_label": "validate_config.sh",
-      "id": "tmp_daily_ai_digest_graphify_input_scripts_validate_config_sh",
-      "community_name": "Config Validation"
+      "community_name": "Config Validation",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_validate_config_sh"
     },
     {
       "label": "validate_config.sh script",
@@ -124,8 +123,8 @@
       "_origin": "ast",
       "community": 21,
       "norm_label": "validate_config.sh script",
-      "id": "tmp_daily_ai_digest_graphify_input_scripts_validate_config_sh__entry",
-      "community_name": "Config Validation"
+      "community_name": "Config Validation",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_validate_config_sh__entry"
     },
     {
       "label": "__init__.py",
@@ -133,10 +132,10 @@
       "source_file": "src/digest/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 14,
+      "community": 13,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_init_py",
-      "community_name": "Daily AI Digest Pipeline"
+      "community_name": "Outbound Delivery Adapters",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_init_py"
     },
     {
       "label": "Daily AI digest pipeline.",
@@ -144,10 +143,10 @@
       "source_file": "src/digest/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 14,
+      "community": 13,
       "norm_label": "daily ai digest pipeline.",
-      "id": "digest_init_rationale_1",
-      "community_name": "Daily AI Digest Pipeline"
+      "community_name": "Outbound Delivery Adapters",
+      "id": "digest_init_rationale_1"
     },
     {
       "label": "__init__.py",
@@ -155,10 +154,10 @@
       "source_file": "src/digest/cluster/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 10,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_cluster_init_py",
-      "community_name": "Near-duplicate Clustering"
+      "community_name": "Content Normalization",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_cluster_init_py"
     },
     {
       "label": "Near-duplicate clustering.",
@@ -166,10 +165,10 @@
       "source_file": "src/digest/cluster/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 10,
       "norm_label": "near-duplicate clustering.",
-      "id": "cluster_init_rationale_1",
-      "community_name": "Near-duplicate Clustering"
+      "community_name": "Content Normalization",
+      "id": "cluster_init_rationale_1"
     },
     {
       "label": "group.py",
@@ -177,10 +176,10 @@
       "source_file": "src/digest/cluster/group.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "group.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_cluster_group_py",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_cluster_group_py"
     },
     {
       "label": "_title_key()",
@@ -188,10 +187,10 @@
       "source_file": "src/digest/cluster/group.py",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "_title_key()",
-      "id": "cluster_group_title_key",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "cluster_group_title_key"
     },
     {
       "label": "_release_family_key()",
@@ -199,10 +198,10 @@
       "source_file": "src/digest/cluster/group.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "_release_family_key()",
-      "id": "cluster_group_release_family_key",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "cluster_group_release_family_key"
     },
     {
       "label": "_cluster_key()",
@@ -210,10 +209,10 @@
       "source_file": "src/digest/cluster/group.py",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "_cluster_key()",
-      "id": "cluster_group_cluster_key",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "cluster_group_cluster_key"
     },
     {
       "label": "cluster_items()",
@@ -221,10 +220,10 @@
       "source_file": "src/digest/cluster/group.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "cluster_items()",
-      "id": "cluster_group_cluster_items",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "cluster_group_cluster_items"
     },
     {
       "label": "__init__.py",
@@ -232,10 +231,10 @@
       "source_file": "src/digest/collect/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 11,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_init_py",
-      "community_name": "Curated Source Collectors"
+      "community_name": "Near-duplicate Clustering",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_init_py"
     },
     {
       "label": "Curated-source collectors.",
@@ -243,10 +242,10 @@
       "source_file": "src/digest/collect/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 11,
       "norm_label": "curated-source collectors.",
-      "id": "collect_init_rationale_1",
-      "community_name": "Curated Source Collectors"
+      "community_name": "Near-duplicate Clustering",
+      "id": "collect_init_rationale_1"
     },
     {
       "label": "github.py",
@@ -254,10 +253,10 @@
       "source_file": "src/digest/collect/github.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "github.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_github_py",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_github_py"
     },
     {
       "label": "_collect_atom_releases()",
@@ -265,10 +264,10 @@
       "source_file": "src/digest/collect/github.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "_collect_atom_releases()",
-      "id": "collect_github_collect_atom_releases",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_github_collect_atom_releases"
     },
     {
       "label": "collect_github_releases()",
@@ -276,10 +275,10 @@
       "source_file": "src/digest/collect/github.py",
       "source_location": "L66",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "collect_github_releases()",
-      "id": "collect_github_collect_github_releases",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_github_collect_github_releases"
     },
     {
       "label": "datetime",
@@ -287,10 +286,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "datetime",
-      "id": "datetime",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "datetime"
     },
     {
       "label": "collect_github_repository_search()",
@@ -298,10 +297,10 @@
       "source_file": "src/digest/collect/github.py",
       "source_location": "L117",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "collect_github_repository_search()",
-      "id": "collect_github_collect_github_repository_search",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_github_collect_github_repository_search"
     },
     {
       "label": "html_index.py",
@@ -309,10 +308,10 @@
       "source_file": "src/digest/collect/html_index.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "html_index.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_html_index_py",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_collect_html_index_py"
     },
     {
       "label": "_published_at()",
@@ -320,10 +319,10 @@
       "source_file": "src/digest/collect/html_index.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "_published_at()",
-      "id": "collect_html_index_published_at",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_html_index_published_at"
     },
     {
       "label": "extract_index_entries()",
@@ -331,10 +330,10 @@
       "source_file": "src/digest/collect/html_index.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "extract_index_entries()",
-      "id": "collect_html_index_extract_index_entries",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_html_index_extract_index_entries"
     },
     {
       "label": "collect_html_index()",
@@ -342,10 +341,10 @@
       "source_file": "src/digest/collect/html_index.py",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "collect_html_index()",
-      "id": "collect_html_index_collect_html_index",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "collect_html_index_collect_html_index"
     },
     {
       "label": "config.py",
@@ -353,10 +352,10 @@
       "source_file": "src/digest/config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "config.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_config_py",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_config_py"
     },
     {
       "label": "load_config()",
@@ -364,10 +363,10 @@
       "source_file": "src/digest/config.py",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "load_config()",
-      "id": "digest_config_load_config",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "digest_config_load_config"
     },
     {
       "label": "Path",
@@ -375,10 +374,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "path",
-      "id": "path",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "path"
     },
     {
       "label": "__init__.py",
@@ -386,10 +385,10 @@
       "source_file": "src/digest/deliver/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 12,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_deliver_init_py",
-      "community_name": "Outbound Delivery Adapters"
+      "community_name": "Curated Source Collectors",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_deliver_init_py"
     },
     {
       "label": "Outbound delivery adapters.",
@@ -397,10 +396,10 @@
       "source_file": "src/digest/deliver/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 13,
+      "community": 12,
       "norm_label": "outbound delivery adapters.",
-      "id": "deliver_init_rationale_1",
-      "community_name": "Outbound Delivery Adapters"
+      "community_name": "Curated Source Collectors",
+      "id": "deliver_init_rationale_1"
     },
     {
       "label": "feishu.py",
@@ -410,8 +409,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "feishu.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_deliver_feishu_py",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_deliver_feishu_py"
     },
     {
       "label": "DeliveryResult",
@@ -421,8 +420,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "deliveryresult",
-      "id": "deliver_feishu_deliveryresult",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_deliveryresult"
     },
     {
       "label": "FeishuDelivery",
@@ -432,8 +431,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "feishudelivery",
-      "id": "deliver_feishu_feishudelivery",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery"
     },
     {
       "label": ".__init__()",
@@ -443,8 +442,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".__init__()",
-      "id": "deliver_feishu_feishudelivery_init",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery_init"
     },
     {
       "label": ".get_tenant_token()",
@@ -454,8 +453,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".get_tenant_token()",
-      "id": "deliver_feishu_feishudelivery_get_tenant_token",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery_get_tenant_token"
     },
     {
       "label": ".send_text()",
@@ -465,8 +464,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".send_text()",
-      "id": "deliver_feishu_feishudelivery_send_text",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery_send_text"
     },
     {
       "label": ".send_post()",
@@ -476,8 +475,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".send_post()",
-      "id": "deliver_feishu_feishudelivery_send_post",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery_send_post"
     },
     {
       "label": "._send()",
@@ -487,8 +486,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "._send()",
-      "id": "deliver_feishu_feishudelivery_send",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "deliver_feishu_feishudelivery_send"
     },
     {
       "label": "__init__.py",
@@ -496,10 +495,10 @@
       "source_file": "src/digest/filter/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 14,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_filter_init_py",
-      "community_name": "Filtering and Scoring"
+      "community_name": "Daily AI Digest Pipeline",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_filter_init_py"
     },
     {
       "label": "Deterministic filtering and scoring.",
@@ -507,10 +506,10 @@
       "source_file": "src/digest/filter/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 14,
       "norm_label": "deterministic filtering and scoring.",
-      "id": "filter_init_rationale_1",
-      "community_name": "Filtering and Scoring"
+      "community_name": "Daily AI Digest Pipeline",
+      "id": "filter_init_rationale_1"
     },
     {
       "label": "quality.py",
@@ -520,8 +519,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "quality.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_filter_quality_py",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_filter_quality_py"
     },
     {
       "label": "weighted_score()",
@@ -531,8 +530,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "weighted_score()",
-      "id": "filter_quality_weighted_score",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "filter_quality_weighted_score"
     },
     {
       "label": "hard_filter()",
@@ -542,8 +541,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "hard_filter()",
-      "id": "filter_quality_hard_filter",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "filter_quality_hard_filter"
     },
     {
       "label": "dedupe_exact()",
@@ -553,8 +552,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "dedupe_exact()",
-      "id": "filter_quality_dedupe_exact",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "filter_quality_dedupe_exact"
     },
     {
       "label": "tag_topics()",
@@ -564,8 +563,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "tag_topics()",
-      "id": "filter_quality_tag_topics",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "filter_quality_tag_topics"
     },
     {
       "label": "__init__.py",
@@ -573,10 +572,10 @@
       "source_file": "src/digest/generate/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 15,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_init_py",
-      "community_name": "Translation and Summarization"
+      "community_name": "Filtering and Scoring",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_init_py"
     },
     {
       "label": "Translation, summarization, and rendering.",
@@ -584,10 +583,10 @@
       "source_file": "src/digest/generate/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 15,
       "norm_label": "translation, summarization, and rendering.",
-      "id": "generate_init_rationale_1",
-      "community_name": "Translation and Summarization"
+      "community_name": "Filtering and Scoring",
+      "id": "generate_init_rationale_1"
     },
     {
       "label": "common.py",
@@ -595,10 +594,10 @@
       "source_file": "src/digest/generate/common.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "common.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_common_py",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_common_py"
     },
     {
       "label": "parse_generation()",
@@ -606,10 +605,10 @@
       "source_file": "src/digest/generate/common.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "parse_generation()",
-      "id": "generate_common_parse_generation",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "generate_common_parse_generation"
     },
     {
       "label": "fallback_generation()",
@@ -617,10 +616,10 @@
       "source_file": "src/digest/generate/common.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "fallback_generation()",
-      "id": "generate_common_fallback_generation",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "generate_common_fallback_generation"
     },
     {
       "label": "minimax.py",
@@ -628,10 +627,10 @@
       "source_file": "src/digest/generate/minimax.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "minimax.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_minimax_py",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_minimax_py"
     },
     {
       "label": "MiniMaxGenerator",
@@ -639,10 +638,10 @@
       "source_file": "src/digest/generate/minimax.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "minimaxgenerator",
-      "id": "generate_minimax_minimaxgenerator",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "generate_minimax_minimaxgenerator"
     },
     {
       "label": ".__init__()",
@@ -650,10 +649,10 @@
       "source_file": "src/digest/generate/minimax.py",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": ".__init__()",
-      "id": "generate_minimax_minimaxgenerator_init",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "generate_minimax_minimaxgenerator_init"
     },
     {
       "label": ".generate_text()",
@@ -661,10 +660,10 @@
       "source_file": "src/digest/generate/minimax.py",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": ".generate_text()",
-      "id": "generate_minimax_minimaxgenerator_generate_text",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "generate_minimax_minimaxgenerator_generate_text"
     },
     {
       "label": "render.py",
@@ -674,8 +673,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "render.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_render_py",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_generate_render_py"
     },
     {
       "label": "compact_text()",
@@ -685,8 +684,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "compact_text()",
-      "id": "generate_render_compact_text",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_compact_text"
     },
     {
       "label": "_link_line()",
@@ -696,8 +695,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "_link_line()",
-      "id": "generate_render_link_line",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_link_line"
     },
     {
       "label": "_section_block()",
@@ -707,8 +706,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "_section_block()",
-      "id": "generate_render_section_block",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_section_block"
     },
     {
       "label": "render_feishu_post()",
@@ -718,8 +717,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "render_feishu_post()",
-      "id": "generate_render_render_feishu_post",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_render_feishu_post"
     },
     {
       "label": "render_feishu_section_posts()",
@@ -729,8 +728,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "render_feishu_section_posts()",
-      "id": "generate_render_render_feishu_section_posts",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_render_feishu_section_posts"
     },
     {
       "label": "render_fault_digest()",
@@ -740,8 +739,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "render_fault_digest()",
-      "id": "generate_render_render_fault_digest",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_render_fault_digest"
     },
     {
       "label": "render_digest()",
@@ -751,8 +750,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "render_digest()",
-      "id": "generate_render_render_digest",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "generate_render_render_digest"
     },
     {
       "label": "__init__.py",
@@ -760,10 +759,10 @@
       "source_file": "src/digest/jobs/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 16,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_jobs_init_py",
-      "community_name": "Runnable Digest Jobs"
+      "community_name": "Translation and Summarization",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_jobs_init_py"
     },
     {
       "label": "Runnable digest jobs.",
@@ -771,10 +770,10 @@
       "source_file": "src/digest/jobs/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 16,
       "norm_label": "runnable digest jobs.",
-      "id": "jobs_init_rationale_1",
-      "community_name": "Runnable Digest Jobs"
+      "community_name": "Translation and Summarization",
+      "id": "jobs_init_rationale_1"
     },
     {
       "label": "daily.py",
@@ -784,8 +783,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "daily.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_jobs_daily_py",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_jobs_daily_py"
     },
     {
       "label": "PipelineDependencies",
@@ -795,8 +794,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "pipelinedependencies",
-      "id": "jobs_daily_pipelinedependencies",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "jobs_daily_pipelinedependencies"
     },
     {
       "label": "RunReport",
@@ -804,10 +803,10 @@
       "source_file": "src/digest/jobs/daily.py",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 1,
+      "community": 4,
       "norm_label": "runreport",
-      "id": "jobs_daily_runreport",
-      "community_name": "Application Configuration"
+      "community_name": "Pipeline State Management",
+      "id": "jobs_daily_runreport"
     },
     {
       "label": "_checkpoint()",
@@ -817,8 +816,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "_checkpoint()",
-      "id": "jobs_daily_checkpoint",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "jobs_daily_checkpoint"
     },
     {
       "label": "_read_items()",
@@ -828,8 +827,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_read_items()",
-      "id": "jobs_daily_read_items",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_read_items"
     },
     {
       "label": "_score()",
@@ -839,8 +838,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_score()",
-      "id": "jobs_daily_score",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_score"
     },
     {
       "label": "_source_groups()",
@@ -850,8 +849,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_source_groups()",
-      "id": "jobs_daily_source_groups",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_source_groups"
     },
     {
       "label": "_candidate_flags()",
@@ -861,8 +860,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_candidate_flags()",
-      "id": "jobs_daily_candidate_flags",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_candidate_flags"
     },
     {
       "label": "_published_at_requirements()",
@@ -872,8 +871,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_published_at_requirements()",
-      "id": "jobs_daily_published_at_requirements",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_published_at_requirements"
     },
     {
       "label": "_requires_published_at()",
@@ -883,8 +882,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_requires_published_at()",
-      "id": "jobs_daily_requires_published_at",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_requires_published_at"
     },
     {
       "label": "_cluster_group()",
@@ -894,8 +893,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_cluster_group()",
-      "id": "jobs_daily_cluster_group",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_cluster_group"
     },
     {
       "label": "_cluster_candidate_allowed()",
@@ -905,8 +904,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_cluster_candidate_allowed()",
-      "id": "jobs_daily_cluster_candidate_allowed",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_cluster_candidate_allowed"
     },
     {
       "label": "_cluster_text()",
@@ -916,8 +915,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_cluster_text()",
-      "id": "jobs_daily_cluster_text",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_cluster_text"
     },
     {
       "label": "_practice_allowed()",
@@ -927,8 +926,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "_practice_allowed()",
-      "id": "jobs_daily_practice_allowed",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_practice_allowed"
     },
     {
       "label": "run_daily()",
@@ -938,8 +937,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "run_daily()",
-      "id": "jobs_daily_run_daily",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "jobs_daily_run_daily"
     },
     {
       "label": "within_catch_up_window()",
@@ -947,10 +946,10 @@
       "source_file": "src/digest/jobs/daily.py",
       "source_location": "L343",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "within_catch_up_window()",
-      "id": "jobs_daily_within_catch_up_window",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "jobs_daily_within_catch_up_window"
     },
     {
       "label": "_default_collector()",
@@ -958,10 +957,10 @@
       "source_file": "src/digest/jobs/daily.py",
       "source_location": "L350",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "_default_collector()",
-      "id": "jobs_daily_default_collector",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "jobs_daily_default_collector"
     },
     {
       "label": "_dependencies()",
@@ -969,10 +968,10 @@
       "source_file": "src/digest/jobs/daily.py",
       "source_location": "L374",
       "_origin": "ast",
-      "community": 1,
+      "community": 7,
       "norm_label": "_dependencies()",
-      "id": "jobs_daily_dependencies",
-      "community_name": "Application Configuration"
+      "community_name": "Content Clustering",
+      "id": "jobs_daily_dependencies"
     },
     {
       "label": "main()",
@@ -980,10 +979,10 @@
       "source_file": "src/digest/jobs/daily.py",
       "source_location": "L392",
       "_origin": "ast",
-      "community": 1,
+      "community": 7,
       "norm_label": "main()",
-      "id": "jobs_daily_main",
-      "community_name": "Application Configuration"
+      "community_name": "Content Clustering",
+      "id": "jobs_daily_main"
     },
     {
       "label": "models.py",
@@ -993,8 +992,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "models.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_models_py",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_models_py"
     },
     {
       "label": "StageStatus",
@@ -1004,8 +1003,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "stagestatus",
-      "id": "digest_models_stagestatus",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "digest_models_stagestatus"
     },
     {
       "label": "StrEnum",
@@ -1015,8 +1014,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "strenum",
-      "id": "strenum",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "strenum"
     },
     {
       "label": "RawItem",
@@ -1026,8 +1025,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "rawitem",
-      "id": "digest_models_rawitem",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "digest_models_rawitem"
     },
     {
       "label": "NewsItem",
@@ -1037,8 +1036,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "newsitem",
-      "id": "digest_models_newsitem",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "digest_models_newsitem"
     },
     {
       "label": "DigestItem",
@@ -1048,8 +1047,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "digestitem",
-      "id": "digest_models_digestitem",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "digest_models_digestitem"
     },
     {
       "label": "StageCheckpoint",
@@ -1059,8 +1058,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "stagecheckpoint",
-      "id": "digest_models_stagecheckpoint",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "digest_models_stagecheckpoint"
     },
     {
       "label": "AppConfig",
@@ -1070,8 +1069,8 @@
       "_origin": "ast",
       "community": 1,
       "norm_label": "appconfig",
-      "id": "digest_models_appconfig",
-      "community_name": "Application Configuration"
+      "community_name": "Application Configuration",
+      "id": "digest_models_appconfig"
     },
     {
       "label": "__init__.py",
@@ -1079,10 +1078,10 @@
       "source_file": "src/digest/parse/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 17,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_parse_init_py",
-      "community_name": "Content Parsing Normalization"
+      "community_name": "Runnable Digest Jobs",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_parse_init_py"
     },
     {
       "label": "Content parsing and normalization.",
@@ -1090,10 +1089,10 @@
       "source_file": "src/digest/parse/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 17,
       "norm_label": "content parsing and normalization.",
-      "id": "parse_init_rationale_1",
-      "community_name": "Content Parsing Normalization"
+      "community_name": "Runnable Digest Jobs",
+      "id": "parse_init_rationale_1"
     },
     {
       "label": "normalize.py",
@@ -1101,10 +1100,10 @@
       "source_file": "src/digest/parse/normalize.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "normalize.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_parse_normalize_py",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_parse_normalize_py"
     },
     {
       "label": "canonicalize_url()",
@@ -1112,10 +1111,10 @@
       "source_file": "src/digest/parse/normalize.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "canonicalize_url()",
-      "id": "parse_normalize_canonicalize_url",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "parse_normalize_canonicalize_url"
     },
     {
       "label": "normalize_text()",
@@ -1123,10 +1122,10 @@
       "source_file": "src/digest/parse/normalize.py",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "normalize_text()",
-      "id": "parse_normalize_normalize_text",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "parse_normalize_normalize_text"
     },
     {
       "label": "normalize_raw_item()",
@@ -1134,10 +1133,10 @@
       "source_file": "src/digest/parse/normalize.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "normalize_raw_item()",
-      "id": "parse_normalize_normalize_raw_item",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "parse_normalize_normalize_raw_item"
     },
     {
       "label": "__init__.py",
@@ -1145,10 +1144,10 @@
       "source_file": "src/digest/storage/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 18,
       "norm_label": "__init__.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_storage_init_py",
-      "community_name": "Persistent Storage Helpers"
+      "community_name": "Content Parsing Normalization",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_storage_init_py"
     },
     {
       "label": "Persistent storage helpers.",
@@ -1156,10 +1155,10 @@
       "source_file": "src/digest/storage/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 18,
       "norm_label": "persistent storage helpers.",
-      "id": "storage_init_rationale_1",
-      "community_name": "Persistent Storage Helpers"
+      "community_name": "Content Parsing Normalization",
+      "id": "storage_init_rationale_1"
     },
     {
       "label": "state.py",
@@ -1169,8 +1168,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "state.py",
-      "id": "tmp_daily_ai_digest_graphify_input_src_digest_storage_state_py",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "tmp_daily_ai_digest_graphify_input_src_digest_storage_state_py"
     },
     {
       "label": "_json_default()",
@@ -1180,8 +1179,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "_json_default()",
-      "id": "storage_state_json_default",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_json_default"
     },
     {
       "label": "atomic_write_json()",
@@ -1191,8 +1190,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "atomic_write_json()",
-      "id": "storage_state_atomic_write_json",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_atomic_write_json"
     },
     {
       "label": "StateStore",
@@ -1202,8 +1201,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "statestore",
-      "id": "storage_state_statestore",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_statestore"
     },
     {
       "label": ".__init__()",
@@ -1211,10 +1210,10 @@
       "source_file": "src/digest/storage/state.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 4,
+      "community": 8,
       "norm_label": ".__init__()",
-      "id": "storage_state_statestore_init",
-      "community_name": "Pipeline State Management"
+      "community_name": "Text Generation",
+      "id": "storage_state_statestore_init"
     },
     {
       "label": ".create_run()",
@@ -1224,8 +1223,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": ".create_run()",
-      "id": "storage_state_statestore_create_run",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_statestore_create_run"
     },
     {
       "label": ".save_checkpoint()",
@@ -1235,8 +1234,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": ".save_checkpoint()",
-      "id": "storage_state_statestore_save_checkpoint",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_statestore_save_checkpoint"
     },
     {
       "label": ".resume_stage()",
@@ -1246,8 +1245,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": ".resume_stage()",
-      "id": "storage_state_statestore_resume_stage",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_statestore_resume_stage"
     },
     {
       "label": "run_lock()",
@@ -1257,8 +1256,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "run_lock()",
-      "id": "storage_state_run_lock",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "storage_state_run_lock"
     },
     {
       "label": "test_daily.py",
@@ -1268,8 +1267,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_daily.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_integration_test_daily_py",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_integration_test_daily_py"
     },
     {
       "label": "FakeCollector",
@@ -1279,8 +1278,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "fakecollector",
-      "id": "integration_test_daily_fakecollector",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakecollector"
     },
     {
       "label": ".__init__()",
@@ -1290,8 +1289,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "integration_test_daily_fakecollector_init",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakecollector_init"
     },
     {
       "label": ".__call__()",
@@ -1301,8 +1300,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__call__()",
-      "id": "integration_test_daily_fakecollector_call",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakecollector_call"
     },
     {
       "label": "FakeGenerator",
@@ -1312,8 +1311,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "fakegenerator",
-      "id": "integration_test_daily_fakegenerator",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakegenerator"
     },
     {
       "label": ".__init__()",
@@ -1323,8 +1322,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "integration_test_daily_fakegenerator_init",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakegenerator_init"
     },
     {
       "label": ".__call__()",
@@ -1334,8 +1333,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__call__()",
-      "id": "integration_test_daily_fakegenerator_call",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakegenerator_call"
     },
     {
       "label": "Result",
@@ -1345,8 +1344,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "result",
-      "id": "integration_test_daily_result",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_result"
     },
     {
       "label": "FakeDelivery",
@@ -1356,8 +1355,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "fakedelivery",
-      "id": "integration_test_daily_fakedelivery",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakedelivery"
     },
     {
       "label": ".__init__()",
@@ -1367,8 +1366,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".__init__()",
-      "id": "integration_test_daily_fakedelivery_init",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakedelivery_init"
     },
     {
       "label": ".send_text()",
@@ -1378,8 +1377,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".send_text()",
-      "id": "integration_test_daily_fakedelivery_send_text",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakedelivery_send_text"
     },
     {
       "label": ".send_post()",
@@ -1389,8 +1388,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": ".send_post()",
-      "id": "integration_test_daily_fakedelivery_send_post",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_fakedelivery_send_post"
     },
     {
       "label": "config()",
@@ -1400,8 +1399,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "config()",
-      "id": "integration_test_daily_config",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_config"
     },
     {
       "label": "section_config()",
@@ -1411,8 +1410,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "section_config()",
-      "id": "integration_test_daily_section_config",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_section_config"
     },
     {
       "label": "raw()",
@@ -1422,8 +1421,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "raw()",
-      "id": "integration_test_daily_raw",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_raw"
     },
     {
       "label": "raw_ranked()",
@@ -1433,8 +1432,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "raw_ranked()",
-      "id": "integration_test_daily_raw_ranked",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_raw_ranked"
     },
     {
       "label": "raw_section()",
@@ -1444,8 +1443,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "raw_section()",
-      "id": "integration_test_daily_raw_section",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_raw_section"
     },
     {
       "label": "test_total_source_failure_delivers_fault_digest()",
@@ -1455,8 +1454,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_total_source_failure_delivers_fault_digest()",
-      "id": "integration_test_daily_test_total_source_failure_delivers_fault_digest",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_total_source_failure_delivers_fault_digest"
     },
     {
       "label": "test_success_writes_all_stage_checkpoints_and_retry_is_idempotent()",
@@ -1466,8 +1465,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_success_writes_all_stage_checkpoints_and_retry_is_idempotent()",
-      "id": "integration_test_daily_test_success_writes_all_stage_checkpoints_and_retry_is_idempotent",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_success_writes_all_stage_checkpoints_and_retry_is_idempotent"
     },
     {
       "label": "test_fault_run_can_recollect_with_same_run_id()",
@@ -1477,8 +1476,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_fault_run_can_recollect_with_same_run_id()",
-      "id": "integration_test_daily_test_fault_run_can_recollect_with_same_run_id",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_fault_run_can_recollect_with_same_run_id"
     },
     {
       "label": "test_digest_applies_top_story_quota_without_candidates()",
@@ -1488,8 +1487,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_digest_applies_top_story_quota_without_candidates()",
-      "id": "integration_test_daily_test_digest_applies_top_story_quota_without_candidates",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_digest_applies_top_story_quota_without_candidates"
     },
     {
       "label": "test_digest_reserves_sections_for_github_and_practice_sources()",
@@ -1499,8 +1498,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_digest_reserves_sections_for_github_and_practice_sources()",
-      "id": "integration_test_daily_test_digest_reserves_sections_for_github_and_practice_sources",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_digest_reserves_sections_for_github_and_practice_sources"
     },
     {
       "label": "test_productivity_sources_do_not_enter_top_stories()",
@@ -1510,8 +1509,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_productivity_sources_do_not_enter_top_stories()",
-      "id": "integration_test_daily_test_productivity_sources_do_not_enter_top_stories",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_productivity_sources_do_not_enter_top_stories"
     },
     {
       "label": "test_practice_section_excludes_legal_safety_and_keeps_productivity_items()",
@@ -1521,8 +1520,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_practice_section_excludes_legal_safety_and_keeps_productivity_items()",
-      "id": "integration_test_daily_test_practice_section_excludes_legal_safety_and_keeps_productivity_items",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_practice_section_excludes_legal_safety_and_keeps_productivity_items"
     },
     {
       "label": "test_partial_source_failure_persists_source_health()",
@@ -1532,8 +1531,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_partial_source_failure_persists_source_health()",
-      "id": "integration_test_daily_test_partial_source_failure_persists_source_health",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_partial_source_failure_persists_source_health"
     },
     {
       "label": "test_normal_digest_uses_compact_post_and_one_primary_link()",
@@ -1543,8 +1542,8 @@
       "_origin": "ast",
       "community": 3,
       "norm_label": "test_normal_digest_uses_compact_post_and_one_primary_link()",
-      "id": "integration_test_daily_test_normal_digest_uses_compact_post_and_one_primary_link",
-      "community_name": "Pipeline Components"
+      "community_name": "Pipeline Components",
+      "id": "integration_test_daily_test_normal_digest_uses_compact_post_and_one_primary_link"
     },
     {
       "label": "test_cluster.py",
@@ -1552,10 +1551,10 @@
       "source_file": "tests/unit/test_cluster.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_cluster.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_cluster_py",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_cluster_py"
     },
     {
       "label": "test_shared_topic_does_not_merge_unrelated_titles()",
@@ -1563,10 +1562,10 @@
       "source_file": "tests/unit/test_cluster.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_shared_topic_does_not_merge_unrelated_titles()",
-      "id": "unit_test_cluster_test_shared_topic_does_not_merge_unrelated_titles",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_cluster_test_shared_topic_does_not_merge_unrelated_titles"
     },
     {
       "label": "test_equal_normalized_titles_cluster()",
@@ -1574,10 +1573,10 @@
       "source_file": "tests/unit/test_cluster.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_equal_normalized_titles_cluster()",
-      "id": "unit_test_cluster_test_equal_normalized_titles_cluster",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_cluster_test_equal_normalized_titles_cluster"
     },
     {
       "label": "test_same_github_release_repository_versions_cluster()",
@@ -1585,10 +1584,10 @@
       "source_file": "tests/unit/test_cluster.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_same_github_release_repository_versions_cluster()",
-      "id": "unit_test_cluster_test_same_github_release_repository_versions_cluster",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_cluster_test_same_github_release_repository_versions_cluster"
     },
     {
       "label": "test_collect.py",
@@ -1596,10 +1595,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_collect_py",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_collect_py"
     },
     {
       "label": "FakeResponse",
@@ -1607,10 +1606,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "fakeresponse",
-      "id": "unit_test_collect_fakeresponse",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakeresponse"
     },
     {
       "label": ".__init__()",
@@ -1618,10 +1617,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".__init__()",
-      "id": "unit_test_collect_fakeresponse_init",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakeresponse_init"
     },
     {
       "label": ".raise_for_status()",
@@ -1629,10 +1628,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".raise_for_status()",
-      "id": "unit_test_collect_fakeresponse_raise_for_status",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakeresponse_raise_for_status"
     },
     {
       "label": ".json()",
@@ -1640,10 +1639,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".json()",
-      "id": "unit_test_collect_fakeresponse_json",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakeresponse_json"
     },
     {
       "label": "FakeSession",
@@ -1651,10 +1650,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "fakesession",
-      "id": "unit_test_collect_fakesession",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakesession"
     },
     {
       "label": ".__init__()",
@@ -1662,10 +1661,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".__init__()",
-      "id": "unit_test_collect_fakesession_init",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakesession_init"
     },
     {
       "label": ".get()",
@@ -1673,10 +1672,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".get()",
-      "id": "unit_test_collect_fakesession_get",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_fakesession_get"
     },
     {
       "label": "SequencedSession",
@@ -1684,10 +1683,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "sequencedsession",
-      "id": "unit_test_collect_sequencedsession",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_sequencedsession"
     },
     {
       "label": ".__init__()",
@@ -1695,10 +1694,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".__init__()",
-      "id": "unit_test_collect_sequencedsession_init",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_sequencedsession_init"
     },
     {
       "label": ".get()",
@@ -1706,10 +1705,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": ".get()",
-      "id": "unit_test_collect_sequencedsession_get",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_sequencedsession_get"
     },
     {
       "label": "test_extract_index_entries_keeps_article_links()",
@@ -1717,10 +1716,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L48",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_extract_index_entries_keeps_article_links()",
-      "id": "unit_test_collect_test_extract_index_entries_keeps_article_links",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_extract_index_entries_keeps_article_links"
     },
     {
       "label": "test_extract_index_entries_accepts_openai_rss()",
@@ -1728,10 +1727,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_extract_index_entries_accepts_openai_rss()",
-      "id": "unit_test_collect_test_extract_index_entries_accepts_openai_rss",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_extract_index_entries_accepts_openai_rss"
     },
     {
       "label": "test_collect_html_index_accepts_configured_allowed_hosts_for_practice_sources()",
@@ -1739,10 +1738,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_html_index_accepts_configured_allowed_hosts_for_practice_sources()",
-      "id": "unit_test_collect_test_collect_html_index_accepts_configured_allowed_hosts_for_practice_sources",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_html_index_accepts_configured_allowed_hosts_for_practice_sources"
     },
     {
       "label": "test_collect_html_index_uses_rss_description_as_raw_body()",
@@ -1750,10 +1749,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_html_index_uses_rss_description_as_raw_body()",
-      "id": "unit_test_collect_test_collect_html_index_uses_rss_description_as_raw_body",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_html_index_uses_rss_description_as_raw_body"
     },
     {
       "label": "test_collect_html_index_extracts_rss_pubdate()",
@@ -1761,10 +1760,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L113",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_html_index_extracts_rss_pubdate()",
-      "id": "unit_test_collect_test_collect_html_index_extracts_rss_pubdate",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_html_index_extracts_rss_pubdate"
     },
     {
       "label": "test_collect_html_index_extracts_atom_published_date()",
@@ -1772,10 +1771,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L133",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_html_index_extracts_atom_published_date()",
-      "id": "unit_test_collect_test_collect_html_index_extracts_atom_published_date",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_html_index_extracts_atom_published_date"
     },
     {
       "label": "test_extract_index_entries_sorts_feed_entries_by_published_date_descending()",
@@ -1783,10 +1782,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L153",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_extract_index_entries_sorts_feed_entries_by_published_date_descending()",
-      "id": "unit_test_collect_test_extract_index_entries_sorts_feed_entries_by_published_date_descending",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_extract_index_entries_sorts_feed_entries_by_published_date_descending"
     },
     {
       "label": "test_collect_github_releases_maps_api_payload()",
@@ -1794,10 +1793,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L164",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_github_releases_maps_api_payload()",
-      "id": "unit_test_collect_test_collect_github_releases_maps_api_payload",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_github_releases_maps_api_payload"
     },
     {
       "label": "test_collect_github_releases_falls_back_to_atom_on_rate_limit()",
@@ -1805,10 +1804,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L184",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_github_releases_falls_back_to_atom_on_rate_limit()",
-      "id": "unit_test_collect_test_collect_github_releases_falls_back_to_atom_on_rate_limit",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_github_releases_falls_back_to_atom_on_rate_limit"
     },
     {
       "label": "test_collect_github_repository_search_maps_hot_ai_projects()",
@@ -1816,10 +1815,10 @@
       "source_file": "tests/unit/test_collect.py",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 2,
+      "community": 0,
       "norm_label": "test_collect_github_repository_search_maps_hot_ai_projects()",
-      "id": "unit_test_collect_test_collect_github_repository_search_maps_hot_ai_projects",
-      "community_name": "Content Collection"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_collect_test_collect_github_repository_search_maps_hot_ai_projects"
     },
     {
       "label": "test_config.py",
@@ -1827,10 +1826,10 @@
       "source_file": "tests/unit/test_config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "test_config.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_config_py",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_config_py"
     },
     {
       "label": "write_configs()",
@@ -1838,10 +1837,10 @@
       "source_file": "tests/unit/test_config.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "write_configs()",
-      "id": "unit_test_config_write_configs",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "unit_test_config_write_configs"
     },
     {
       "label": "set_required_environment()",
@@ -1849,10 +1848,10 @@
       "source_file": "tests/unit/test_config.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "set_required_environment()",
-      "id": "unit_test_config_set_required_environment",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "unit_test_config_set_required_environment"
     },
     {
       "label": "MonkeyPatch",
@@ -1860,10 +1859,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "monkeypatch",
-      "id": "monkeypatch",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "monkeypatch"
     },
     {
       "label": "test_config_loads_shared_environment()",
@@ -1871,10 +1870,10 @@
       "source_file": "tests/unit/test_config.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "test_config_loads_shared_environment()",
-      "id": "unit_test_config_test_config_loads_shared_environment",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "unit_test_config_test_config_loads_shared_environment"
     },
     {
       "label": "test_config_rejects_weights_that_do_not_sum_to_one()",
@@ -1882,10 +1881,10 @@
       "source_file": "tests/unit/test_config.py",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 9,
+      "community": 8,
       "norm_label": "test_config_rejects_weights_that_do_not_sum_to_one()",
-      "id": "unit_test_config_test_config_rejects_weights_that_do_not_sum_to_one",
-      "community_name": "Configuration Management"
+      "community_name": "Text Generation",
+      "id": "unit_test_config_test_config_rejects_weights_that_do_not_sum_to_one"
     },
     {
       "label": "test_default_collector.py",
@@ -1893,10 +1892,10 @@
       "source_file": "tests/unit/test_default_collector.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_default_collector.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_default_collector_py",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_default_collector_py"
     },
     {
       "label": "test_default_collector_includes_github_repository_search()",
@@ -1904,10 +1903,10 @@
       "source_file": "tests/unit/test_default_collector.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_default_collector_includes_github_repository_search()",
-      "id": "unit_test_default_collector_test_default_collector_includes_github_repository_search",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_default_collector_test_default_collector_includes_github_repository_search"
     },
     {
       "label": "test_feishu.py",
@@ -1917,8 +1916,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "test_feishu.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_feishu_py",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_feishu_py"
     },
     {
       "label": "FakeResponse",
@@ -1928,8 +1927,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "fakeresponse",
-      "id": "unit_test_feishu_fakeresponse",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakeresponse"
     },
     {
       "label": ".__init__()",
@@ -1939,8 +1938,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".__init__()",
-      "id": "unit_test_feishu_fakeresponse_init",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakeresponse_init"
     },
     {
       "label": ".raise_for_status()",
@@ -1950,8 +1949,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".raise_for_status()",
-      "id": "unit_test_feishu_fakeresponse_raise_for_status",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakeresponse_raise_for_status"
     },
     {
       "label": ".json()",
@@ -1961,8 +1960,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".json()",
-      "id": "unit_test_feishu_fakeresponse_json",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakeresponse_json"
     },
     {
       "label": "FakeSession",
@@ -1972,8 +1971,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "fakesession",
-      "id": "unit_test_feishu_fakesession",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakesession"
     },
     {
       "label": ".__init__()",
@@ -1983,8 +1982,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".__init__()",
-      "id": "unit_test_feishu_fakesession_init",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakesession_init"
     },
     {
       "label": ".queue()",
@@ -1994,8 +1993,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".queue()",
-      "id": "unit_test_feishu_fakesession_queue",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakesession_queue"
     },
     {
       "label": ".post()",
@@ -2005,8 +2004,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": ".post()",
-      "id": "unit_test_feishu_fakesession_post",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_fakesession_post"
     },
     {
       "label": "test_send_targets_chat_id()",
@@ -2016,8 +2015,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "test_send_targets_chat_id()",
-      "id": "unit_test_feishu_test_send_targets_chat_id",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_test_send_targets_chat_id"
     },
     {
       "label": "test_send_post_targets_chat_with_post_payload()",
@@ -2027,8 +2026,8 @@
       "_origin": "ast",
       "community": 5,
       "norm_label": "test_send_post_targets_chat_with_post_payload()",
-      "id": "unit_test_feishu_test_send_post_targets_chat_with_post_payload",
-      "community_name": "Feishu Delivery System"
+      "community_name": "Feishu Delivery System",
+      "id": "unit_test_feishu_test_send_post_targets_chat_with_post_payload"
     },
     {
       "label": "test_minimax.py",
@@ -2036,10 +2035,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "test_minimax.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_minimax_py",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_minimax_py"
     },
     {
       "label": "FakeCompletions",
@@ -2047,10 +2046,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "fakecompletions",
-      "id": "unit_test_minimax_fakecompletions",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_fakecompletions"
     },
     {
       "label": ".__init__()",
@@ -2058,10 +2057,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": ".__init__()",
-      "id": "unit_test_minimax_fakecompletions_init",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_fakecompletions_init"
     },
     {
       "label": ".create()",
@@ -2069,10 +2068,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": ".create()",
-      "id": "unit_test_minimax_fakecompletions_create",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_fakecompletions_create"
     },
     {
       "label": "test_minimax_generator_uses_configured_model()",
@@ -2080,10 +2079,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "test_minimax_generator_uses_configured_model()",
-      "id": "unit_test_minimax_test_minimax_generator_uses_configured_model",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_test_minimax_generator_uses_configured_model"
     },
     {
       "label": "test_parse_generation_rejects_non_json()",
@@ -2091,10 +2090,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "test_parse_generation_rejects_non_json()",
-      "id": "unit_test_minimax_test_parse_generation_rejects_non_json",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_test_parse_generation_rejects_non_json"
     },
     {
       "label": "test_parse_generation_accepts_minimax_think_prefix()",
@@ -2102,10 +2101,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "test_parse_generation_accepts_minimax_think_prefix()",
-      "id": "unit_test_minimax_test_parse_generation_accepts_minimax_think_prefix",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_test_parse_generation_accepts_minimax_think_prefix"
     },
     {
       "label": "test_fallback_marks_english_translation_pending()",
@@ -2113,10 +2112,10 @@
       "source_file": "tests/unit/test_minimax.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "norm_label": "test_fallback_marks_english_translation_pending()",
-      "id": "unit_test_minimax_test_fallback_marks_english_translation_pending",
-      "community_name": "Text Generation"
+      "community_name": "Content Clustering",
+      "id": "unit_test_minimax_test_fallback_marks_english_translation_pending"
     },
     {
       "label": "test_models.py",
@@ -2124,10 +2123,10 @@
       "source_file": "tests/unit/test_models.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 22,
+      "community": 23,
       "norm_label": "test_models.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_models_py",
-      "community_name": "Model Testing"
+      "community_name": "Feishu Rich Text",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_models_py"
     },
     {
       "label": "test_stage_status_contract()",
@@ -2135,10 +2134,10 @@
       "source_file": "tests/unit/test_models.py",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 22,
+      "community": 23,
       "norm_label": "test_stage_status_contract()",
-      "id": "unit_test_models_test_stage_status_contract",
-      "community_name": "Model Testing"
+      "community_name": "Feishu Rich Text",
+      "id": "unit_test_models_test_stage_status_contract"
     },
     {
       "label": "test_normalize.py",
@@ -2146,10 +2145,10 @@
       "source_file": "tests/unit/test_normalize.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "test_normalize.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_normalize_py",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_normalize_py"
     },
     {
       "label": "raw_item()",
@@ -2157,10 +2156,10 @@
       "source_file": "tests/unit/test_normalize.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "raw_item()",
-      "id": "unit_test_normalize_raw_item",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "unit_test_normalize_raw_item"
     },
     {
       "label": "test_canonicalize_url_removes_tracking_parameters()",
@@ -2168,10 +2167,10 @@
       "source_file": "tests/unit/test_normalize.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "test_canonicalize_url_removes_tracking_parameters()",
-      "id": "unit_test_normalize_test_canonicalize_url_removes_tracking_parameters",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "unit_test_normalize_test_canonicalize_url_removes_tracking_parameters"
     },
     {
       "label": "test_normalize_raw_item_is_stable()",
@@ -2179,10 +2178,10 @@
       "source_file": "tests/unit/test_normalize.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 10,
+      "community": 9,
       "norm_label": "test_normalize_raw_item_is_stable()",
-      "id": "unit_test_normalize_test_normalize_raw_item_is_stable",
-      "community_name": "Content Normalization"
+      "community_name": "Configuration Management",
+      "id": "unit_test_normalize_test_normalize_raw_item_is_stable"
     },
     {
       "label": "test_quality.py",
@@ -2190,10 +2189,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_quality.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_quality_py",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_quality_py"
     },
     {
       "label": "item()",
@@ -2201,10 +2200,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "item()",
-      "id": "unit_test_quality_item",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_quality_item"
     },
     {
       "label": "test_weighted_score_is_reproducible()",
@@ -2212,10 +2211,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_weighted_score_is_reproducible()",
-      "id": "unit_test_quality_test_weighted_score_is_reproducible",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_quality_test_weighted_score_is_reproducible"
     },
     {
       "label": "test_hard_filter_rejects_blocked_and_stale_items()",
@@ -2223,10 +2222,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_hard_filter_rejects_blocked_and_stale_items()",
-      "id": "unit_test_quality_test_hard_filter_rejects_blocked_and_stale_items",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_quality_test_hard_filter_rejects_blocked_and_stale_items"
     },
     {
       "label": "test_hard_filter_rejects_missing_published_at_when_required()",
@@ -2234,10 +2233,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_hard_filter_rejects_missing_published_at_when_required()",
-      "id": "unit_test_quality_test_hard_filter_rejects_missing_published_at_when_required",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_quality_test_hard_filter_rejects_missing_published_at_when_required"
     },
     {
       "label": "test_dedupe_exact_keeps_first_stable_item()",
@@ -2245,10 +2244,10 @@
       "source_file": "tests/unit/test_quality.py",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 7,
+      "community": 1,
       "norm_label": "test_dedupe_exact_keeps_first_stable_item()",
-      "id": "unit_test_quality_test_dedupe_exact_keeps_first_stable_item",
-      "community_name": "Content Clustering"
+      "community_name": "Application Configuration",
+      "id": "unit_test_quality_test_dedupe_exact_keeps_first_stable_item"
     },
     {
       "label": "test_render.py",
@@ -2258,8 +2257,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_render.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_render_py",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_render_py"
     },
     {
       "label": "test_fault_digest_is_non_empty_and_actionable()",
@@ -2269,8 +2268,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_fault_digest_is_non_empty_and_actionable()",
-      "id": "unit_test_render_test_fault_digest_is_non_empty_and_actionable",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_fault_digest_is_non_empty_and_actionable"
     },
     {
       "label": "test_normal_digest_keeps_source_link()",
@@ -2280,8 +2279,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_normal_digest_keeps_source_link()",
-      "id": "unit_test_render_test_normal_digest_keeps_source_link",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_normal_digest_keeps_source_link"
     },
     {
       "label": "test_compact_text_caps_output_at_100_characters()",
@@ -2291,8 +2290,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_compact_text_caps_output_at_100_characters()",
-      "id": "unit_test_render_test_compact_text_caps_output_at_100_characters",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_compact_text_caps_output_at_100_characters"
     },
     {
       "label": "test_feishu_post_is_compact_and_uses_one_link()",
@@ -2302,8 +2301,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_feishu_post_is_compact_and_uses_one_link()",
-      "id": "unit_test_render_test_feishu_post_is_compact_and_uses_one_link",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_feishu_post_is_compact_and_uses_one_link"
     },
     {
       "label": "test_feishu_post_renders_productivity_section()",
@@ -2313,8 +2312,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_feishu_post_renders_productivity_section()",
-      "id": "unit_test_render_test_feishu_post_renders_productivity_section",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_feishu_post_renders_productivity_section"
     },
     {
       "label": "test_feishu_post_keeps_fifteen_items_visible_in_compact_rows()",
@@ -2324,8 +2323,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_feishu_post_keeps_fifteen_items_visible_in_compact_rows()",
-      "id": "unit_test_render_test_feishu_post_keeps_fifteen_items_visible_in_compact_rows",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_feishu_post_keeps_fifteen_items_visible_in_compact_rows"
     },
     {
       "label": "test_feishu_section_posts_split_sections_into_separate_messages()",
@@ -2335,8 +2334,8 @@
       "_origin": "ast",
       "community": 6,
       "norm_label": "test_feishu_section_posts_split_sections_into_separate_messages()",
-      "id": "unit_test_render_test_feishu_section_posts_split_sections_into_separate_messages",
-      "community_name": "Digest Rendering"
+      "community_name": "Digest Rendering",
+      "id": "unit_test_render_test_feishu_section_posts_split_sections_into_separate_messages"
     },
     {
       "label": "test_schedule.py",
@@ -2344,10 +2343,10 @@
       "source_file": "tests/unit/test_schedule.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_schedule.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_schedule_py",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_schedule_py"
     },
     {
       "label": "test_timer_starts_at_0845_project_timezone()",
@@ -2355,10 +2354,10 @@
       "source_file": "tests/unit/test_schedule.py",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_timer_starts_at_0845_project_timezone()",
-      "id": "unit_test_schedule_test_timer_starts_at_0845_project_timezone",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_schedule_test_timer_starts_at_0845_project_timezone"
     },
     {
       "label": "test_catch_up_window_rejects_late_start()",
@@ -2366,10 +2365,10 @@
       "source_file": "tests/unit/test_schedule.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_catch_up_window_rejects_late_start()",
-      "id": "unit_test_schedule_test_catch_up_window_rejects_late_start",
-      "community_name": "Application Configuration"
+      "community_name": "Digest Pipeline Stages",
+      "id": "unit_test_schedule_test_catch_up_window_rejects_late_start"
     },
     {
       "label": "test_state.py",
@@ -2379,8 +2378,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "test_state.py",
-      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_state_py",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_state_py"
     },
     {
       "label": "checkpoint()",
@@ -2390,8 +2389,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "checkpoint()",
-      "id": "unit_test_state_checkpoint",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "unit_test_state_checkpoint"
     },
     {
       "label": "test_resume_returns_interrupted_stage()",
@@ -2401,8 +2400,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "test_resume_returns_interrupted_stage()",
-      "id": "unit_test_state_test_resume_returns_interrupted_stage",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "unit_test_state_test_resume_returns_interrupted_stage"
     },
     {
       "label": "test_succeeded_stage_is_not_repeated()",
@@ -2412,8 +2411,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "test_succeeded_stage_is_not_repeated()",
-      "id": "unit_test_state_test_succeeded_stage_is_not_repeated",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "unit_test_state_test_succeeded_stage_is_not_repeated"
     },
     {
       "label": "test_atomic_write_replaces_complete_json()",
@@ -2423,8 +2422,8 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "test_atomic_write_replaces_complete_json()",
-      "id": "unit_test_state_test_atomic_write_replaces_complete_json",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "unit_test_state_test_atomic_write_replaces_complete_json"
     },
     {
       "label": "test_run_lock_rejects_second_holder()",
@@ -2434,8 +2433,60 @@
       "_origin": "ast",
       "community": 4,
       "norm_label": "test_run_lock_rejects_second_holder()",
-      "id": "unit_test_state_test_run_lock_rejects_second_holder",
-      "community_name": "Pipeline State Management"
+      "community_name": "Pipeline State Management",
+      "id": "unit_test_state_test_run_lock_rejects_second_holder"
+    },
+    {
+      "label": "graphify_refresh.sh",
+      "file_type": "code",
+      "source_file": "scripts/graphify_refresh.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "community": 19,
+      "norm_label": "graphify_refresh.sh",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh",
+      "community_name": "Persistent Storage Helpers"
+    },
+    {
+      "label": "graphify_refresh.sh script",
+      "file_type": "code",
+      "source_file": "scripts/graphify_refresh.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "community": 19,
+      "norm_label": "graphify_refresh.sh script",
+      "id": "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh__entry",
+      "community_name": "Persistent Storage Helpers"
+    },
+    {
+      "label": "test_graphify_refresh.py",
+      "file_type": "code",
+      "source_file": "tests/unit/test_graphify_refresh.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 22,
+      "norm_label": "test_graphify_refresh.py",
+      "id": "tmp_daily_ai_digest_graphify_input_tests_unit_test_graphify_refresh_py",
+      "community_name": "Model Testing"
+    },
+    {
+      "label": "test_graphify_refresh_excludes_runtime_dirs_and_writes_mobile_summary()",
+      "file_type": "code",
+      "source_file": "tests/unit/test_graphify_refresh.py",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 22,
+      "norm_label": "test_graphify_refresh_excludes_runtime_dirs_and_writes_mobile_summary()",
+      "id": "unit_test_graphify_refresh_test_graphify_refresh_excludes_runtime_dirs_and_writes_mobile_summary",
+      "community_name": "Model Testing"
     },
     {
       "label": "Daily AI Digest",
@@ -2446,10 +2497,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "daily ai digest",
       "id": "daily_ai_digest_design_daily_ai_digest",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Pipeline",
@@ -2460,10 +2511,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "pipeline",
       "id": "daily_ai_digest_design_pipeline",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Collect Stage",
@@ -2474,10 +2525,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "collect stage",
       "id": "daily_ai_digest_design_collect_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Extract Stage",
@@ -2488,10 +2539,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "extract stage",
       "id": "daily_ai_digest_design_extract_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Normalize Stage",
@@ -2502,10 +2553,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "normalize stage",
       "id": "daily_ai_digest_design_normalize_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Deduplicate Stage",
@@ -2516,10 +2567,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "deduplicate stage",
       "id": "daily_ai_digest_design_deduplicate_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Filter Stage",
@@ -2530,10 +2581,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "filter stage",
       "id": "daily_ai_digest_design_filter_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Cluster Stage",
@@ -2544,10 +2595,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "cluster stage",
       "id": "daily_ai_digest_design_cluster_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Translate Stage",
@@ -2558,10 +2609,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "translate stage",
       "id": "daily_ai_digest_design_translate_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Summarize Stage",
@@ -2572,10 +2623,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "summarize stage",
       "id": "daily_ai_digest_design_summarize_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Render Stage",
@@ -2586,10 +2637,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "render stage",
       "id": "daily_ai_digest_design_render_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
       "label": "Deliver Stage",
@@ -2600,13 +2651,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "deliver stage",
       "id": "daily_ai_digest_design_deliver_stage",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
-      "label": "RawItem",
+      "label": "Raw Item",
       "file_type": "document",
       "source_file": "2026-06-22-daily-ai-digest-design.md",
       "source_location": null,
@@ -2614,13 +2665,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "rawitem",
+      "community": 2,
+      "norm_label": "raw item",
       "id": "daily_ai_digest_design_raw_item",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
-      "label": "NewsItem",
+      "label": "News Item",
       "file_type": "document",
       "source_file": "2026-06-22-daily-ai-digest-design.md",
       "source_location": null,
@@ -2628,13 +2679,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "newsitem",
+      "community": 2,
+      "norm_label": "news item",
       "id": "daily_ai_digest_design_news_item",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
-      "label": "DigestItem",
+      "label": "Digest Item",
       "file_type": "document",
       "source_file": "2026-06-22-daily-ai-digest-design.md",
       "source_location": null,
@@ -2642,83 +2693,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "digestitem",
+      "community": 2,
+      "norm_label": "digest item",
       "id": "daily_ai_digest_design_digest_item",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
-      "label": "Filters Configuration",
-      "file_type": "code",
-      "source_file": "configs/filters.yml",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "filters configuration",
-      "id": "daily_ai_digest_design_filters_yml",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Schedule Configuration",
-      "file_type": "code",
-      "source_file": "configs/schedule.yml",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "schedule configuration",
-      "id": "daily_ai_digest_design_schedule_yml",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Sources Configuration",
-      "file_type": "code",
-      "source_file": "configs/sources.yml",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "sources configuration",
-      "id": "daily_ai_digest_design_sources_yml",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Topics Configuration",
-      "file_type": "code",
-      "source_file": "configs/topics.yml",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "topics configuration",
-      "id": "daily_ai_digest_design_topics_yml",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "run_daily",
-      "file_type": "code",
-      "source_file": "2026-06-22-daily-ai-digest-design.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "run_daily",
-      "id": "daily_ai_digest_design_run_daily",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "MiniMax Client",
+      "label": "MiniMax Backend",
       "file_type": "document",
       "source_file": "2026-06-22-daily-ai-digest-design.md",
       "source_location": null,
@@ -2726,10 +2707,24 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "minimax client",
-      "id": "daily_ai_digest_design_minimax_client",
-      "community_name": "Digest Pipeline Stages"
+      "community": 2,
+      "norm_label": "minimax backend",
+      "id": "daily_ai_digest_design_minimax_backend",
+      "community_name": "Content Collection"
+    },
+    {
+      "label": "Scheduler",
+      "file_type": "document",
+      "source_file": "2026-06-22-daily-ai-digest-design.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 2,
+      "norm_label": "scheduler",
+      "id": "daily_ai_digest_design_scheduler",
+      "community_name": "Content Collection"
     },
     {
       "label": "Feishu Delivery",
@@ -2740,13 +2735,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "feishu delivery",
       "id": "daily_ai_digest_design_feishu_delivery",
-      "community_name": "Digest Pipeline Stages"
+      "community_name": "Content Collection"
     },
     {
-      "label": "Local Verification",
+      "label": "Daily AI Digest",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": null,
@@ -2754,13 +2749,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 34,
-      "norm_label": "local verification",
-      "id": "readme_local_verification",
-      "community_name": "Local Verification"
+      "community": 28,
+      "norm_label": "daily ai digest",
+      "id": "readme_daily_ai_digest",
+      "community_name": "Interactive Cards"
     },
     {
-      "label": "Requirements",
+      "label": "Findings",
       "file_type": "document",
       "source_file": "findings.md",
       "source_location": null,
@@ -2768,41 +2763,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 26,
-      "norm_label": "requirements",
-      "id": "findings_requirements",
-      "community_name": "Requirements"
+      "community": 2,
+      "norm_label": "findings",
+      "id": "findings_findings",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Current Evidence",
-      "file_type": "document",
-      "source_file": "findings.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "current evidence",
-      "id": "findings_current_evidence",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Technical Decisions",
-      "file_type": "document",
-      "source_file": "findings.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "technical decisions",
-      "id": "findings_technical_decisions",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Progress Session 2026-06-23",
+      "label": "Progress",
       "file_type": "document",
       "source_file": "progress.md",
       "source_location": null,
@@ -2810,55 +2777,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 33,
-      "norm_label": "progress session 2026-06-23",
-      "id": "progress_session_2026_06_23",
-      "community_name": "Progress Session"
+      "community": 2,
+      "norm_label": "progress",
+      "id": "progress_progress",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Phase 1: Diagnose",
-      "file_type": "document",
-      "source_file": "progress.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "phase 1: diagnose",
-      "id": "progress_phase_1_diagnose",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Phase 2: TDD Implementation",
-      "file_type": "document",
-      "source_file": "progress.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "phase 2: tdd implementation",
-      "id": "progress_phase_2_tdd_implementation",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Phase 3: Verification",
-      "file_type": "document",
-      "source_file": "progress.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 32,
-      "norm_label": "phase 3: verification",
-      "id": "progress_phase_3_verification",
-      "community_name": "Verification Phase"
-    },
-    {
-      "label": "Fix Digest Quota and Degraded Collection",
+      "label": "Task Plan",
       "file_type": "document",
       "source_file": "task_plan.md",
       "source_location": null,
@@ -2866,83 +2791,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 35,
-      "norm_label": "fix digest quota and degraded collection",
-      "id": "task_plan_fix_digest_quota",
-      "community_name": "Digest Fixes"
+      "community": 2,
+      "norm_label": "task plan",
+      "id": "task_plan_task_plan",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Task Plan Phase 1: Diagnose",
-      "file_type": "document",
-      "source_file": "task_plan.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "task plan phase 1: diagnose",
-      "id": "task_plan_phase_1_diagnose",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Task Plan Phase 2: TDD Implementation",
-      "file_type": "document",
-      "source_file": "task_plan.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "task plan phase 2: tdd implementation",
-      "id": "task_plan_phase_2_tdd_implementation",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Task Plan Phase 3: Verification",
-      "file_type": "document",
-      "source_file": "task_plan.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 36,
-      "norm_label": "task plan phase 3: verification",
-      "id": "task_plan_phase_3_verification",
-      "community_name": "Verification Task Plan"
-    },
-    {
-      "label": "Task Plan Phase 4: Handoff",
-      "file_type": "document",
-      "source_file": "task_plan.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 37,
-      "norm_label": "task plan phase 4: handoff",
-      "id": "task_plan_phase_4_handoff",
-      "community_name": "Handoff Task Plan"
-    },
-    {
-      "label": "Feishu Rich Text Post",
-      "file_type": "document",
-      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/feishu-app-options.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 23,
-      "norm_label": "feishu rich text post",
-      "id": "feishu_app_options_a",
-      "community_name": "Feishu Rich Text"
-    },
-    {
-      "label": "Compact Plain Text",
+      "label": "Feishu App Options",
       "file_type": "document",
       "source_file": ".superpowers/brainstorm/1170591-1782204303/content/feishu-app-options.html",
       "source_location": null,
@@ -2951,68 +2806,96 @@
       "author": null,
       "contributor": null,
       "community": 24,
-      "norm_label": "compact plain text",
-      "id": "feishu_app_options_b",
+      "norm_label": "feishu app options",
+      "id": "feishu_app_options_feishu_app_options",
       "community_name": "Plain Text Format"
     },
     {
-      "label": "Interactive Card",
+      "label": "Layout Options",
       "file_type": "document",
-      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/feishu-app-options.html",
+      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/layout-options.html",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
       "community": 25,
-      "norm_label": "interactive card",
-      "id": "feishu_app_options_c",
+      "norm_label": "layout options",
+      "id": "layout_options_layout_options",
       "community_name": "Interactive Cards"
     },
     {
-      "label": "Single Rich Text Briefing",
-      "file_type": "document",
-      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/layout-options.html",
+      "label": "Filters",
+      "file_type": "concept",
+      "source_file": "configs/filters.yml",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
-      "norm_label": "single rich text briefing",
-      "id": "layout_options_a",
-      "community_name": "Rich Text Briefing"
+      "community": 2,
+      "norm_label": "filters",
+      "id": "filters_yml_filters",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Interactive Card",
-      "file_type": "document",
-      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/layout-options.html",
+      "label": "Schedule",
+      "file_type": "concept",
+      "source_file": "configs/schedule.yml",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 28,
-      "norm_label": "interactive card",
-      "id": "layout_options_b",
-      "community_name": "Interactive Cards"
+      "community": 2,
+      "norm_label": "schedule",
+      "id": "schedule_yml_schedule",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Split Into Two Messages",
-      "file_type": "document",
-      "source_file": ".superpowers/brainstorm/1170591-1782204303/content/layout-options.html",
+      "label": "Sources",
+      "file_type": "concept",
+      "source_file": "configs/sources.yml",
       "source_location": null,
       "source_url": null,
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
-      "norm_label": "split into two messages",
-      "id": "layout_options_c",
-      "community_name": "Message Splitting"
+      "community": 2,
+      "norm_label": "sources",
+      "id": "sources_yml_sources",
+      "community_name": "Content Collection"
     },
     {
-      "label": "MiniMax Configuration",
+      "label": "Topics",
+      "file_type": "concept",
+      "source_file": "configs/topics.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 2,
+      "norm_label": "topics",
+      "id": "topics_yml_topics",
+      "community_name": "Content Collection"
+    },
+    {
+      "label": "Architecture",
+      "file_type": "document",
+      "source_file": "docs/architecture.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 2,
+      "norm_label": "architecture",
+      "id": "architecture_architecture",
+      "community_name": "Content Collection"
+    },
+    {
+      "label": "Operations",
       "file_type": "document",
       "source_file": "docs/operations.md",
       "source_location": null,
@@ -3020,41 +2903,13 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "minimax configuration",
-      "id": "operations_mini_max_configuration",
-      "community_name": "Digest Pipeline Stages"
+      "community": 2,
+      "norm_label": "operations",
+      "id": "operations_operations",
+      "community_name": "Content Collection"
     },
     {
-      "label": "Feishu Delivery",
-      "file_type": "document",
-      "source_file": "docs/operations.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "feishu delivery",
-      "id": "operations_feishu_delivery",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Manual Pipeline Execution",
-      "file_type": "document",
-      "source_file": "docs/operations.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 30,
-      "norm_label": "manual pipeline execution",
-      "id": "operations_manual_pipeline",
-      "community_name": "Manual Pipeline"
-    },
-    {
-      "label": "Source Whitelist",
+      "label": "Source Policy",
       "file_type": "document",
       "source_file": "docs/source-policy.md",
       "source_location": null,
@@ -3062,38 +2917,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
-      "norm_label": "source whitelist",
-      "id": "source_policy_whitelist",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Tier 1 Sources",
-      "file_type": "document",
-      "source_file": "docs/source-policy.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "tier 1 sources",
-      "id": "source_policy_tier_1",
-      "community_name": "Digest Pipeline Stages"
-    },
-    {
-      "label": "Tier 2 Sources",
-      "file_type": "document",
-      "source_file": "docs/source-policy.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 0,
-      "norm_label": "tier 2 sources",
-      "id": "source_policy_tier_2",
-      "community_name": "Digest Pipeline Stages"
+      "community": 2,
+      "norm_label": "source policy",
+      "id": "source_policy_source_policy",
+      "community_name": "Content Collection"
     },
     {
       "label": "Compact Feishu Post Implementation Plan",
@@ -3104,10 +2931,10 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "compact feishu post implementation plan",
-      "id": "compact_feishu_post_plan",
-      "community_name": "Digest Pipeline Stages"
+      "id": "compact_feishu_post_plan_compact_feishu_post_implementation_plan",
+      "community_name": "Content Collection"
     },
     {
       "label": "Compact Feishu Post Design",
@@ -3118,10 +2945,24 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 0,
+      "community": 2,
       "norm_label": "compact feishu post design",
-      "id": "compact_feishu_post_design",
-      "community_name": "Digest Pipeline Stages"
+      "id": "compact_feishu_post_design_compact_feishu_post_design",
+      "community_name": "Content Collection"
+    },
+    {
+      "label": "OpenAI News",
+      "file_type": "document",
+      "source_file": "tests/fixtures/openai-news.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "community": 26,
+      "norm_label": "openai news",
+      "id": "openai_news_html_openai_news",
+      "community_name": "Requirements"
     }
   ],
   "links": [
@@ -8318,6 +8159,36 @@
       "target": "unit_test_state_checkpoint"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/graphify_refresh.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh",
+      "target": "tmp_daily_ai_digest_graphify_input_scripts_graphify_refresh_sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "tests/unit/test_graphify_refresh.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "tmp_daily_ai_digest_graphify_input_tests_unit_test_graphify_refresh_py",
+      "target": "unit_test_graphify_refresh_test_graphify_refresh_excludes_runtime_dirs_and_writes_mobile_summary"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/superpowers/plans/2026-06-24-compact-feishu-post.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "compact_feishu_post_plan_compact_feishu_post_implementation_plan",
+      "target": "daily_ai_digest_design_daily_ai_digest"
+    },
+    {
       "relation": "uses",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -8338,16 +8209,6 @@
       "target": "daily_ai_digest_design_feishu_delivery"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "2026-06-22-daily-ai-digest-design.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_filters_yml"
-    },
-    {
       "relation": "uses",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -8355,7 +8216,7 @@
       "source_location": null,
       "weight": 1.0,
       "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_minimax_client"
+      "target": "daily_ai_digest_design_minimax_backend"
     },
     {
       "relation": "uses",
@@ -8388,54 +8249,44 @@
       "target": "daily_ai_digest_design_raw_item"
     },
     {
-      "relation": "contains",
+      "relation": "uses",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "2026-06-22-daily-ai-digest-design.md",
       "source_location": null,
       "weight": 1.0,
       "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_run_daily"
+      "target": "daily_ai_digest_design_scheduler"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "2026-06-22-daily-ai-digest-design.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_schedule_yml"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "2026-06-22-daily-ai-digest-design.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_sources_yml"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "2026-06-22-daily-ai-digest-design.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "daily_ai_digest_design_daily_ai_digest",
-      "target": "daily_ai_digest_design_topics_yml"
-    },
-    {
-      "relation": "addresses",
+      "relation": "analyzes",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "findings.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "findings_technical_decisions",
+      "source": "findings_findings",
       "target": "daily_ai_digest_design_daily_ai_digest"
+    },
+    {
+      "relation": "operationalizes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/operations.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "operations_operations",
+      "target": "daily_ai_digest_design_daily_ai_digest"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "architecture_architecture",
+      "target": "daily_ai_digest_design_pipeline"
     },
     {
       "relation": "contains",
@@ -8538,74 +8389,84 @@
       "target": "daily_ai_digest_design_translate_stage"
     },
     {
-      "relation": "references",
+      "relation": "configures",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "findings.md",
+      "source_file": "configs/sources.yml",
       "source_location": null,
       "weight": 1.0,
-      "source": "findings_current_evidence",
-      "target": "daily_ai_digest_design_filters_yml"
+      "source": "sources_yml_sources",
+      "target": "daily_ai_digest_design_collect_stage"
     },
     {
-      "relation": "modifies",
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "configs/filters.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "filters_yml_filters",
+      "target": "daily_ai_digest_design_filter_stage"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "configs/topics.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "topics_yml_topics",
+      "target": "daily_ai_digest_design_filter_stage"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "configs/schedule.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "schedule_yml_schedule",
+      "target": "daily_ai_digest_design_scheduler"
+    },
+    {
+      "relation": "addresses",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "progress.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "progress_phase_2_tdd_implementation",
-      "target": "daily_ai_digest_design_filters_yml"
+      "source": "progress_progress",
+      "target": "findings_findings"
     },
     {
-      "relation": "modifies",
+      "relation": "tracks",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "task_plan.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "task_plan_phase_2_tdd_implementation",
-      "target": "daily_ai_digest_design_filters_yml"
+      "source": "task_plan_task_plan",
+      "target": "progress_progress"
     },
     {
-      "relation": "describes",
+      "relation": "specifies",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/source-policy.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "source_policy_tier_1",
-      "target": "daily_ai_digest_design_sources_yml"
+      "source": "source_policy_source_policy",
+      "target": "sources_yml_sources"
     },
     {
-      "relation": "describes",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/source-policy.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "source_policy_tier_2",
-      "target": "daily_ai_digest_design_sources_yml"
-    },
-    {
-      "relation": "describes",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/source-policy.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "source_policy_whitelist",
-      "target": "daily_ai_digest_design_sources_yml"
-    },
-    {
-      "relation": "describes",
+      "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/operations.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "operations_mini_max_configuration",
-      "target": "daily_ai_digest_design_minimax_client"
+      "source": "operations_operations",
+      "target": "compact_feishu_post_design_compact_feishu_post_design"
     },
     {
       "relation": "specifies",
@@ -8614,64 +8475,14 @@
       "source_file": "docs/superpowers/specs/2026-06-24-compact-feishu-post-design.md",
       "source_location": null,
       "weight": 1.0,
-      "source": "compact_feishu_post_design",
-      "target": "daily_ai_digest_design_feishu_delivery"
-    },
-    {
-      "relation": "modifies",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/superpowers/plans/2026-06-24-compact-feishu-post.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "compact_feishu_post_plan",
-      "target": "daily_ai_digest_design_feishu_delivery"
-    },
-    {
-      "relation": "describes",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/operations.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "operations_feishu_delivery",
-      "target": "daily_ai_digest_design_feishu_delivery"
-    },
-    {
-      "relation": "confirms",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "progress.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "progress_phase_1_diagnose",
-      "target": "findings_current_evidence"
-    },
-    {
-      "relation": "addresses",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "task_plan.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "task_plan_phase_1_diagnose",
-      "target": "findings_current_evidence"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/superpowers/plans/2026-06-24-compact-feishu-post.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "compact_feishu_post_plan",
-      "target": "compact_feishu_post_design"
+      "source": "compact_feishu_post_design_compact_feishu_post_design",
+      "target": "compact_feishu_post_plan_compact_feishu_post_implementation_plan"
     }
   ],
   "hyperedges": [
     {
-      "id": "pipeline_stages_sequence",
-      "label": "Pipeline Stages Sequence",
+      "id": "pipeline_stages",
+      "label": "Daily AI Digest Pipeline Stages",
       "nodes": [
         "daily_ai_digest_design_collect_stage",
         "daily_ai_digest_design_extract_stage",
@@ -8690,8 +8501,8 @@
       "source_file": "2026-06-22-daily-ai-digest-design.md"
     },
     {
-      "id": "data_model_item_types",
-      "label": "Data Model Item Types",
+      "id": "data_models",
+      "label": "Daily AI Digest Data Models",
       "nodes": [
         "daily_ai_digest_design_raw_item",
         "daily_ai_digest_design_news_item",
@@ -8703,19 +8514,18 @@
       "source_file": "2026-06-22-daily-ai-digest-design.md"
     },
     {
-      "id": "configuration_files",
-      "label": "Configuration Files",
+      "id": "implementation_artifacts",
+      "label": "Implementation Artifacts",
       "nodes": [
-        "daily_ai_digest_design_filters_yml",
-        "daily_ai_digest_design_schedule_yml",
-        "daily_ai_digest_design_sources_yml",
-        "daily_ai_digest_design_topics_yml"
+        "findings_findings",
+        "progress_progress",
+        "task_plan_task_plan"
       ],
-      "relation": "configure",
+      "relation": "form",
       "confidence": "EXTRACTED",
       "confidence_score": 0.75,
-      "source_file": "2026-06-22-daily-ai-digest-design.md"
+      "source_file": "findings.md"
     }
   ],
-  "built_at_commit": "7587b21aac0fb3e48d1093c738e9039980b74346"
+  "built_at_commit": "a948664229b0ed5619acd800e1243fa93d44a9ce"
 }
