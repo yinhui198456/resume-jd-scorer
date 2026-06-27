@@ -1,6 +1,7 @@
 import hashlib
 import argparse
 import json
+import re
 import uuid
 from dataclasses import asdict, dataclass
 from datetime import datetime
@@ -9,12 +10,12 @@ from typing import Callable
 from zoneinfo import ZoneInfo
 
 from digest.cluster.group import cluster_items
-from digest.collect.github import collect_github_releases
+from digest.collect.github import collect_github_releases, collect_github_repository_search
 from digest.collect.html_index import collect_html_index
 from digest.config import load_config
 from digest.deliver.feishu import FeishuDelivery
 from digest.filter.quality import dedupe_exact, hard_filter, tag_topics, weighted_score
-from digest.generate.render import render_digest, render_fault_digest, render_feishu_post
+from digest.generate.render import render_digest, render_fault_digest, render_feishu_section_posts
 from digest.generate.minimax import MiniMaxGenerator
 from digest.generate.common import fallback_generation
 from digest.models import AppConfig, DigestItem, NewsItem, RawItem, StageCheckpoint, StageStatus
@@ -62,6 +63,97 @@ def _score(item: NewsItem, config: AppConfig) -> None:
     }
     item.score_components = components
     item.score = weighted_score(components, config.filters["weights"])
+
+
+def _source_groups(config: AppConfig) -> dict[str, str]:
+    groups: dict[str, str] = {}
+    for section in ("html_indexes", "github_releases", "github_repository_search"):
+        for source in config.sources.get(section, []):
+            if source.get("content_group"):
+                groups[str(source["id"])] = str(source["content_group"])
+    return groups
+
+
+def _candidate_flags(config: AppConfig) -> dict[str, bool]:
+    flags: dict[str, bool] = {}
+    for section in ("html_indexes", "github_releases", "github_repository_search"):
+        for source in config.sources.get(section, []):
+            if "candidate_pool" in source:
+                flags[str(source["id"])] = bool(source["candidate_pool"])
+    return flags
+
+
+def _published_at_requirements(config: AppConfig) -> dict[str, bool]:
+    requirements: dict[str, bool] = {}
+    for section in ("html_indexes", "github_releases", "github_repository_search"):
+        for source in config.sources.get(section, []):
+            if "require_published_at" in source:
+                requirements[str(source["id"])] = bool(source["require_published_at"])
+    return requirements
+
+
+def _requires_published_at(
+    item: NewsItem, raw_by_id: dict[str, RawItem], requirements: dict[str, bool]
+) -> bool:
+    return any(
+        requirements.get(raw_by_id[raw_id].source_id, False)
+        for raw_id in item.raw_ids
+        if raw_id in raw_by_id
+    )
+
+
+def _cluster_group(
+    cluster: list[NewsItem],
+    raw_by_id: dict[str, RawItem],
+    groups: dict[str, str],
+) -> str:
+    for news in cluster:
+        for raw_id in news.raw_ids:
+            source_id = raw_by_id.get(raw_id).source_id if raw_id in raw_by_id else ""
+            if source_id in groups:
+                return groups[source_id]
+    return "default"
+
+
+def _cluster_candidate_allowed(
+    cluster: list[NewsItem],
+    raw_by_id: dict[str, RawItem],
+    flags: dict[str, bool],
+) -> bool:
+    if not flags:
+        return True
+    saw_configured_source = False
+    for news in cluster:
+        for raw_id in news.raw_ids:
+            raw = raw_by_id.get(raw_id)
+            if not raw:
+                continue
+            if raw.source_id in flags:
+                saw_configured_source = True
+                if flags[raw.source_id]:
+                    return True
+    return not saw_configured_source
+
+
+def _cluster_text(cluster: list[NewsItem]) -> str:
+    return " ".join(
+        f"{item.normalized_title} {item.normalized_body}" for item in cluster
+    ).casefold()
+
+
+def _practice_allowed(cluster: list[NewsItem], config: AppConfig) -> bool:
+    rules = config.filters.get("practice_methodology", {})
+    include = [str(keyword).casefold() for keyword in rules.get("include_keywords", [])]
+    exclude = [str(keyword).casefold() for keyword in rules.get("exclude_keywords", [])]
+    text = _cluster_text(cluster)
+    if any(keyword in text for keyword in exclude):
+        return False
+    if re.search(r"\b\d+\.\d+(?:\.\d+)?[a-z]?\d*\b", text) and any(
+        keyword in text
+        for keyword in ("fix", "fixes", "bugfix", "dependency pin", "pyproject.toml")
+    ):
+        return False
+    return not include or any(keyword in text for keyword in include)
 
 
 def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies, run_id: str, now: datetime) -> RunReport:
@@ -127,8 +219,17 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
             news_items = dedupe_exact(news_items)
             _checkpoint(store, run_id, "deduplicate", StageStatus.SUCCEEDED, now, len(news_items), [str(normalized_path)])
             eligible: list[NewsItem] = []
+            raw_by_id = {item.raw_id: item for item in raw_items}
+            published_requirements = _published_at_requirements(config)
             for item in news_items:
-                if hard_filter(item, config.sources.get("blocked_domains", []), config.filters["allowed_languages"], int(config.filters["max_age_hours"]), now)[0]:
+                if hard_filter(
+                    item,
+                    config.sources.get("blocked_domains", []),
+                    config.filters["allowed_languages"],
+                    int(config.filters["max_age_hours"]),
+                    now,
+                    require_published_at=_requires_published_at(item, raw_by_id, published_requirements),
+                )[0]:
                     tag_topics(item, config.topics.get("primary", []))
                     _score(item, config)
                     if item.score >= float(config.filters["thresholds"]["candidate"]):
@@ -142,18 +243,51 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                 (sorted(cluster, key=lambda item: (-item.score, item.news_id)) for cluster in clusters),
                 key=lambda cluster: (-cluster[0].score, cluster[0].news_id),
             )
+            source_groups = _source_groups(config)
+            candidate_flags = _candidate_flags(config)
             top_limit = int(config.filters.get("quotas", {}).get("top_stories", 10))
-            candidate_limit = int(config.filters.get("quotas", {}).get("candidates", 10))
+            productivity_limit = int(
+                config.filters.get("quotas", {}).get(
+                    "productivity_projects",
+                    int(config.filters.get("quotas", {}).get("github_projects", 0))
+                    + int(config.filters.get("quotas", {}).get("practice_methodology", 0)),
+                )
+            )
+            target_total = top_limit + productivity_limit
             digest_threshold = float(config.filters["thresholds"]["digest"])
             selected: list[tuple[str, list[NewsItem]]] = []
-            top_count = candidate_count = 0
+            selected_keys: set[str] = set()
+            counts = {"重点资讯": 0, "生产力项目": 0}
             for cluster in ranked_clusters:
-                if cluster[0].score >= digest_threshold and top_count < top_limit:
+                cluster_key = cluster[0].news_id
+                group = _cluster_group(cluster, raw_by_id, source_groups)
+                if group == "practice_methodology" and not _practice_allowed(cluster, config):
+                    continue
+                if group in {"github_projects", "practice_methodology"} and counts["生产力项目"] < productivity_limit:
+                    selected.append(("生产力项目", cluster))
+                    selected_keys.add(cluster_key)
+                    counts["生产力项目"] += 1
+                elif group == "default" and cluster[0].score >= digest_threshold and counts["重点资讯"] < top_limit:
                     selected.append(("重点资讯", cluster))
-                    top_count += 1
-                elif candidate_count < candidate_limit:
-                    selected.append(("候选池", cluster))
-                    candidate_count += 1
+                    selected_keys.add(cluster_key)
+                    counts["重点资讯"] += 1
+            for cluster in ranked_clusters:
+                if len(selected) >= target_total:
+                    break
+                cluster_key = cluster[0].news_id
+                if cluster_key in selected_keys:
+                    continue
+                group = _cluster_group(cluster, raw_by_id, source_groups)
+                if group == "practice_methodology" and not _practice_allowed(cluster, config):
+                    continue
+                if group in {"github_projects", "practice_methodology"} and counts["生产力项目"] < productivity_limit:
+                    selected.append(("生产力项目", cluster))
+                    selected_keys.add(cluster_key)
+                    counts["生产力项目"] += 1
+                elif group == "default" and counts["重点资讯"] < top_limit:
+                    selected.append(("重点资讯", cluster))
+                    selected_keys.add(cluster_key)
+                    counts["重点资讯"] += 1
             digest_items: list[DigestItem] = []
             section_counts: dict[str, int] = {}
             for section, cluster in selected:
@@ -168,15 +302,15 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
             if digest_items:
                 sections = {
                     section: [item for item in digest_items if item.section == section]
-                    for section in ("重点资讯", "候选池")
+                    for section in ("重点资讯", "生产力项目")
                 }
                 text = render_digest(run_id, now.isoformat(), sections, health)
-                post_payload = render_feishu_post(now.isoformat(), sections, health)
-                delivery_mode = "post"
+                post_payloads = render_feishu_section_posts(now.isoformat(), sections, health)
+                delivery_mode = "posts"
                 status = "succeeded"
             else:
                 text = render_fault_digest(run_id, now.isoformat(), [{"source_id": "all", "error_code": "NO_USABLE_ITEMS"}])
-                post_payload = None
+                post_payloads = []
                 delivery_mode = "text"
                 status = "degraded"
             item_count = len(digest_items)
@@ -190,8 +324,12 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
         log = json.loads(delivery_log.read_text(encoding="utf-8")) if delivery_log.exists() else {}
         if log.get(delivery_key, {}).get("status") != "succeeded":
             atomic_write_json(delivery_log, {**log, delivery_key: {"status": "attempting"}})
-            if delivery_mode == "post":
-                result = dependencies.delivery.send_post(post_payload, delivery_key)
+            if delivery_mode == "posts":
+                message_ids = []
+                for index, post_payload in enumerate(post_payloads, 1):
+                    result = dependencies.delivery.send_post(post_payload, f"{delivery_key}:{index}")
+                    message_ids.append(result.message_id)
+                result = type("DeliveryBatch", (), {"message_id": ",".join(message_ids)})()
             else:
                 result = dependencies.delivery.send_text(text, delivery_key)
             atomic_write_json(delivery_log, {**log, delivery_key: {"status": "succeeded", "message_id": result.message_id}})
@@ -221,6 +359,12 @@ def _default_collector(config: AppConfig, run_id: str, now: datetime):
     for source in config.sources.get("github_releases", []):
         try:
             items.extend(collect_github_releases(source, run_id=run_id, now=now))
+        except Exception as error:
+            status = getattr(getattr(error, "response", None), "status_code", None)
+            failures.append({"source_id": source["id"], "error_code": f"HTTP_{status}" if status else type(error).__name__})
+    for source in config.sources.get("github_repository_search", []):
+        try:
+            items.extend(collect_github_repository_search(source, run_id=run_id, now=now))
         except Exception as error:
             status = getattr(getattr(error, "response", None), "status_code", None)
             failures.append({"source_id": source["id"], "error_code": f"HTTP_{status}" if status else type(error).__name__})

@@ -1,7 +1,7 @@
 allowed_languages:
   - en
   - zh
-max_age_hours: 72
+max_age_hours: 36
 thresholds:
   digest: 0.70
   candidate: 0.55
@@ -13,8 +13,49 @@ weights:
   originality: 0.10
   evidence: 0.05
 quotas:
-  top_stories: 8
+  top_stories: 6
+  productivity_projects: 9
   codex_cc: 5
   overseas: 5
   domestic: 5
-  candidates: 3
+practice_methodology:
+  include_keywords:
+    - workflow
+    - productivity
+    - skill
+    - skills
+    - agent
+    - coding
+    - automation
+    - tool
+    - tools
+    - project
+    - implementation
+    - prompt
+    - MCP
+    - RAG
+    - Claude Code
+    - Codex
+  exclude_keywords:
+    - legal
+    - liability
+    - law
+    - lawsuit
+    - safety
+    - security
+    - policy
+    - governance
+    - regulation
+    - risk
+    - alignment
+    - cover letter
+    - job application
+    - quoting
+    - quote
+    - frontier ecosystem
+    - ecosystem
+    - pyproject.toml
+    - dependency pin
+    - bugfix
+    - bug fix
+    - patch release

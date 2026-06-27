@@ -27,5 +27,15 @@ def test_hard_filter_rejects_blocked_and_stale_items():
     assert reasons == ["blocked_domain", "stale"]
 
 
+def test_hard_filter_rejects_missing_published_at_when_required():
+    now = datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai"))
+    news = item("https://example.com/a", None)
+
+    allowed, reasons = hard_filter(news, [], ["en", "zh"], 72, now, require_published_at=True)
+
+    assert not allowed
+    assert reasons == ["missing_published_at"]
+
+
 def test_dedupe_exact_keeps_first_stable_item():
     assert len(dedupe_exact([item(), item()])) == 1

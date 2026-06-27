@@ -6,21 +6,78 @@ allowed_tier3_domains:
 html_indexes:
   - id: openai-news
     tier: 1
+    candidate_pool: false
+    require_published_at: true
     url: https://openai.com/news/rss.xml
   - id: openai-codex-changelog
     tier: 1
+    candidate_pool: true
+    require_published_at: true
     url: https://developers.openai.com/codex/changelog
   - id: anthropic-news
     tier: 1
+    candidate_pool: false
+    require_published_at: true
     url: https://www.anthropic.com/news
+  - id: simon-willison-ai-practice
+    tier: 2
+    content_group: practice_methodology
+    candidate_pool: true
+    require_published_at: true
+    url: https://simonwillison.net/atom/everything/
+    allowed_hosts:
+      - simonwillison.net
+  - id: chip-huyen-ai-practice
+    tier: 2
+    content_group: practice_methodology
+    candidate_pool: true
+    require_published_at: true
+    url: https://huyenchip.com/feed.xml
+    allowed_hosts:
+      - huyenchip.com
+  - id: lilian-weng-methodology
+    tier: 2
+    content_group: practice_methodology
+    candidate_pool: true
+    require_published_at: true
+    url: https://lilianweng.github.io/index.xml
+    allowed_hosts:
+      - lilianweng.github.io
+  - id: latent-space-ai-methodology
+    tier: 2
+    content_group: practice_methodology
+    candidate_pool: true
+    require_published_at: true
+    url: https://www.latent.space/feed
+    allowed_hosts:
+      - www.latent.space
 github_releases:
   - id: openai-codex
     tier: 1
+    candidate_pool: true
     repository: openai/codex
   - id: anthropics-claude-code
     tier: 1
+    candidate_pool: true
     repository: anthropics/claude-code
   - id: mcp-python-sdk
     tier: 1
+    candidate_pool: true
     repository: modelcontextprotocol/python-sdk
-tier2: []
+github_repository_search:
+  - id: github-hot-ai-projects
+    tier: 2
+    content_group: github_projects
+    candidate_pool: true
+    query: topic:agents topic:llm stars:>100 created:>=2026-01-01
+    sort: stars
+    order: desc
+    limit: 20
+  - id: github-hot-ai-coding-projects
+    tier: 2
+    content_group: github_projects
+    candidate_pool: true
+    query: ai coding assistant in:name,description stars:>50 created:>=2026-01-01
+    sort: stars
+    order: desc
+    limit: 20

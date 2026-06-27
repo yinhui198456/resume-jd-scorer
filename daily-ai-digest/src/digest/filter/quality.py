@@ -12,13 +12,22 @@ def weighted_score(components: dict[str, float], weights: dict[str, float]) -> f
     return round(sum(components[name] * weights[name] for name in weights), 6)
 
 
-def hard_filter(item: NewsItem, blocked_domains: list[str], allowed_languages: list[str], max_age_hours: int, now: datetime) -> tuple[bool, list[str]]:
+def hard_filter(
+    item: NewsItem,
+    blocked_domains: list[str],
+    allowed_languages: list[str],
+    max_age_hours: int,
+    now: datetime,
+    require_published_at: bool = False,
+) -> tuple[bool, list[str]]:
     reasons: list[str] = []
     host = (urlsplit(item.canonical_url).hostname or "").lower()
     if any(host == domain or host.endswith(f".{domain}") for domain in blocked_domains):
         reasons.append("blocked_domain")
     if item.language not in allowed_languages:
         reasons.append("unsupported_language")
+    if require_published_at and not item.published_at:
+        reasons.append("missing_published_at")
     timestamp = datetime.fromisoformat((item.published_at or item.fetched_at).replace("Z", "+00:00"))
     if (now - timestamp).total_seconds() > max_age_hours * 3600:
         reasons.append("stale")

@@ -3,7 +3,7 @@ from datetime import datetime
 from digest.models import DigestItem
 
 
-SECTIONS = ["今日结论", "重点资讯", "Codex / CC 实践", "海外信号", "国内观察", "候选池"]
+SECTIONS = ["今日结论", "重点资讯", "GitHub 热门项目", "实践/方法论", "Codex / CC 实践", "海外信号", "国内观察", "候选池"]
 
 
 def compact_text(text: str, limit: int = 100) -> str:
@@ -20,39 +20,77 @@ def _link_line(label: str, url: str) -> list[dict[str, object]]:
     return elements
 
 
+def _section_block(section_title: str, items: list[DigestItem]) -> list[dict[str, object]]:
+    elements: list[dict[str, object]] = [
+        {"tag": "text", "text": f"【{section_title}】\n", "style": ["bold"]}
+    ]
+    for index, item in enumerate(items, 1):
+        prefix = "" if index == 1 else "\n"
+        elements.append(
+            {
+                "tag": "text",
+                "text": f"{prefix}{index}. {item.chinese_title}：{compact_text(item.summary)}  ",
+            }
+        )
+        if item.source_links:
+            elements.append({"tag": "a", "text": "查看原文", "href": item.source_links[0]})
+    return elements
+
+
 def render_feishu_post(
     generated_at: str,
     sections: dict[str, list[DigestItem]],
     source_health: dict[str, object],
 ) -> dict[str, object]:
     timestamp = datetime.fromisoformat(generated_at)
-    top = sections.get("重点资讯", [])[:8]
-    candidates = sections.get("候选池", [])[:3]
+    top = sections.get("重点资讯", [])
+    productivity = sections.get("生产力项目", [])
     health = "来源正常" if source_health.get("status") == "healthy" else "部分来源异常"
     content: list[list[dict[str, object]]] = [
-        [{"tag": "text", "text": f"{health} · {len(top)} 条重点 · {len(candidates)} 条候选"}]
+        [{"tag": "text", "text": f"{health} · {len(top)} 条重点 · {len(productivity)} 条生产力项目"}]
     ]
-    for index, item in enumerate(top, 1):
-        content.append(
-            [{"tag": "text", "text": f"{index}. {item.chinese_title}", "style": ["bold"]}]
-        )
-        content.append([{"tag": "text", "text": compact_text(item.summary)}])
-        content.append(_link_line("", item.source_links[0] if item.source_links else ""))
-    if candidates:
-        content.append([{"tag": "text", "text": "候选速览", "style": ["bold"]}])
-        for item in candidates:
-            content.append(
-                _link_line(
-                    f"• {item.chinese_title}  ",
-                    item.source_links[0] if item.source_links else "",
-                )
-            )
+    for section_title, items in (
+        ("重点资讯", top),
+        ("生产力项目", productivity),
+    ):
+        if not items:
+            continue
+        content.append(_section_block(section_title, items))
     return {
         "zh_cn": {
             "title": f"每日 AI 资讯｜{timestamp.month}月{timestamp.day}日",
             "content": content,
         }
     }
+
+
+def render_feishu_section_posts(
+    generated_at: str,
+    sections: dict[str, list[DigestItem]],
+    source_health: dict[str, object],
+) -> list[dict[str, object]]:
+    timestamp = datetime.fromisoformat(generated_at)
+    health = "来源正常" if source_health.get("status") == "healthy" else "部分来源异常"
+    posts: list[dict[str, object]] = []
+    for section_title, display_title in (
+        ("重点资讯", "重点资讯"),
+        ("生产力项目", "生产力项目"),
+    ):
+        items = sections.get(section_title, [])
+        if not items:
+            continue
+        posts.append(
+            {
+                "zh_cn": {
+                    "title": f"每日 AI 资讯｜{timestamp.month}月{timestamp.day}日｜{display_title}",
+                    "content": [
+                        [{"tag": "text", "text": f"{health} · {display_title} · {len(items)} 条"}],
+                        _section_block(display_title, items),
+                    ],
+                }
+            }
+        )
+    return posts
 
 
 def render_fault_digest(run_id: str, generated_at: str, failures: list[dict[str, str]]) -> str:

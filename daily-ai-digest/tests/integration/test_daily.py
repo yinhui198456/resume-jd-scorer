@@ -54,6 +54,42 @@ def config(root: Path) -> AppConfig:
     return AppConfig(str(root), {"blocked_domains": ["csdn.com"]}, {"allowed_languages": ["en", "zh"], "max_age_hours": 72, "thresholds": {"digest": 0.70, "candidate": 0.55}, "weights": {"source_trust": 0.30, "topic_match": 0.25, "information_density": 0.15, "recency": 0.15, "originality": 0.10, "evidence": 0.05}, "quotas": {"top_stories": 8, "candidates": 3}}, {"primary": ["MCP", "Codex"]}, {}, "key", "url", "model", "app", "secret", "chat")
 
 
+def section_config(root: Path) -> AppConfig:
+    return AppConfig(
+        str(root),
+        {
+            "blocked_domains": ["csdn.com"],
+            "html_indexes": [
+                {"id": "openai-news", "tier": 1, "candidate_pool": False},
+                {"id": "openai-codex-changelog", "tier": 1, "candidate_pool": True},
+                {"id": "simon-willison-ai-practice", "tier": 2, "content_group": "practice_methodology", "candidate_pool": True},
+            ],
+            "github_repository_search": [
+                {"id": "github-hot-ai-projects", "tier": 2, "content_group": "github_projects", "candidate_pool": True},
+            ],
+        },
+        {
+            "allowed_languages": ["en", "zh"],
+            "max_age_hours": 72,
+            "thresholds": {"digest": 0.70, "candidate": 0.55},
+            "weights": {"source_trust": 0.30, "topic_match": 0.25, "information_density": 0.15, "recency": 0.15, "originality": 0.10, "evidence": 0.05},
+            "quotas": {"top_stories": 6, "productivity_projects": 9},
+            "practice_methodology": {
+                "include_keywords": ["workflow", "productivity", "skills", "agent", "coding", "automation", "tools", "project", "implementation", "prompt", "MCP", "RAG"],
+                "exclude_keywords": ["legal", "liability", "safety", "security", "policy", "governance", "regulation", "risk"],
+            },
+        },
+        {"primary": ["Agent", "MCP", "Codex", "AI coding", "Methodology"]},
+        {},
+        "key",
+        "url",
+        "model",
+        "app",
+        "secret",
+        "chat",
+    )
+
+
 def raw(run_id="run-1") -> RawItem:
     body = "MCP Codex release notes with benchmark, demo, code and documentation links."
     return RawItem(run_id, 1, "raw-1", "openai-codex", 1, "https://developers.openai.com/codex/changelog", "https://example.com/release", "Codex MCP release", body, None, "2026-06-22T00:40:00Z", "2026-06-22T08:45:00+08:00", "en", "hash")
@@ -66,6 +102,26 @@ def raw_ranked(index: int, high_score: bool, run_id: str = "run-quota") -> RawIt
         else "brief"
     )
     return RawItem(run_id, 1, f"raw-{index}", "official", 1, "https://example.com", f"https://example.com/{index}", f"Update {index}", body, None, "2026-06-22T00:40:00Z", "2026-06-22T08:45:00+08:00", "en", f"hash-{index}")
+
+
+def raw_section(index: int, source_id: str, tier: int, title: str, run_id: str = "run-sections") -> RawItem:
+    body = "Agent MCP Codex AI coding methodology benchmark demo code documentation links " * 2
+    return RawItem(
+        run_id,
+        1,
+        f"raw-section-{index}",
+        source_id,
+        tier,
+        f"https://example.com/{source_id}",
+        f"https://example.com/{source_id}/{index}",
+        title,
+        body,
+        None,
+        "2026-06-22T00:40:00Z",
+        "2026-06-22T08:45:00+08:00",
+        "en",
+        f"hash-section-{index}",
+    )
 
 
 def test_total_source_failure_delivers_fault_digest(tmp_path):
@@ -116,7 +172,7 @@ def test_fault_run_can_recollect_with_same_run_id(tmp_path):
     assert delivery.post_count == 1
 
 
-def test_digest_applies_top_story_and_candidate_quotas(tmp_path):
+def test_digest_applies_top_story_quota_without_candidates(tmp_path):
     items = [raw_ranked(i, i < 12) for i in range(24)]
     collector = FakeCollector(items)
     generator = FakeGenerator()
@@ -125,9 +181,112 @@ def test_digest_applies_top_story_and_candidate_quotas(tmp_path):
     report = run_daily(tmp_path, config(tmp_path), deps, "run-quota", datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")))
 
     generated = json.loads((tmp_path / "data/state/runs/run-quota/generated.json").read_text())
-    assert report.item_count == 11
-    assert generator.call_count == 11
-    assert Counter(item["section"] for item in generated) == {"重点资讯": 8, "候选池": 3}
+    assert report.item_count == 8
+    assert generator.call_count == 8
+    assert Counter(item["section"] for item in generated) == {"重点资讯": 8}
+
+
+def test_digest_reserves_sections_for_github_and_practice_sources(tmp_path):
+    items = [
+        *(raw_section(i, "openai-news", 1, f"Official Agent update {i}") for i in range(10)),
+        *(raw_section(100 + i, "github-hot-ai-projects", 2, f"GitHub AI project {i}") for i in range(4)),
+        *(raw_section(200 + i, "simon-willison-ai-practice", 2, f"AI methodology practice {i}") for i in range(5)),
+        *(raw_section(300 + i, "openai-codex-changelog", 1, f"Codex changelog {i}") for i in range(5)),
+    ]
+    generator = FakeGenerator()
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector(items), generator, FakeDelivery()),
+        "run-sections",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-sections/generated.json").read_text())
+    assert report.item_count == 15
+    assert generator.call_count == 15
+    assert Counter(item["section"] for item in generated) == {
+        "重点资讯": 6,
+        "生产力项目": 9,
+    }
+
+
+def test_productivity_sources_do_not_enter_top_stories(tmp_path):
+    items = [
+        *(raw_section(i, "openai-news", 1, f"Broad AI policy story {i}") for i in range(12)),
+        *(raw_section(100 + i, "github-hot-ai-projects", 2, f"GitHub AI project {i}") for i in range(4)),
+        *(raw_section(200 + i, "simon-willison-ai-practice", 2, f"AI methodology practice {i}") for i in range(5)),
+        *(raw_section(300 + i, "openai-codex-changelog", 1, f"Codex changelog {i}") for i in range(3)),
+    ]
+
+    run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector(items), FakeGenerator(), FakeDelivery()),
+        "run-candidate-quality",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    raw_items = json.loads((tmp_path / "data/raw/run-candidate-quality.json").read_text())
+    filtered = json.loads((tmp_path / "data/filtered/run-candidate-quality.json").read_text())
+    generated = json.loads((tmp_path / "data/state/runs/run-candidate-quality/generated.json").read_text())
+    raw_by_id = {item["raw_id"]: item for item in raw_items}
+    news_by_id = {item["news_id"]: item for item in filtered}
+    top_sources = set()
+    for digest_item in generated:
+        if digest_item["section"] != "重点资讯":
+            continue
+        for news_id in digest_item["news_ids"]:
+            for raw_id in news_by_id[news_id]["raw_ids"]:
+                top_sources.add(raw_by_id[raw_id]["source_id"])
+
+    assert "github-hot-ai-projects" not in top_sources
+    assert "simon-willison-ai-practice" not in top_sources
+
+
+def test_practice_section_excludes_legal_safety_and_keeps_productivity_items(tmp_path):
+    items = [
+        *(raw_section(i, "openai-news", 1, f"Official Agent update {i}") for i in range(8)),
+        *(raw_section(100 + i, "github-hot-ai-projects", 2, f"GitHub AI project {i}") for i in range(4)),
+        raw_section(200, "simon-willison-ai-practice", 2, "AI liability and legal risk for model providers"),
+        raw_section(201, "simon-willison-ai-practice", 2, "Claude Code skills workflow for agent productivity"),
+        raw_section(202, "simon-willison-ai-practice", 2, "Project automation tools for AI coding teams"),
+        raw_section(203, "simon-willison-ai-practice", 2, "Prompt workflow implementation patterns"),
+        raw_section(204, "simon-willison-ai-practice", 2, "datasette-export-database 0.3a2 fixes pyproject.toml dependency pin"),
+        *(raw_section(300 + i, "openai-codex-changelog", 1, f"Codex changelog {i}") for i in range(5)),
+    ]
+
+    run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector(items), FakeGenerator(), FakeDelivery()),
+        "run-practice-quality",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    raw_items = json.loads((tmp_path / "data/raw/run-practice-quality.json").read_text())
+    filtered = json.loads((tmp_path / "data/filtered/run-practice-quality.json").read_text())
+    generated = json.loads((tmp_path / "data/state/runs/run-practice-quality/generated.json").read_text())
+    raw_by_id = {item["raw_id"]: item for item in raw_items}
+    news_by_id = {item["news_id"]: item for item in filtered}
+    practice_titles = []
+    all_selected_titles = []
+    for digest_item in generated:
+        for news_id in digest_item["news_ids"]:
+            for raw_id in news_by_id[news_id]["raw_ids"]:
+                all_selected_titles.append(raw_by_id[raw_id]["title"])
+                if digest_item["section"] == "生产力项目":
+                    practice_titles.append(raw_by_id[raw_id]["title"])
+
+    assert "AI liability and legal risk for model providers" not in practice_titles
+    assert "AI liability and legal risk for model providers" not in all_selected_titles
+    assert "datasette-export-database 0.3a2 fixes pyproject.toml dependency pin" not in all_selected_titles
+    assert {
+        "Claude Code skills workflow for agent productivity",
+        "Project automation tools for AI coding teams",
+        "Prompt workflow implementation patterns",
+    } <= set(practice_titles)
 
 
 def test_partial_source_failure_persists_source_health(tmp_path):

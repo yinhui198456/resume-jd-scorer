@@ -29,7 +29,11 @@ class MiniMaxGenerator:
                         "Translate to concise Chinese. Preserve Agent, RAG, MCP, "
                         "Function Calling, Tool Calling, Evaluation, Observability, "
                         "Codex, and Claude Code in English. Write one complete, "
-                        "explanatory summary within 100 Chinese characters. "
+                        "explanatory summary within 100 Chinese characters. For "
+                        "productivity/project items, explain what it is, why it is "
+                        "worth mentioning now, what productivity it improves, and "
+                        "its advantage or likely alternative. Do not focus on minor "
+                        "patch details unless they change user-visible capability. "
                         "Return exactly one JSON "
                         "object with chinese_title, summary, and why_it_matters."
                     ),

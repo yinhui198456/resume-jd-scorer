@@ -112,3 +112,72 @@ def collect_github_releases(
             )
         )
     return items
+
+
+def collect_github_repository_search(
+    source: dict[str, object],
+    session: object = requests,
+    run_id: str = "",
+    now: datetime | None = None,
+) -> list[RawItem]:
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": USER_AGENT}
+    token = os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    limit = int(source.get("limit", 20))
+    response = session.get(
+        "https://api.github.com/search/repositories",
+        params={
+            "q": str(source["query"]),
+            "sort": str(source.get("sort", "stars")),
+            "order": str(source.get("order", "desc")),
+            "per_page": limit,
+        },
+        headers=headers,
+        timeout=20,
+    )
+    response.raise_for_status()
+    fetched_at = (now or datetime.now().astimezone()).isoformat()
+    items: list[RawItem] = []
+    for repository in response.json().get("items", [])[:limit]:
+        url = str(repository["html_url"])
+        full_name = str(repository.get("full_name") or url)
+        description = str(repository.get("description") or "")
+        topics = [str(topic) for topic in repository.get("topics", [])]
+        body = "\n".join(
+            part
+            for part in [
+                description or full_name,
+                f"stars: {repository.get('stargazers_count', 0)}",
+                f"forks: {repository.get('forks_count', 0)}",
+                f"language: {repository.get('language') or 'unknown'}",
+                f"created_at: {repository.get('created_at')}" if repository.get("created_at") else "",
+                f"pushed_at: {repository.get('pushed_at')}" if repository.get("pushed_at") else "",
+                f"topics: {', '.join(topics)}" if topics else "",
+            ]
+            if part
+        )
+        native_id = str(repository.get("id") or url)
+        raw_id = hashlib.sha256(
+            f"{source['id']}\0{native_id}\0{url}".encode()
+        ).hexdigest()
+        items.append(
+            RawItem(
+                run_id=run_id,
+                schema_version=1,
+                raw_id=raw_id,
+                source_id=str(source["id"]),
+                source_tier=int(source["tier"]),
+                source_url="https://api.github.com/search/repositories",
+                canonical_url=url,
+                title=full_name,
+                raw_body=body,
+                author=(repository.get("owner") or {}).get("login"),
+                published_at=repository.get("pushed_at")
+                or repository.get("updated_at"),
+                fetched_at=fetched_at,
+                language="en",
+                content_hash=hashlib.sha256(body.encode()).hexdigest(),
+            )
+        )
+    return items
