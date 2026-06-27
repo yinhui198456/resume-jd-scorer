@@ -38,6 +38,13 @@ Validate whether Graphify is useful for managing project structure and dependenc
 - [x] Summarize output paths
 - [x] Summarize risks and recommended next step
 
+### Phase 5: Refresh workflow
+
+- [x] Add `scripts/graphify_refresh.sh`
+- [x] Add TDD coverage for staging excludes and mobile summary generation
+- [x] Generate `MOBILE_SUMMARY.md`
+- [x] Run real Graphify refresh once
+
 ## Non-goals
 
 - Do not modify `AGENTS.md` or existing source files during this pilot.

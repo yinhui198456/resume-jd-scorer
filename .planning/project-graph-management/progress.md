@@ -19,3 +19,9 @@
 - Reinstalled Graphify as `graphifyy[openai,chinese]`.
 - Full extraction succeeded and generated `graph.json`, `graph.html`, `GRAPH_TREE.html`, and `GRAPH_REPORT.md`.
 - Full graph includes configuration and documentation concepts such as source whitelist, tiered sources, filters, schedule, topics, and Feishu delivery.
+- User selected A: implement a fixed Graphify refresh workflow plus mobile summary.
+- Wrote failing TDD test for `scripts/graphify_refresh.sh`.
+- Implemented `scripts/graphify_refresh.sh`.
+- Target test passed: `tests/unit/test_graphify_refresh.py`.
+- Ran the real refresh script successfully.
+- Generated `daily-ai-digest/output/graphify-pilot-full/MOBILE_SUMMARY.md`.

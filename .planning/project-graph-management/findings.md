@@ -36,6 +36,25 @@
   - `GRAPH_REPORT.md`
 - Graph diagnostics reported 0 dangling endpoints and 0 duplicate edges.
 
+## Refresh workflow
+
+- Added `daily-ai-digest/scripts/graphify_refresh.sh`.
+- The script builds a temporary staging directory and excludes:
+  - `.git`
+  - `.venv`
+  - `.pytest_cache`
+  - `data`
+  - `output`
+  - `__pycache__`
+  - `*.pyc`
+- The script runs:
+  - `graphify extract`
+  - `graphify cluster-only`
+  - `graphify tree`
+  - mobile summary generation
+- Added `tests/unit/test_graphify_refresh.py` to verify runtime directories are excluded and `MOBILE_SUMMARY.md` is produced.
+- Real refresh completed and produced `daily-ai-digest/output/graphify-pilot-full/MOBILE_SUMMARY.md`.
+
 ## Query checks
 
 - `render_feishu_post()` was found at `src/digest/generate/render.py`.
