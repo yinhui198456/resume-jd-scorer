@@ -1,0 +1,110 @@
+{
+  "方案A": {
+    "label": "2026-06-28 商品池早餐 A",
+    "meal_type": "breakfast",
+    "theme": "电蒸锅预约，低油稳妥",
+    "source_note": "优先使用 data/breakfast_products.json 中的叮咚买菜风格早餐商品池。",
+    "dishes": [
+      {
+        "name": "烧麦",
+        "category": "主食",
+        "time": "15分钟",
+        "method": "电蒸锅预约",
+        "description": "来自早餐商品池；蒸点快手，前一晚可放入电蒸锅预约。【需采购】"
+      },
+      {
+        "name": "鸡蛋",
+        "category": "蛋白",
+        "time": "12分钟",
+        "method": "电蒸锅预约",
+        "description": "来自早餐商品池；与烧麦同锅蒸煮，补充优质蛋白，需全熟。【需采购】"
+      },
+      {
+        "name": "牛奶",
+        "category": "饮品",
+        "time": "1分钟",
+        "method": "即食",
+        "description": "来自早餐商品池；优先纯牛奶或低糖款，补钙且儿童友好。【需采购】"
+      },
+      {
+        "name": "小番茄",
+        "category": "果蔬",
+        "time": "3分钟",
+        "method": "即食",
+        "description": "来自早餐商品池；清洗即食，平衡蒸点油盐感。【需采购】"
+      }
+    ]
+  },
+  "方案B": {
+    "label": "2026-06-28 商品池早餐 B",
+    "meal_type": "breakfast",
+    "theme": "豆浆机预约，粗粮搭配",
+    "source_note": "优先使用 data/breakfast_products.json 中的叮咚买菜风格早餐商品池。",
+    "dishes": [
+      {
+        "name": "窝窝头",
+        "category": "主食",
+        "time": "12分钟",
+        "method": "电蒸锅预约",
+        "description": "来自早餐商品池；粗粮主食，低油，适合预约蒸制。【需采购】"
+      },
+      {
+        "name": "鸡蛋",
+        "category": "蛋白",
+        "time": "12分钟",
+        "method": "电蒸锅预约",
+        "description": "来自早餐商品池；与窝窝头同锅处理，补充蛋白，需全熟。【需采购】"
+      },
+      {
+        "name": "无糖豆浆",
+        "category": "饮品",
+        "time": "25分钟",
+        "method": "豆浆机预约",
+        "description": "来自早餐商品池；豆浆机预约，低糖，补充植物蛋白。【需采购】"
+      },
+      {
+        "name": "小番茄",
+        "category": "果蔬",
+        "time": "3分钟",
+        "method": "即食",
+        "description": "来自早餐商品池；清洗即食，提升早餐清爽度。【需采购】"
+      }
+    ]
+  },
+  "方案C": {
+    "label": "2026-06-28 商品池早餐 C",
+    "meal_type": "breakfast",
+    "theme": "煎锅快煎，周末换口味",
+    "source_note": "优先使用 data/breakfast_products.json 中的叮咚买菜风格早餐商品池。",
+    "dishes": [
+      {
+        "name": "手抓饼",
+        "category": "主食",
+        "time": "10分钟",
+        "method": "煎锅快煎",
+        "description": "来自早餐商品池；少油煎，减少额外酱料，作为本次唯一高油煎烙主食。【需采购】"
+      },
+      {
+        "name": "鸡蛋",
+        "category": "蛋白",
+        "time": "5分钟",
+        "method": "煎锅快煎",
+        "description": "来自早餐商品池；可夹入手抓饼，补充蛋白，煎至全熟。【需采购】"
+      },
+      {
+        "name": "牛奶",
+        "category": "饮品",
+        "time": "1分钟",
+        "method": "即食",
+        "description": "来自早餐商品池；优先纯牛奶或低糖款。【需采购】"
+      },
+      {
+        "name": "小番茄",
+        "category": "果蔬",
+        "time": "3分钟",
+        "method": "即食",
+        "description": "来自早餐商品池；搭配煎烙主食降低油腻感。【需采购】"
+      }
+    ]
+  }
+}
