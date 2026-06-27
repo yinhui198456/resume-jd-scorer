@@ -35,7 +35,10 @@ MAIN_INGREDIENT_MAP = {
     "鸽子汤": "鸽子", "党参鸽子汤": "鸽子", "盐焗乳鸽": "鸽子", "乳鸽": "鸽子",
     "红烧肉": "猪肉", "红烧排骨": "猪肉", "糖醋排骨": "猪肉", "粉蒸肉": "猪肉",
     "回锅肉": "猪肉", "小炒肉": "猪肉", "同安封肉": "猪肉",
+    "冬瓜丸子汤": "猪肉",
     "炒牛肉": "牛肉", "炖牛肉": "牛肉", "红烧牛肉": "牛肉", "清炖牛肋条": "牛肉",
+    "盐葱牛小排": "牛肉",
+    "咖喱牛肉": "牛肉", "咖喱牛腩": "牛肉",
     "清蒸": "鱼", "红烧鱼": "鱼", "煎鱼": "鱼", "蒸鱼": "鱼",
     "鲈鱼": "鱼", "鳜鱼": "鱼", "多宝鱼": "鱼", "青花鱼": "鱼", "带鱼": "鱼",
     "白灼鲜虾": "虾", "白灼虾": "虾", "炒虾仁": "虾", "毛豆炒虾仁": "虾",
@@ -308,11 +311,12 @@ def check_seasonal_creative(plan_label, dishes):
     return issues
 
 
-def check_30day_blacklist(plan_label, dishes, blacklist):
+def check_30day_blacklist(plan_label, dishes, blacklist, explicit_overrides=None):
     """30天排重：菜名和主材不在黑名单内。"""
     issues = []
     dish_blacklist = set(blacklist.get("dish_names", []))
     ingredient_blacklist = set(blacklist.get("main_ingredients", []))
+    override_text = "\n".join(explicit_overrides or [])
 
     for dish in dishes:
         name = dish.get("name", "")
@@ -322,10 +326,13 @@ def check_30day_blacklist(plan_label, dishes, blacklist):
         if "主食" in cat:
             continue
 
+        ingredient = normalize_ingredient(name)
+        if name in override_text or ingredient in override_text:
+            continue
+
         if name in dish_blacklist:
             issues.append(f"【{plan_label}】30天已做：{name}")
 
-        ingredient = normalize_ingredient(name)
         if ingredient in ingredient_blacklist:
             issues.append(f"【{plan_label}】主材30天已用：{name}（主材「{ingredient}」在黑名单）")
 
@@ -357,6 +364,7 @@ def review_plan(plan_data, blacklist):
 
     label = plan_data.get("label", "未知方案")
     dishes = plan_data.get("dishes", [])
+    explicit_overrides = plan_data.get("explicit_overrides", [])
 
     all_issues.extend(check_structure(label, dishes))
     all_issues.extend(check_main_ingredient_clash(label, dishes))
@@ -366,7 +374,7 @@ def review_plan(plan_data, blacklist):
     all_issues.extend(check_time(label, dishes))
     all_issues.extend(check_inventory_label(label, dishes))
     all_issues.extend(check_seasonal_creative(label, dishes))
-    all_issues.extend(check_30day_blacklist(label, dishes, blacklist))
+    all_issues.extend(check_30day_blacklist(label, dishes, blacklist, explicit_overrides))
     all_issues.extend(check_technique_dup(label, dishes))
 
     return all_issues
@@ -421,3 +429,32 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# ─── 新增：跨方案排重检查 ──
+def check_cross_plan_dedup(plans):
+    """跨方案排重：3套方案的主材不应高度重复。"""
+    issues = []
+    all_main_ingredients = []
+    for plan_label, plan_data in plans.items():
+        for dish in plan_data.get("dishes", []):
+            note = dish.get("note", "") + dish.get("description", "")
+            for main_ing, mapped in MAIN_INGREDIENT_MAP.items():
+                if main_ing in dish.get("name", "") or main_ing in note:
+                    all_main_ingredients.append((plan_label, mapped))
+                    break
+    
+    # 统计每个主材出现的方案数
+    from collections import Counter
+    plan_ingredients = {}
+    for plan_label, ing in all_main_ingredients:
+        if plan_label not in plan_ingredients:
+            plan_ingredients[plan_label] = set()
+        plan_ingredients[plan_label].add(ing)
+    
+    # 找出所有方案都用的主材
+    if len(plan_ingredients) >= 2:
+        common = set.intersection(*plan_ingredients.values())
+        if common:
+            issues.append(f"【跨方案排重】所有方案都使用主材：{', '.join(common)} — 请确保各方案有差异化主材选择")
+    
+    return issues

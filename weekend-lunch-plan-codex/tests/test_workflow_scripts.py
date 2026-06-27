@@ -1,4 +1,5 @@
 import json
+import importlib.util
 import os
 import subprocess
 import sys
@@ -28,6 +29,14 @@ def run_script(script, *args, data_dir=None, stdin_data=None):
 
 def write_json(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def load_skill_script(name):
+    path = SKILL_DIR / "scripts" / name
+    spec = importlib.util.spec_from_file_location(path.stem, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 class WorkflowScriptTests(unittest.TestCase):
@@ -160,6 +169,42 @@ class WorkflowScriptTests(unittest.TestCase):
         self.assertEqual(payload["status"], "PASS")
         self.assertEqual(payload["gate"]["status"], "PASS")
         self.assertEqual(payload["aggregation"]["verdict"], "PASS")
+
+    def test_review_gate_normalizes_confirmed_menu_ingredients(self):
+        review_gate = load_skill_script("recipe_review_gate.py")
+        self.assertEqual(review_gate.normalize_ingredient("咖喱牛肉"), "牛肉")
+        self.assertEqual(review_gate.normalize_ingredient("咖喱牛腩"), "牛肉")
+        self.assertEqual(review_gate.normalize_ingredient("盐葱牛小排"), "牛肉")
+        self.assertEqual(review_gate.normalize_ingredient("冬瓜丸子汤"), "猪肉")
+
+    def test_review_pipeline_allows_explicit_user_overrides_for_recent_ingredients(self):
+        write_json(
+            self.data_dir / "history.json",
+            [{"date": "2026-06-18", "dishes": ["盐葱牛小排", "同安封肉"]}],
+        )
+        plan = {
+            "方案A": {
+                "label": "方案A",
+                "explicit_overrides": ["咖喱牛腩", "冬瓜丸子汤"],
+                "dishes": [
+                    {"name": "咖喱牛腩", "category": "大荤", "time": "25分钟", "description": "用户确认；【需采购】"},
+                    {"name": "蒜蓉粉丝蒸扇贝", "category": "大荤", "time": "12分钟", "description": "粉丝铺底，有仪式感；【需采购】"},
+                    {"name": "腐乳炒空心菜", "category": "【素】", "time": "8分钟", "description": "空心菜当季；【需采购】"},
+                    {"name": "冬瓜丸子汤", "category": "汤", "time": "18分钟", "description": "冬瓜当季；【需采购】"},
+                    {"name": "南瓜饭", "category": "主食", "time": "30分钟", "description": "电饭煲制作；【需采购】"},
+                ],
+            }
+        }
+
+        result = run_script(
+            "review_pipeline.py",
+            data_dir=self.data_dir,
+            stdin_data=json.dumps(plan, ensure_ascii=False),
+        )
+        self.assertEqual(result.returncode, 2, result.stderr + result.stdout)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], "NEEDS_EVAL")
+        self.assertEqual(payload["gate"]["status"], "PASS")
 
 
 if __name__ == "__main__":
