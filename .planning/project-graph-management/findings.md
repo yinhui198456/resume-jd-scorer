@@ -55,6 +55,15 @@
 - Added `tests/unit/test_graphify_refresh.py` to verify runtime directories are excluded and `MOBILE_SUMMARY.md` is produced.
 - Real refresh completed and produced `daily-ai-digest/output/graphify-pilot-full/MOBILE_SUMMARY.md`.
 
+## Daily digest quality follow-up
+
+- Existing implementation already covers the two-section model:
+  - `重点资讯`
+  - `生产力项目`
+- Existing tests cover 15 generated items, removal of candidate pool rendering, practice/productivity filtering, and excluding legal/safety/materially irrelevant practice items.
+- Added missing protection for same-product version-title clustering outside GitHub release URLs.
+- Added explicit test that GitHub repository search uses `pushed_at` as the item timestamp, preventing old created projects with recent pushes from being treated as 2024 news.
+
 ## Query checks
 
 - `render_feishu_post()` was found at `src/digest/generate/render.py`.

@@ -25,3 +25,7 @@
 - Target test passed: `tests/unit/test_graphify_refresh.py`.
 - Ran the real refresh script successfully.
 - Generated `daily-ai-digest/output/graphify-pilot-full/MOBILE_SUMMARY.md`.
+- Continued into daily AI digest quality fixes.
+- Added product-version title clustering so repeated same-product releases such as Claude Code/Codex versions collapse into one cluster even when URLs are not GitHub release URLs.
+- Added a GitHub repository search date guard verifying `pushed_at` is used as `published_at`.
+- Full test suite passed: 54 tests.
