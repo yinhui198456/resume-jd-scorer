@@ -1,0 +1,131 @@
+{
+  "方案A": {
+    "label": "2026-06-28 周末早餐 A",
+    "meal_type": "breakfast",
+    "total_time": "约20分钟",
+    "dishes": [
+      {
+        "category": "主食",
+        "name": "虾仁蛋饼",
+        "description": "虾仁、鸡蛋和少量面粉摊成薄饼，少油快手，孩子接受度高。【需采购】",
+        "time": "12分钟",
+        "note": "平底锅少油；虾仁需完全变色熟透。",
+        "inventory_status": "需采购",
+        "technique": "煎"
+      },
+      {
+        "category": "蛋白",
+        "name": "水煮蛋",
+        "description": "补充优质蛋白，制作稳定，适合早餐搭配。【需采购】",
+        "time": "10分钟",
+        "note": "可与豆浆机并行。",
+        "inventory_status": "需采购",
+        "technique": "煮"
+      },
+      {
+        "category": "饮品",
+        "name": "无糖豆浆",
+        "description": "豆浆机制作，不额外加糖，补充植物蛋白。【需采购】",
+        "time": "20分钟",
+        "note": "黄豆可前一晚浸泡；豆浆机自动完成。",
+        "inventory_status": "需采购",
+        "technique": "豆浆机"
+      },
+      {
+        "category": "果蔬",
+        "name": "小番茄",
+        "description": "清洗即食，补充维生素和清爽口感。【需采购】",
+        "time": "3分钟",
+        "note": "选择低酸甜口小番茄。",
+        "inventory_status": "需采购",
+        "technique": "清洗"
+      }
+    ]
+  },
+  "方案B": {
+    "label": "2026-06-28 周末早餐 B",
+    "meal_type": "breakfast",
+    "total_time": "约25分钟",
+    "dishes": [
+      {
+        "category": "主食",
+        "name": "鲜肉小馄饨",
+        "description": "小馄饨清汤煮制，主食和肉类负担适中，早餐饱腹感好。【需采购】",
+        "time": "15分钟",
+        "note": "可购买冷冻小馄饨；汤底少盐。",
+        "inventory_status": "需采购",
+        "technique": "煮"
+      },
+      {
+        "category": "蛋白",
+        "name": "蒸鸡蛋羹",
+        "description": "口感软嫩，儿童友好，补充蛋白质。【需采购】",
+        "time": "12分钟",
+        "note": "电蒸锅定时蒸制，少盐不加糖。",
+        "inventory_status": "需采购",
+        "technique": "蒸"
+      },
+      {
+        "category": "饮品",
+        "name": "牛奶",
+        "description": "补充钙和蛋白质，直接搭配即可。【需采购】",
+        "time": "2分钟",
+        "note": "可温热，不加糖。",
+        "inventory_status": "需采购",
+        "technique": "加热"
+      },
+      {
+        "category": "果蔬",
+        "name": "黄瓜条",
+        "description": "清爽解腻，切条即可，适合搭配馄饨。【需采购】",
+        "time": "5分钟",
+        "note": "去皮切条，少量盐可选。",
+        "inventory_status": "需采购",
+        "technique": "切配"
+      }
+    ]
+  },
+  "方案C": {
+    "label": "2026-06-28 周末早餐 C",
+    "meal_type": "breakfast",
+    "total_time": "约25分钟",
+    "dishes": [
+      {
+        "category": "主食",
+        "name": "紫薯饭团",
+        "description": "紫薯和米饭捏成小饭团，颜色好看，主食更有吸引力。【需采购】",
+        "time": "20分钟",
+        "note": "紫薯可前一晚蒸好；早上复热后捏饭团。",
+        "inventory_status": "需采购",
+        "technique": "蒸"
+      },
+      {
+        "category": "蛋白",
+        "name": "奶酪鸡胸片",
+        "description": "鸡胸片搭配少量奶酪，补充蛋白和钙，少油少糖。【需采购】",
+        "time": "8分钟",
+        "note": "可用即食低钠鸡胸；奶酪控制用量。",
+        "inventory_status": "需采购",
+        "technique": "复热"
+      },
+      {
+        "category": "饮品",
+        "name": "玉米汁",
+        "description": "豆浆机制作，玉米天然清甜，不额外加糖。【需采购】",
+        "time": "20分钟",
+        "note": "用鲜玉米或冷冻玉米粒，豆浆机自动完成。",
+        "inventory_status": "需采购",
+        "technique": "豆浆机"
+      },
+      {
+        "category": "果蔬",
+        "name": "蓝莓",
+        "description": "清洗即食，份量小，适合早餐搭配。【需采购】",
+        "time": "3分钟",
+        "note": "控制份量，不做甜品化处理。",
+        "inventory_status": "需采购",
+        "technique": "清洗"
+      }
+    ]
+  }
+}
