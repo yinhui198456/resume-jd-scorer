@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>daily-ai-digest-full — graphify tree viewer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      margin: 20px 0 0 24px;
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #1e3a56;
+    }
+    .controls {
+      margin: 20px 0 15px 24px;
+    }
+    button {
+      margin-right: 10px;
+      padding: 8px 18px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    button:active {
+      background: #004085;
+    }
+    #tree-container {
+      width: calc(100vw - 48px); /* Adjust for body margin/padding */
+      height: 85vh;
+      overflow: auto;
+      border-radius: 8px;
+      background: #fff;
+      margin-left: 24px;
+      margin-right: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid #ddd;
+    }
+    svg {
+      background: #fff;
+      border-radius: 8px;
+      display: block; /* Important for D3 */
+    }
+    .node circle {
+      stroke-width: 2.5px;
+    }
+    .node text { /* Base style for the <text> container */
+      font: 13px 'Segoe UI', sans-serif;
+      paint-order: stroke fill; /* Ensures text is readable over lines */
+      stroke: #fff; /* White halo */
+      stroke-width: 3px; /* Halo thickness */
+      stroke-linejoin: round;
+      stroke-opacity: 0.85; /* Halo opacity */
+    }
+    .link {
+      fill: none;
+      stroke-opacity: 0.7;
+      stroke-width: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h1>daily-ai-digest-full — Knowledge Graph</h1>
+  <div class="controls">
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button onclick="resetView()">Reset View</button>
+  </div>
+  <div id="tree-container">
+    <svg id="tree-svg" width="6000" height="8000"></svg>
+  </div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    const initialJsonData = {"name":"daily-ai-digest-full","total_count":223,"children":[{"name":"2026-06-22-daily-ai-digest-design.md","total_count":18,"children":[{"name":"Cluster Stage","total_count":1,"children":[]},{"name":"Collect Stage","total_count":1,"children":[]},{"name":"Daily AI Digest","total_count":1,"children":[]},{"name":"Deduplicate Stage","total_count":1,"children":[]},{"name":"Deliver Stage","total_count":1,"children":[]},{"name":"DigestItem","total_count":1,"children":[]},{"name":"Extract Stage","total_count":1,"children":[]},{"name":"Feishu Delivery","total_count":1,"children":[]},{"name":"Filter Stage","total_count":1,"children":[]},{"name":"MiniMax Client","total_count":1,"children":[]},{"name":"NewsItem","total_count":1,"children":[]},{"name":"Normalize Stage","total_count":1,"children":[]},{"name":"Pipeline","total_count":1,"children":[]},{"name":"RawItem","total_count":1,"children":[]},{"name":"Render Stage","total_count":1,"children":[]},{"name":"run_daily","total_count":1,"children":[]},{"name":"Summarize Stage","total_count":1,"children":[]},{"name":"Translate Stage","total_count":1,"children":[]}]},{"name":"2026-06-24-compact-feishu-post-design.md","total_count":1,"children":[{"name":"Compact Feishu Post Design","total_count":1,"children":[]}]},{"name":"2026-06-24-compact-feishu-post.md","total_count":1,"children":[{"name":"Compact Feishu Post Implementation Plan","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Daily AI digest pipeline.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Near-duplicate clustering.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Curated-source collectors.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Outbound delivery adapters.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Deterministic filtering and scoring.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Translation, summarization, and rendering.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Runnable digest jobs.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Content parsing and normalization.","total_count":1,"children":[]}]},{"name":"__init__.py","total_count":1,"children":[{"name":"Persistent storage helpers.","total_count":1,"children":[]}]},{"name":"common.py","total_count":2,"children":[{"name":"fallback_generation()","total_count":1,"children":[]},{"name":"parse_generation()","total_count":1,"children":[]}]},{"name":"config.py","total_count":1,"children":[{"name":"load_config()","total_count":1,"children":[]}]},{"name":"daily.py","total_count":18,"children":[{"name":"_candidate_flags()","total_count":1,"children":[]},{"name":"_checkpoint()","total_count":1,"children":[]},{"name":"_cluster_candidate_allowed()","total_count":1,"children":[]},{"name":"_cluster_group()","total_count":1,"children":[]},{"name":"_cluster_text()","total_count":1,"children":[]},{"name":"_default_collector()","total_count":1,"children":[]},{"name":"_dependencies()","total_count":1,"children":[]},{"name":"_practice_allowed()","total_count":1,"children":[]},{"name":"_published_at_requirements()","total_count":1,"children":[]},{"name":"_read_items()","total_count":1,"children":[]},{"name":"_requires_published_at()","total_count":1,"children":[]},{"name":"_score()","total_count":1,"children":[]},{"name":"_source_groups()","total_count":1,"children":[]},{"name":"main()","total_count":1,"children":[]},{"name":"PipelineDependencies","total_count":1,"children":[]},{"name":"run_daily()","total_count":1,"children":[]},{"name":"RunReport","total_count":1,"children":[]},{"name":"within_catch_up_window()","total_count":1,"children":[]}]},{"name":"feishu-app-options.html","total_count":3,"children":[{"name":"Compact Plain Text","total_count":1,"children":[]},{"name":"Feishu Rich Text Post","total_count":1,"children":[]},{"name":"Interactive Card","total_count":1,"children":[]}]},{"name":"feishu.py","total_count":7,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":"._send()","total_count":1,"children":[]},{"name":".get_tenant_token()","total_count":1,"children":[]},{"name":".send_post()","total_count":1,"children":[]},{"name":".send_text()","total_count":1,"children":[]},{"name":"DeliveryResult","total_count":1,"children":[]},{"name":"FeishuDelivery","total_count":1,"children":[]}]},{"name":"filters.yml","total_count":1,"children":[{"name":"Filters Configuration","total_count":1,"children":[]}]},{"name":"findings.md","total_count":3,"children":[{"name":"Current Evidence","total_count":1,"children":[]},{"name":"Requirements","total_count":1,"children":[]},{"name":"Technical Decisions","total_count":1,"children":[]}]},{"name":"github.py","total_count":3,"children":[{"name":"_collect_atom_releases()","total_count":1,"children":[]},{"name":"collect_github_releases()","total_count":1,"children":[]},{"name":"collect_github_repository_search()","total_count":1,"children":[]}]},{"name":"group.py","total_count":4,"children":[{"name":"_cluster_key()","total_count":1,"children":[]},{"name":"_release_family_key()","total_count":1,"children":[]},{"name":"_title_key()","total_count":1,"children":[]},{"name":"cluster_items()","total_count":1,"children":[]}]},{"name":"html_index.py","total_count":3,"children":[{"name":"_published_at()","total_count":1,"children":[]},{"name":"collect_html_index()","total_count":1,"children":[]},{"name":"extract_index_entries()","total_count":1,"children":[]}]},{"name":"layout-options.html","total_count":3,"children":[{"name":"Interactive Card","total_count":1,"children":[]},{"name":"Single Rich Text Briefing","total_count":1,"children":[]},{"name":"Split Into Two Messages","total_count":1,"children":[]}]},{"name":"minimax.py","total_count":3,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":".generate_text()","total_count":1,"children":[]},{"name":"MiniMaxGenerator","total_count":1,"children":[]}]},{"name":"models.py","total_count":6,"children":[{"name":"AppConfig","total_count":1,"children":[]},{"name":"DigestItem","total_count":1,"children":[]},{"name":"NewsItem","total_count":1,"children":[]},{"name":"RawItem","total_count":1,"children":[]},{"name":"StageCheckpoint","total_count":1,"children":[]},{"name":"StageStatus","total_count":1,"children":[]}]},{"name":"normalize.py","total_count":3,"children":[{"name":"canonicalize_url()","total_count":1,"children":[]},{"name":"normalize_raw_item()","total_count":1,"children":[]},{"name":"normalize_text()","total_count":1,"children":[]}]},{"name":"operations.md","total_count":3,"children":[{"name":"Feishu Delivery","total_count":1,"children":[]},{"name":"Manual Pipeline Execution","total_count":1,"children":[]},{"name":"MiniMax Configuration","total_count":1,"children":[]}]},{"name":"progress.md","total_count":4,"children":[{"name":"Phase 1: Diagnose","total_count":1,"children":[]},{"name":"Phase 2: TDD Implementation","total_count":1,"children":[]},{"name":"Phase 3: Verification","total_count":1,"children":[]},{"name":"Progress Session 2026-06-23","total_count":1,"children":[]}]},{"name":"pyproject.toml","total_count":1,"children":[{"name":"daily-ai-digest","total_count":1,"children":[]}]},{"name":"quality.py","total_count":4,"children":[{"name":"dedupe_exact()","total_count":1,"children":[]},{"name":"hard_filter()","total_count":1,"children":[]},{"name":"tag_topics()","total_count":1,"children":[]},{"name":"weighted_score()","total_count":1,"children":[]}]},{"name":"README.md","total_count":1,"children":[{"name":"Local Verification","total_count":1,"children":[]}]},{"name":"render.py","total_count":7,"children":[{"name":"_link_line()","total_count":1,"children":[]},{"name":"_section_block()","total_count":1,"children":[]},{"name":"compact_text()","total_count":1,"children":[]},{"name":"render_digest()","total_count":1,"children":[]},{"name":"render_fault_digest()","total_count":1,"children":[]},{"name":"render_feishu_post()","total_count":1,"children":[]},{"name":"render_feishu_section_posts()","total_count":1,"children":[]}]},{"name":"run_daily.sh","total_count":1,"children":[{"name":"run_daily.sh script","total_count":1,"children":[]}]},{"name":"schedule.yml","total_count":1,"children":[{"name":"Schedule Configuration","total_count":1,"children":[]}]},{"name":"source-policy.md","total_count":3,"children":[{"name":"Source Whitelist","total_count":1,"children":[]},{"name":"Tier 1 Sources","total_count":1,"children":[]},{"name":"Tier 2 Sources","total_count":1,"children":[]}]},{"name":"sources.yml","total_count":1,"children":[{"name":"Sources Configuration","total_count":1,"children":[]}]},{"name":"state.py","total_count":8,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":".create_run()","total_count":1,"children":[]},{"name":".resume_stage()","total_count":1,"children":[]},{"name":".save_checkpoint()","total_count":1,"children":[]},{"name":"_json_default()","total_count":1,"children":[]},{"name":"atomic_write_json()","total_count":1,"children":[]},{"name":"run_lock()","total_count":1,"children":[]},{"name":"StateStore","total_count":1,"children":[]}]},{"name":"task_plan.md","total_count":5,"children":[{"name":"Fix Digest Quota and Degraded Collection","total_count":1,"children":[]},{"name":"Task Plan Phase 1: Diagnose","total_count":1,"children":[]},{"name":"Task Plan Phase 2: TDD Implementation","total_count":1,"children":[]},{"name":"Task Plan Phase 3: Verification","total_count":1,"children":[]},{"name":"Task Plan Phase 4: Handoff","total_count":1,"children":[]}]},{"name":"test_cluster.py","total_count":3,"children":[{"name":"test_equal_normalized_titles_cluster()","total_count":1,"children":[]},{"name":"test_same_github_release_repository_versions_cluster()","total_count":1,"children":[]},{"name":"test_shared_topic_does_not_merge_unrelated_titles()","total_count":1,"children":[]}]},{"name":"test_collect.py","total_count":20,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".get()","total_count":1,"children":[]},{"name":".get()","total_count":1,"children":[]},{"name":".json()","total_count":1,"children":[]},{"name":".raise_for_status()","total_count":1,"children":[]},{"name":"FakeResponse","total_count":1,"children":[]},{"name":"FakeSession","total_count":1,"children":[]},{"name":"SequencedSession","total_count":1,"children":[]},{"name":"test_collect_github_releases_falls_back_to_atom_on_rate_limit()","total_count":1,"children":[]},{"name":"test_collect_github_releases_maps_api_payload()","total_count":1,"children":[]},{"name":"test_collect_github_repository_search_maps_hot_ai_projects()","total_count":1,"children":[]},{"name":"test_collect_html_index_accepts_configured_allowed_hosts_for_practice_sources()","total_count":1,"children":[]},{"name":"test_collect_html_index_extracts_atom_published_date()","total_count":1,"children":[]},{"name":"test_collect_html_index_extracts_rss_pubdate()","total_count":1,"children":[]},{"name":"test_collect_html_index_uses_rss_description_as_raw_body()","total_count":1,"children":[]},{"name":"test_extract_index_entries_accepts_openai_rss()","total_count":1,"children":[]},{"name":"test_extract_index_entries_keeps_article_links()","total_count":1,"children":[]},{"name":"test_extract_index_entries_sorts_feed_entries_by_published_date_descending()","total_count":1,"children":[]}]},{"name":"test_config.py","total_count":4,"children":[{"name":"set_required_environment()","total_count":1,"children":[]},{"name":"test_config_loads_shared_environment()","total_count":1,"children":[]},{"name":"test_config_rejects_weights_that_do_not_sum_to_one()","total_count":1,"children":[]},{"name":"write_configs()","total_count":1,"children":[]}]},{"name":"test_daily.py","total_count":25,"children":[{"name":".__call__()","total_count":1,"children":[]},{"name":".__call__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".send_post()","total_count":1,"children":[]},{"name":".send_text()","total_count":1,"children":[]},{"name":"config()","total_count":1,"children":[]},{"name":"FakeCollector","total_count":1,"children":[]},{"name":"FakeDelivery","total_count":1,"children":[]},{"name":"FakeGenerator","total_count":1,"children":[]},{"name":"raw()","total_count":1,"children":[]},{"name":"raw_ranked()","total_count":1,"children":[]},{"name":"raw_section()","total_count":1,"children":[]},{"name":"Result","total_count":1,"children":[]},{"name":"section_config()","total_count":1,"children":[]},{"name":"test_digest_applies_top_story_quota_without_candidates()","total_count":1,"children":[]},{"name":"test_digest_reserves_sections_for_github_and_practice_sources()","total_count":1,"children":[]},{"name":"test_fault_run_can_recollect_with_same_run_id()","total_count":1,"children":[]},{"name":"test_normal_digest_uses_compact_post_and_one_primary_link()","total_count":1,"children":[]},{"name":"test_partial_source_failure_persists_source_health()","total_count":1,"children":[]},{"name":"test_practice_section_excludes_legal_safety_and_keeps_productivity_items()","total_count":1,"children":[]},{"name":"test_productivity_sources_do_not_enter_top_stories()","total_count":1,"children":[]},{"name":"test_success_writes_all_stage_checkpoints_and_retry_is_idempotent()","total_count":1,"children":[]},{"name":"test_total_source_failure_delivers_fault_digest()","total_count":1,"children":[]}]},{"name":"test_default_collector.py","total_count":1,"children":[{"name":"test_default_collector_includes_github_repository_search()","total_count":1,"children":[]}]},{"name":"test_feishu.py","total_count":10,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":".__init__()","total_count":1,"children":[]},{"name":".json()","total_count":1,"children":[]},{"name":".post()","total_count":1,"children":[]},{"name":".queue()","total_count":1,"children":[]},{"name":".raise_for_status()","total_count":1,"children":[]},{"name":"FakeResponse","total_count":1,"children":[]},{"name":"FakeSession","total_count":1,"children":[]},{"name":"test_send_post_targets_chat_with_post_payload()","total_count":1,"children":[]},{"name":"test_send_targets_chat_id()","total_count":1,"children":[]}]},{"name":"test_minimax.py","total_count":7,"children":[{"name":".__init__()","total_count":1,"children":[]},{"name":".create()","total_count":1,"children":[]},{"name":"FakeCompletions","total_count":1,"children":[]},{"name":"test_fallback_marks_english_translation_pending()","total_count":1,"children":[]},{"name":"test_minimax_generator_uses_configured_model()","total_count":1,"children":[]},{"name":"test_parse_generation_accepts_minimax_think_prefix()","total_count":1,"children":[]},{"name":"test_parse_generation_rejects_non_json()","total_count":1,"children":[]}]},{"name":"test_models.py","total_count":1,"children":[{"name":"test_stage_status_contract()","total_count":1,"children":[]}]},{"name":"test_normalize.py","total_count":3,"children":[{"name":"raw_item()","total_count":1,"children":[]},{"name":"test_canonicalize_url_removes_tracking_parameters()","total_count":1,"children":[]},{"name":"test_normalize_raw_item_is_stable()","total_count":1,"children":[]}]},{"name":"test_quality.py","total_count":5,"children":[{"name":"item()","total_count":1,"children":[]},{"name":"test_dedupe_exact_keeps_first_stable_item()","total_count":1,"children":[]},{"name":"test_hard_filter_rejects_blocked_and_stale_items()","total_count":1,"children":[]},{"name":"test_hard_filter_rejects_missing_published_at_when_required()","total_count":1,"children":[]},{"name":"test_weighted_score_is_reproducible()","total_count":1,"children":[]}]},{"name":"test_render.py","total_count":7,"children":[{"name":"test_compact_text_caps_output_at_100_characters()","total_count":1,"children":[]},{"name":"test_fault_digest_is_non_empty_and_actionable()","total_count":1,"children":[]},{"name":"test_feishu_post_is_compact_and_uses_one_link()","total_count":1,"children":[]},{"name":"test_feishu_post_keeps_fifteen_items_visible_in_compact_rows()","total_count":1,"children":[]},{"name":"test_feishu_post_renders_productivity_section()","total_count":1,"children":[]},{"name":"test_feishu_section_posts_split_sections_into_separate_messages()","total_count":1,"children":[]},{"name":"test_normal_digest_keeps_source_link()","total_count":1,"children":[]}]},{"name":"test_schedule.py","total_count":2,"children":[{"name":"test_catch_up_window_rejects_late_start()","total_count":1,"children":[]},{"name":"test_timer_starts_at_0845_project_timezone()","total_count":1,"children":[]}]},{"name":"test_state.py","total_count":5,"children":[{"name":"checkpoint()","total_count":1,"children":[]},{"name":"test_atomic_write_replaces_complete_json()","total_count":1,"children":[]},{"name":"test_resume_returns_interrupted_stage()","total_count":1,"children":[]},{"name":"test_run_lock_rejects_second_holder()","total_count":1,"children":[]},{"name":"test_succeeded_stage_is_not_repeated()","total_count":1,"children":[]}]},{"name":"topics.yml","total_count":1,"children":[{"name":"Topics Configuration","total_count":1,"children":[]}]},{"name":"validate_config.sh","total_count":1,"children":[{"name":"validate_config.sh script","total_count":1,"children":[]}]}]};
+
+    function transformData(jsonData) {
+        // Helper function to recursively build the children structure
+        function processNode(node, parentL1StageName) {
+            let displayName = node.name;
+            // Append total_count if it exists and is not already in the name
+            if (node.total_count !== undefined) {
+                if (!/\(Total Count: \d+\)$/.test(displayName)) {
+                    displayName += ` (Total Count: ${node.total_count})`;
+                }
+            }
+
+            const newNode = { name: displayName };
+
+            if (parentL1StageName === "Root") {
+                 newNode.originalStageName = node.name;
+            } else {
+                newNode.originalStageName = parentL1StageName;
+            }
+
+            if (node.children && node.children.length > 0) {
+                const stageNameToPass = (parentL1StageName === "Root") ? node.name : parentL1StageName;
+                newNode.children = node.children.map(child => processNode(child, stageNameToPass));
+            }
+
+            return newNode;
+        }
+
+        let rootDisplayName = jsonData.name;
+        if (jsonData.total_count !== undefined && !/\(Total Count: \d+\)$/.test(rootDisplayName)) {
+            rootDisplayName += ` (Total Count: ${jsonData.total_count})`;
+        }
+
+        return {
+            name: rootDisplayName,
+            originalStageName: "Root",
+            children: (jsonData.children || []).map(child => processNode(child, "Root"))
+        };
+    }
+
+    const treeData = transformData(initialJsonData);
+
+    // Auto-populated phaseColors: every depth-1 child of the root gets
+    // a stable colour from a bigger palette so all top-level dirs are
+    // distinguishable.
+    const PALETTE = [
+      ["#3498DB","#2980B9","#AED6F1"], ["#2ECC71","#27AE60","#A9DFBF"],
+      ["#E74C3C","#C0392B","#F5B7B1"], ["#9B59B6","#8E44AD","#D7BDE2"],
+      ["#F39C12","#D68910","#FAD7A0"], ["#1ABC9C","#117864","#A2D9CE"],
+      ["#34495E","#1B2631","#ABB2B9"], ["#E67E22","#BA4A00","#F5CBA7"],
+      ["#16A085","#0E6655","#A2D9CE"], ["#D35400","#A04000","#EDBB99"],
+      ["#7F8C8D","#566573","#D5DBDB"], ["#C0392B","#7B241C","#F5B7B1"],
+      ["#2E86C1","#1B4F72","#A9CCE3"], ["#28B463","#196F3D","#A9DFBF"],
+      ["#AF7AC5","#6C3483","#D2B4DE"],
+    ];
+    const phaseColors = { "Root": { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+                          "Default": { fill: "#BDC3C7", stroke: "#95A5A6", collapsedFill: "#ECF0F1" } };
+    (initialJsonData.children || []).forEach((c, i) => {
+      const pal = PALETTE[i % PALETTE.length];
+      phaseColors[c.name] = { fill: pal[0], stroke: pal[1], collapsedFill: pal[2] };
+    });
+
+    const levelSpecificPalettes = {
+      0: { fill: "#4A4A4A", stroke: "#333333", collapsedFill: "#6C757D" },
+      2: { fill: "#6ab04c", stroke: "#508a38", collapsedFill: "#a3d391" },
+      3: { fill: "#f0932b", stroke: "#d0730f", collapsedFill: "#f6c07e" },
+      4: { fill: "#be2edd", stroke: "#a01cb3", collapsedFill: "#e08bf2" },
+      5: { fill: "#00a8ff", stroke: "#007ac1", collapsedFill: "#74d2ff" },
+      6: { fill: "#e55039", stroke: "#c23620", collapsedFill: "#f09a8d" },
+      default: { fill: "#747d8c", stroke: "#57606f", collapsedFill: "#a4b0be" }
+    };
+
+    const svgElement = d3.select("#tree-svg");
+    const initialSvgWidth = +svgElement.attr("width");
+    const initialSvgHeight = +svgElement.attr("height");
+    const margin = { top: 40, right: 120, bottom: 80, left: 450 };
+    let width = initialSvgWidth - margin.left - margin.right;
+    let height = initialSvgHeight - margin.top - margin.bottom;
+    const duration = 500;
+    let nodeCounter = 0;
+    const g = svgElement.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    const treemap = d3.tree().nodeSize([40, 0]);
+    let rootNode = d3.hierarchy(treeData, d => d.children);
+    rootNode.x0 = 0;
+    rootNode.y0 = 0;
+
+    if (rootNode.children) {
+      rootNode.children.forEach(d_child => {
+        if (d_child.children) { collapseBranch(d_child); }
+      });
+    }
+    updateTree(rootNode);
+
+    function collapseBranch(d) { if (d.children) { d._children = d.children; d._children.forEach(collapseBranch); d.children = null; } }
+    function expandBranch(d) { if (d._children) { d.children = d._children; d._children = null; } if (d.children) { d.children.forEach(expandBranch); } }
+    window.expandAll = () => { expandBranch(rootNode); updateTree(rootNode); };
+    window.collapseAll = () => { if (rootNode.children) { rootNode.children.forEach(collapseBranch); } updateTree(rootNode); };
+    window.resetView = () => { if (rootNode.children) { rootNode.children.forEach(d_child => { if (d_child.children || d_child._children) { collapseBranch(d_child); } }); } if (rootNode._children && !rootNode.children) { rootNode.children = rootNode._children; rootNode._children = null; } updateTree(rootNode); };
+
+    function updateTree(source) {
+      const treeLayoutData = treemap(rootNode);
+      let nodes = treeLayoutData.descendants();
+      let links = treeLayoutData.descendants().slice(1);
+
+      let minX = 0;
+      let maxX = 0;
+      if (nodes.length > 0) {
+        minX = d3.min(nodes, d => d.x);
+        maxX = d3.max(nodes, d => d.x);
+      }
+
+      let neededHeight = Math.max(initialSvgHeight, maxX - minX + margin.top + margin.bottom + 100);
+      svgElement.transition().duration(duration / 2).attr("height", neededHeight);
+      g.transition().duration(duration / 2).attr("transform", `translate(${margin.left},${margin.top - minX + 40})`);
+
+      nodes.forEach(d => { d.y = d.depth * 400; }); // Adjust horizontal separation if needed
+
+      const node = g.selectAll('g.node').data(nodes, d => d.id || (d.id = ++nodeCounter));
+      const nodeEnter = node.enter().append('g')
+        .attr('class', d => "node" + (d.children || d._children ? " node--internal" : " node--leaf") + (d._children ? " _children" : ""))
+        .attr('transform', d => `translate(${source.y0},${source.x0})`)
+        .on('click', (event, d) => { if (d.children) { d._children = d.children; d.children = null; } else if (d._children) { d.children = d._children; d._children = null; } updateTree(d); })
+        .style('cursor', d => (d.children || d._children) ? 'pointer' : 'default');
+
+      nodeEnter.append('circle').attr('r', 1e-6);
+
+      nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .attr('x', d => d.children || d._children ? -14 : 14)
+        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
+        .style("fill-opacity", 1e-6)
+        .call(wrapText, 380);
+
+      const nodeUpdate = nodeEnter.merge(node);
+      nodeUpdate.transition().duration(duration)
+        .attr('transform', d => `translate(${d.y},${d.x})`)
+        .attr('class', d => "node" + (d.children ? " node--internal" : " node--leaf") + (d._children ? " node--internal _children" : ""));
+
+      nodeUpdate.select('circle').attr('r', 8.5)
+        .style('fill', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            if (d._children) return palette.collapsedFill;
+            if (d.children) return palette.fill;
+            return "#fff";
+        })
+        .style('stroke', d => {
+            let palette;
+            if (d.depth === 0) {
+                palette = levelSpecificPalettes[0];
+            } else if (d.depth === 1) {
+                palette = phaseColors[d.data.originalStageName] || phaseColors.Default;
+            } else {
+                palette = levelSpecificPalettes[d.depth] || levelSpecificPalettes.default;
+            }
+            return palette.stroke;
+        });
+      nodeUpdate.select('text').style("fill-opacity", 1).call(wrapText, 380);
+
+      const nodeExit = node.exit().transition().duration(duration).attr('transform', d => `translate(${source.y},${source.x})`).remove();
+      nodeExit.select('circle').attr('r', 1e-6);
+      nodeExit.select('text').style('fill-opacity', 1e-6);
+
+      const link = g.selectAll('path.link').data(links, d => d.id);
+      const linkEnter = link.enter().insert('path', "g").attr('class', 'link').attr('d', d => { const o = { x: source.x0, y: source.y0 }; return diagonal(o, o); });
+
+      linkEnter.merge(link).transition().duration(duration).attr('d', d => diagonal(d, d.parent))
+        .style('stroke', d => {
+            const sourceNode = d.parent;
+            if (!sourceNode) return phaseColors.Default.stroke;
+            const l1AncestorName = sourceNode.data.originalStageName;
+            const colorPalette = phaseColors[l1AncestorName] || phaseColors.Default;
+            return colorPalette.stroke;
+        });
+      link.exit().transition().duration(duration).attr('d', d => { const o = { x: source.x, y: source.y }; return diagonal(o, o); }).remove();
+      nodes.forEach(d => { d.x0 = d.x; d.y0 = d.y; });
+    }
+
+    function diagonal(s, d) { return `M ${s.y} ${s.x} C ${(s.y + d.y) / 2} ${s.x}, ${(s.y + d.y) / 2} ${d.x}, ${d.y} ${d.x}`; }
+
+    function wrapText(textElements, maxWidth) {
+        const textPartColors = {
+            name: '#343a40',
+            count: '#0056b3'
+        };
+        const countRegex = /(\s\(Total Count: \d+\))$/;
+
+        textElements.each(function () {
+            const textD3 = d3.select(this);
+            const originalNodeText = textD3.datum().data.name;
+            const x = parseFloat(textD3.attr("x") || 0);
+            const initialDy = textD3.attr("dy");
+            const textAnchor = textD3.attr("text-anchor");
+            const lineHeight = 1.1;
+
+            textD3.text(null);
+
+            let namePart = originalNodeText;
+            let countPartText = "";
+
+            const countMatch = originalNodeText.match(countRegex);
+            if (countMatch && originalNodeText.endsWith(countMatch[0])) {
+                namePart = originalNodeText.substring(0, originalNodeText.length - countMatch[0].length).trim();
+                countPartText = countMatch[0].trim();
+            }
+
+            const tokens = [];
+            namePart.split(/\s+/).filter(Boolean).forEach(word => {
+                tokens.push({ text: word, type: 'name' });
+            });
+            if (countPartText) {
+                tokens.push({ text: countPartText, type: 'count' });
+            }
+
+            if (tokens.length === 0 && originalNodeText) {
+                tokens.push({ text: originalNodeText, type: 'name' });
+            }
+
+            let currentTspan = textD3.append("tspan").attr("x", x).attr("dy", initialDy);
+            if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+
+            let lineTokens = [];
+
+            for (let i = 0; i < tokens.length; i++) {
+                const tokenObj = tokens[i];
+
+                lineTokens.push(tokenObj);
+                currentTspan.text(lineTokens.map(t => t.text).join(" "));
+
+                if (currentTspan.node().getComputedTextLength() > maxWidth && lineTokens.length > 1) {
+                    lineTokens.pop();
+
+                    currentTspan.text(null);
+                    lineTokens.forEach((prevToken, idx) => {
+                        currentTspan.append("tspan")
+                            .text((idx > 0 ? " " : "") + prevToken.text)
+                            .style("fill", textPartColors[prevToken.type] || textPartColors.name)
+                            .style("font-weight", prevToken.type === 'count' ? "bold" : "normal");
+                    });
+
+                    lineTokens = [tokenObj];
+                    currentTspan = textD3.append("tspan").attr("x", x).attr("dy", lineHeight + "em");
+                    if (textAnchor === "end") currentTspan.attr("text-anchor", "end");
+                }
+            }
+
+            currentTspan.text(null);
+            lineTokens.forEach((token, idx) => {
+                currentTspan.append("tspan")
+                    .text((idx > 0 ? " " : "") + token.text)
+                    .style("fill", textPartColors[token.type] || textPartColors.name)
+                    .style("font-weight", token.type === 'count' ? "bold" : "normal");
+            });
+
+            if (textD3.selectAll("tspan > tspan").empty() && textD3.select("tspan").text().length === 0 && originalNodeText) {
+                let t = textD3.select("tspan");
+                let displayText = originalNodeText;
+                t.text(displayText).style("fill", textPartColors.name);
+                if (t.node() && t.node().getComputedTextLength() > maxWidth && displayText.length > 20) {
+                    let estimatedChars = Math.floor(maxWidth / (t.node().getComputedTextLength()/displayText.length) );
+                    displayText = displayText.substring(0, Math.max(0, estimatedChars - 3)) + "...";
+                    t.text(displayText);
+                }
+            }
+        });
+    }
+  </script>
+</body>
+</html>
