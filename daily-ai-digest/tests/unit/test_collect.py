@@ -245,3 +245,39 @@ def test_collect_github_repository_search_maps_hot_ai_projects():
         "order": "desc",
         "per_page": 5,
     }
+
+
+def test_collect_github_repository_search_uses_pushed_at_as_published_at():
+    payload = {
+        "items": [
+            {
+                "id": 101,
+                "full_name": "example/agent-kit",
+                "html_url": "https://github.com/example/agent-kit",
+                "description": "Agent workflow framework with MCP tools",
+                "stargazers_count": 12345,
+                "forks_count": 321,
+                "created_at": "2024-01-01T00:00:00Z",
+                "updated_at": "2026-06-20T12:00:00Z",
+                "pushed_at": "2026-06-25T11:00:00Z",
+                "language": "Python",
+                "topics": ["agents", "mcp", "llm"],
+                "owner": {"login": "example"},
+            }
+        ]
+    }
+    session = FakeSession(payload)
+
+    items = collect_github_repository_search(
+        {
+            "id": "github-hot-ai-projects",
+            "tier": 2,
+            "query": "topic:agents topic:llm stars:>500",
+            "limit": 5,
+        },
+        session,
+        "run-hot",
+        datetime(2026, 6, 25, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    assert items[0].published_at == "2026-06-25T11:00:00Z"
