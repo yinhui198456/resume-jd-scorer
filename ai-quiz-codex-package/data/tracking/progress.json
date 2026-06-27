@@ -26,7 +26,7 @@
     "M01_LLM基础": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-24",
+      "last_studied": "2026-06-27",
       "topics_done": 77,
       "total_topics": 81
     },
@@ -75,7 +75,7 @@
     "M08_Agent架构": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-25",
+      "last_studied": "2026-06-27",
       "topics_done": 38,
       "total_topics": 88
     },
@@ -89,14 +89,14 @@
     "M10_MultiAgent": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-25",
+      "last_studied": "2026-06-27",
       "topics_done": 36,
       "total_topics": 70
     },
     "M11_RAG": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-25",
+      "last_studied": "2026-06-27",
       "topics_done": 20,
       "total_topics": 80
     },
@@ -138,8 +138,8 @@
     "M17_工程化": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-25",
-      "topics_done": 4,
+      "last_studied": "2026-06-27",
+      "topics_done": 5,
       "total_topics": 72
     },
     "M18_系统设计": {
@@ -1064,15 +1064,20 @@
     "Q-M08_Agent架构33": {
       "module": "M08_Agent架构",
       "first_learned": "2026-05-27",
-      "last_reviewed": "2026-05-30",
-      "review_count": 1,
-      "next_review": "2026-05-31",
-      "confidence": 4,
+      "last_reviewed": "2026-06-27",
+      "review_count": 2,
+      "next_review": "2026-07-04",
+      "confidence": 5,
       "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
           "confidence": 4,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-27",
+          "confidence": 5,
           "result": "pass"
         }
       ],
@@ -5026,10 +5031,10 @@
     "Q-M01_LLM基础28": {
       "module": "M01_LLM基础",
       "first_learned": "2026-06-03",
-      "last_reviewed": "2026-06-07",
-      "review_count": 7,
-      "next_review": null,
-      "confidence": 1,
+      "last_reviewed": "2026-06-27",
+      "review_count": 9,
+      "next_review": "2026-09-25",
+      "confidence": 3,
       "status": "mastered",
       "review_history": [
         {
@@ -5066,6 +5071,16 @@
           "date": "2026-06-07",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-27",
+          "confidence": 2,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-27",
+          "confidence": 3,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -6107,9 +6122,9 @@
     "Q-M10_MultiAgent16": {
       "module": "M10_MultiAgent",
       "first_learned": "2026-06-07",
-      "last_reviewed": "2026-06-07",
-      "review_count": 2,
-      "next_review": "2026-06-14",
+      "last_reviewed": "2026-06-27",
+      "review_count": 4,
+      "next_review": "2026-07-27",
       "confidence": 1,
       "status": "learning",
       "review_history": [
@@ -6120,6 +6135,16 @@
         },
         {
           "date": "2026-06-07",
+          "confidence": 1,
+          "result": "fail"
+        },
+        {
+          "date": "2026-06-27",
+          "confidence": 1,
+          "result": "fail"
+        },
+        {
+          "date": "2026-06-27",
           "confidence": 1,
           "result": "fail"
         }
@@ -8440,15 +8465,20 @@
     "Q-M11_RAG13": {
       "module": "M11_RAG",
       "first_learned": "2026-06-09",
-      "last_reviewed": "2026-06-09",
-      "review_count": 2,
-      "next_review": "2026-06-16",
+      "last_reviewed": "2026-06-27",
+      "review_count": 3,
+      "next_review": "2026-07-11",
       "confidence": 1,
       "status": "learning",
       "review_history": [
         {
           "date": "2026-06-09",
           "confidence": 2,
+          "result": "fail"
+        },
+        {
+          "date": "2026-06-27",
+          "confidence": 1,
           "result": "fail"
         }
       ],
@@ -13088,6 +13118,22 @@
       ],
       "wrong_count": 0,
       "result": "pass"
+    },
+    "Q-M17_工程化01": {
+      "module": "M17_工程化",
+      "confidence": 5,
+      "status": "reviewing",
+      "first_learned": "2026-06-27",
+      "last_reviewed": "2026-06-27",
+      "review_count": 1,
+      "next_review": "2026-06-30",
+      "review_history": [
+        {
+          "date": "2026-06-27",
+          "confidence": 5,
+          "result": "pass"
+        }
+      ]
     }
   },
   "study_streak": 0,
