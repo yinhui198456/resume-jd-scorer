@@ -2,7 +2,13 @@
 
 当用户在本仓库中发出“周末午餐建议”、询问周末吃什么、午餐方案、家庭备餐计划、现有食材推荐、确认菜单或饭后菜品反馈时，优先使用 `$weekend-lunch-plan` skill。
 
-该 skill 位于 `.agents/skills/weekend-lunch-plan/SKILL.md`。如果隐式触发不稳定，可显式使用：
+Skill主源位于 `/opt/personal-agent-workspace/skills/weekend-lunch-plan/`。
+
+项目内 `.agents/skills/weekend-lunch-plan` 只能是指向主源目录的 symlink，不维护第二份 Skill 内容。
+
+兼容入口 `.agents/skills/weekend-lunch-plan/SKILL.md` 仍可读取，但实际内容来自工作区主源。
+
+如果隐式触发不稳定，可显式使用：
 
 ```text
 $weekend-lunch-plan 周末午餐建议

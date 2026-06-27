@@ -18,17 +18,37 @@
 7. 所有结论必须基于当前工作区文件，不要凭空假设已有文件内容。
 8. 对话内输出大段内容时必须做轻量排版，尤其是飞书 bot 场景：按主题分块、块之间留空行、优先使用短编号列表，每块控制在 3-7 条短句，避免长段落和大表格；内容过长时分多条消息发送。
 
+## Skill Directory Standard
+
+1. 自定义项目 Skill 的唯一主源目录是：
+   `/opt/personal-agent-workspace/skills/<skill-name>/`
+2. `skills/<skill-name>/` 内维护完整 Skill 内容，包括 `SKILL.md`、`scripts/`、`templates/`、`references/` 等。
+3. 项目内 `.agents/skills/<skill-name>` 只能是指向主源目录的 symlink，不能维护第二份 Skill 内容。
+4. Claude Code 的 `~/.claude/skills/<skill-name>` 只能是指向主源目录的 symlink，或由 `sync-skills.sh` 从主源同步出的副本。
+5. 目录名应与 `SKILL.md` frontmatter 的 `name` 保持一致；历史短名只能作为 symlink alias。
+6. 修改 Skill 时只改 `skills/<skill-name>/` 主源；禁止直接修改项目内 `.agents/skills/` 或 `~/.claude/skills/` 的副本。
+7. 详细规范维护在 `docs/SKILLS_UNIFIED.md`，同步/校验脚本为 `sync-skills.sh`。
+
 ## Shared Skills
 
 ### AI刷题
-Skill目录：
+Skill主源：
+/opt/personal-agent-workspace/skills/ai-quiz
+
+项目目录：
 /opt/personal-agent-workspace/ai-quiz-codex-package
 
 涉及题库、学习进度、错题、学习日志写入时，必须使用锁：
 /opt/personal-agent-workspace/.locks/ai-quiz.lock
 
 ### 周末午餐推荐
-Skill目录：
+Skill主源：
+/opt/personal-agent-workspace/skills/weekend-lunch-plan
+
+兼容别名：
+/opt/personal-agent-workspace/skills/weekend-lunch -> weekend-lunch-plan
+
+项目目录：
 /opt/personal-agent-workspace/weekend-lunch-plan-codex
 
 涉及库存、偏好、历史菜单、复盘记录写入时，必须使用锁：

@@ -1,4 +1,22 @@
+---
+name: ai-quiz
+description: 当用户说“开始AI刷题”、“刷题”、“下一题”，回答 A/B/C/D/不会，或询问 AI 刷题进度、错题、复习计划时使用。维护 AI 题库、学习进度、即时判题、复习调度和学习日志；所有项目代码和数据以 /opt/personal-agent-workspace/ai-quiz-codex-package 为准。
+---
+
 # AI刷题 Skill
+
+##  重要：代码位置
+
+**所有代码统一维护在工作区**：
+- Skill 定义：`/opt/personal-agent-workspace/skills/ai-quiz/SKILL.md`
+- 项目代码：`/opt/personal-agent-workspace/ai-quiz-codex-package/`
+
+CC 通过 `~/.claude/skills/ai-quiz/SKILL.md` 访问（此文件应与工作区保持同步）。
+
+**同步命令**：
+```bash
+cp /opt/personal-agent-workspace/skills/ai-quiz/SKILL.md ~/.claude/skills/ai-quiz/SKILL.md
+```
 
 ## Purpose
 用于每日 AI 知识点学习、题库抽题、答题记录、错题跟踪和学习进度维护。
@@ -31,120 +49,42 @@ flock -x /opt/personal-agent-workspace/.locks/ai-quiz.lock -c '<写入命令>'
 ### Core Components
 
 ```
-ai-quiz-codex-package/
-├── engine/
-│   └── quiz_engine.py      # 核心引擎：题目选择、去重、间隔复习、数据写入
-├── tools/
-│   ├── quiz_cli.py         # CLI 工具：启动会话、获取题目、提交答案
-│   ├── sync_progress.py    # 同步工具：同步题库和进度
-│   ├── get_question.py     # 单题获取工具
-│   └── ...                 # 其他工具
-├── data/
-│   ├── question-bank/
-│   │   └── bank.json       # 题库
-│   ├── tracking/
-│   │   ── progress.json   # 学习进度
-│   └── study-logs/         # 学习日志
+/opt/personal-agent-workspace/
+├── skills/
+│   └── ai-quiz/
+│       └── SKILL.md          # Skill 定义（统一维护位置）
+└── ai-quiz-codex-package/
+    ├── engine/
+    │   └── quiz_engine.py    # 核心引擎
+    ├── tools/
+    │   └── quiz_cli.py       # CLI 工具
+    ├── data/
+    │   ├── question-bank/
+    │   │   └── bank.json
+    │   ├── tracking/
+    │   │   └── progress.json
+    │   └── study-logs/
+    └── docs/
+        ├── CODE_REVIEW.md
+        └── 修复总结.md
 ```
 
-### Quiz Engine Features
-
-**quiz_engine.py** 实现了以下核心功能：
-
-1. **题目去重** (QuizSession.presented_questions)
-   - 跟踪已展示但未提交的题目
-   - 避免同一题目在同一会话中重复出现
-
-2. **智能出题策略**
-   - 错题优先 (confidence ≤ 2)
-   - 到期复习优先
-   - 薄弱模块优先 (进度 < 10%)
-   - 轮换机制避免同一模块连续出题
-
-3. **即时写入**
-   - 每答完一题立即保存到 progress.json
-   - 使用文件锁保证并发安全
-   - 断线不丢失数据
-
-4. **标准化输出**
-   - 固定回复模板，减少变体
-   - 正确答案: `✅ **正确！** 答案是 {answer}。`
-   - 错误答案: `❌ **错误！** 正确答案是 **{answer}**。\n\n**解析**：{explanation}`
-   - 不会回答: `正确答案是 **{answer}**。\n\n**解析**：{explanation}`
-
-5. **修复的模块进度逻辑**
-   - 只有新学题目才增加 topics_done
-   - 所有题目都更新 last_studied
-   - 明确区分新学和复习
-
-### CLI Commands
+### Usage
 
 ```bash
 # 启动刷题会话
-python tools/quiz_cli.py start [mode]
-# mode: mixed(默认), review, new, wrong
-
-# 获取题目
-python tools/quiz_cli.py get <mode> [limit] [modules...]
-# mode: review, new, wrong, due
+cd /opt/personal-agent-workspace/ai-quiz-codex-package
+python tools/quiz_cli.py start mixed
 
 # 提交答案
-python tools/quiz_cli.py submit <qid> <answer>
-# answer: A/B/C/D/不会
+python tools/quiz_cli.py submit Q-xxx A
 
 # 查看统计
 python tools/quiz_cli.py stats
-
-# 查看会话信息
-python tools/quiz_cli.py session-info
 ```
 
-## Usage Workflow
+## Code Review
+详见 `docs/CODE_REVIEW.md`
 
-### Standard Quiz Session
-
-1. **启动会话**
-   ```
-   用户: 开始AI刷题
-   Agent: python tools/quiz_cli.py start mixed
-   ```
-
-2. **逐题作答**
-   ```
-   用户: A
-   Agent: python tools/quiz_cli.py submit Q-xxx A
-   # 即时反馈，数据已保存
-   ```
-
-3. **查看进度**
-   ```
-   用户: 今天进度如何？
-   Agent: python tools/quiz_cli.py stats
-   ```
-
-### Manual Mode (Legacy)
-
-如果需要手动控制流程：
-
-1. 使用 `engine/quiz_engine.py` 直接调用
-2. 遵循 Data Rules 和 Concurrency Rules
-3. 确保题目去重和即时写入
-
-## Study Log Generation
-
-学习日志自动生成路径：
-`data/study-logs/reminder-{YYYY-MM-DD}.md`
-
-包含内容：
-- 今日答题概况
-- 各轮次详情
-- 错题汇总
-- 薄弱模块
-- 备注和建议
-
-## Error Handling
-
-1. **题目不存在**: 返回错误提示，不崩溃
-2. **文件锁定失败**: 重试 3 次后报错
-3. **数据损坏**: 从 backup 恢复（如果有）
-4. **并发冲突**: 使用 flock 串行化写操作
+## 修复总结
+详见 `docs/修复总结.md`
