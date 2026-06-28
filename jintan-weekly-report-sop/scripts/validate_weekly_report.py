@@ -124,12 +124,33 @@ def find_empty_numbered_paragraphs(doc):
             for cell_idx, cell in enumerate(row.cells):
                 for para_idx, para in enumerate(cell.paragraphs):
                     text = para.text.strip()
-                    ppr = para._p.pPr
-                    has_numbering = ppr is not None and ppr.numPr is not None
+                    pPr = para._p.find(qn('w:pPr'))
+                    has_numbering = pPr is not None and pPr.find(qn('w:numPr')) is not None
                     if not text and has_numbering:
                         issues.append(
                             f'✗ [L1] 空编号段落: table={table_idx}, row={row_idx}, cell={cell_idx}, paragraph={para_idx}'
                         )
+    return issues
+
+
+def find_duplicate_cell_content(doc):
+    """Detect rows where all non-empty cells contain identical text.
+
+    This typically indicates a merged cell was rendered as multiple
+    duplicate cells by the producer and will show up as repeated text
+    or phantom numbering in PDF output.
+    """
+    issues = []
+    if not doc.tables:
+        return issues
+    table = doc.tables[0]
+    for row_idx, row in enumerate(table.rows):
+        texts = [cell.text.strip() for cell in row.cells]
+        non_empty = [t for t in texts if t]
+        if len(non_empty) > 1 and len(set(non_empty)) == 1:
+            issues.append(
+                f'✗ [L3] Row {row_idx} 存在跨单元格重复内容，疑似合并单元格异常: {non_empty[0][:40]}...'
+            )
     return issues
 
 
@@ -264,6 +285,14 @@ def run_validation(doc_path, source_data):
         passes.append(f'✅ [L3] 里程碑图片: 已嵌入 ({img_count} 张)')
     else:
         issues.append('✗ [L3] 里程碑图片: 未找到嵌入图片')
+
+    duplicate_issues = find_duplicate_cell_content(doc)
+    if duplicate_issues:
+        issues.extend(duplicate_issues[:5])
+        if len(duplicate_issues) > 5:
+            issues.append(f'✗ [L3] 重复内容: 另有 {len(duplicate_issues) - 5} 处')
+    else:
+        passes.append('✅ [L3] 合并单元格: 无跨单元格重复内容')
 
     # Check for tofu/square characters (U+FFFD or U+25A1)
     tofu_count = 0

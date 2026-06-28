@@ -12,7 +12,11 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from report_engine_v9 import ReportGenerator
 from validate_report_tone import check_quality_language
-from validate_weekly_report import find_empty_numbered_paragraphs, find_next_week_plan_issues
+from validate_weekly_report import (
+    find_empty_numbered_paragraphs,
+    find_next_week_plan_issues,
+    find_duplicate_cell_content,
+)
 
 
 def add_numbering(paragraph):
@@ -71,6 +75,17 @@ class WeeklyReportFormatValidationTests(unittest.TestCase):
 
         self.assertEqual(len(issues), 1)
         self.assertIn("空编号段落", issues[0])
+
+    def test_detects_duplicate_merged_cells(self):
+        doc = Document()
+        table = doc.add_table(rows=1, cols=4)
+        for j in range(4):
+            table.cell(0, j).text = "Same duplicate text"
+
+        issues = find_duplicate_cell_content(doc)
+
+        self.assertEqual(len(issues), 1)
+        self.assertIn("重复", issues[0])
 
     def test_generator_clears_empty_numbered_paragraphs_from_target_cell(self):
         doc = Document()
