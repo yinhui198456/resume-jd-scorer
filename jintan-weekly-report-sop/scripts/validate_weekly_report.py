@@ -134,18 +134,25 @@ def find_empty_numbered_paragraphs(doc):
 
 
 def find_duplicate_cell_content(doc):
-    """Detect rows where all non-empty cells contain identical text.
+    """Detect rows where multiple actual cells contain identical text.
 
-    This typically indicates a merged cell was rendered as multiple
-    duplicate cells by the producer and will show up as repeated text
-    or phantom numbering in PDF output.
+    python-docx ``row.cells`` expands merged cells into virtual copies,
+    so this validator inspects the raw ``w:tc`` elements. Rows with a
+    single merged cell spanning all columns are ignored; rows with two
+    or more real cells sharing the same non-empty text are flagged.
     """
     issues = []
     if not doc.tables:
         return issues
     table = doc.tables[0]
     for row_idx, row in enumerate(table.rows):
-        texts = [cell.text.strip() for cell in row.cells]
+        tcs = row._tr.findall(qn('w:tc'))
+        if len(tcs) <= 1:
+            continue
+        texts = []
+        for tc in tcs:
+            text = ''.join(t.text or '' for t in tc.iter() if t.text)
+            texts.append(text.strip())
         non_empty = [t for t in texts if t]
         if len(non_empty) > 1 and len(set(non_empty)) == 1:
             issues.append(
