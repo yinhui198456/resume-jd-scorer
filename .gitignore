@@ -26,3 +26,7 @@ daily-ai-digest/.superpowers/
 
 # generated analysis caches
 daily-ai-digest/output/**/cache/
+
+# project runtime data and outputs
+jintan-weekly-report-sop/data/
+jintan-weekly-report-sop/output/
