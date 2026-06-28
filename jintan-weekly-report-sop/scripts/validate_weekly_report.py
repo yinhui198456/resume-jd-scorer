@@ -332,6 +332,18 @@ def run_validation(doc_path, source_data):
     }
 
 
+def validate_document(doc_path, xlsx_path=None):
+    """Public entry point for structural/data validation.
+
+    Loads the source Excel data automatically if xlsx_path is provided
+    or the default project data file exists.
+    """
+    if xlsx_path is None:
+        xlsx_path = SOURCE_XLSX
+    source_data = parse_excel_sheets(xlsx_path) if os.path.exists(xlsx_path) else {}
+    return run_validation(doc_path, source_data)
+
+
 if __name__ == '__main__':
     if not DOC_PATH or not os.path.exists(DOC_PATH):
         print(json.dumps({'status': 'FAIL', 'issues': ['文档路径无效']}, ensure_ascii=False, indent=2))

@@ -209,16 +209,21 @@ def run_tone_check(doc_path, last_week_path=None):
     }
 
 
+def validate_tone(doc_path, last_week_path=None):
+    """Public entry point for tone/style validation."""
+    return run_tone_check(doc_path, last_week_path)
+
+
 if __name__ == '__main__':
     if len(sys.argv) < 2 or not os.path.exists(sys.argv[1]):
         print(json.dumps({'status': 'FAIL', 'issues': ['文档路径无效']}, ensure_ascii=False, indent=2))
         sys.exit(1)
-    
+
     doc_path = sys.argv[1]
     last_week = sys.argv[2] if len(sys.argv) > 2 else None
-    
+
     result = run_tone_check(doc_path, last_week)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    
+
     if result['status'] == 'FAIL':
         sys.exit(1)
