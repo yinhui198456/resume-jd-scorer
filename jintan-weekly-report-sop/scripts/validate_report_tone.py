@@ -24,6 +24,7 @@ from docx import Document
 # ============================================================================
 FUZZY_PATTERNS = [
     (r'进行中[，,。]', '模糊进度 — 应给出具体百分比或完成度'),
+    (r'进展中[，,。]', '模糊进度 — 应给出具体百分比或完成度'),
     (r'推进中[，,。]', '模糊进度 — 应给出具体百分比或完成度'),
     (r'进展顺利', '空洞评价 — 应给出具体进展'),
     (r'整体.*顺利', '空洞评价 — 应给出具体进展'),
@@ -63,7 +64,7 @@ def check_fuzzy_language(text):
 
 
 def check_quantification(text):
-    """Check that progress items have quantified data."""
+    """Check that progress descriptions have quantified data."""
     issues = []
     # Look for progress descriptions without percentages or dates
     progress_lines = [l for l in text.split('\n') if any(k in l for k in ['进度', '完成', '开发', '测试', '部署'])]
@@ -71,12 +72,16 @@ def check_quantification(text):
     startup_patterns = [r'可以开始', r'开始推进', r'启动', r'进场', r'安排资源', r'通知.*可以', r'调研', r'梳理.*需求', r'收集.*案例']
     # Skip externally-blocked items (can't have % when waiting on vendor/third party)
     external_block_patterns = [r'尚未完成.*需要.*提供', r'需要.*提供.*数据', r'等待.*反馈', r'待.*确认', r'需要确认']
+    # Skip already-completed items
+    completed_patterns = [r'确认完成', r'已完成', r'已交付', r'已上线']
     for line in progress_lines:
         if any(re.search(p, line) for p in startup_patterns):
             continue  # New task, no quantification needed
         if any(re.search(p, line) for p in external_block_patterns):
             continue  # Externally blocked, can't provide %
-        has_number = bool(re.search(r'\d+%', line)) or bool(re.search(r'\d+[天日周月]', line))
+        if any(re.search(p, line) for p in completed_patterns):
+            continue  # Completed item, no need for future %
+        has_number = bool(re.search(r'\d+%', line)) or bool(re.search(r'\d+[天日周月号]', line))
         if not has_number and len(line) > 10:
             issues.append(f'✗ [话术] 缺少量化数据: "{line[:60]}..."')
     return issues
@@ -87,11 +92,11 @@ def check_risk_visibility(text):
     issues = []
     risk_keywords = ['延期', '阻塞', '风险', '滞后', '无法按期', '存在隐患']
     has_risk_content = any(k in text for k in risk_keywords)
-    
-    # If there's a risk section, check it's not empty
-    risk_section_match = re.search(r'(预计存在或可能出现.*?风险[\s\S]*?)(?:需要协调|下周|本周|项目总体)', text)
+
+    # Locate the risk section by its heading (e.g. "四、风险与问题跟踪")
+    risk_section_match = re.search(r'[一二三四五六七八]+、风险与问题跟踪[\s\S]*?(?=[一二三四五六七八]+、|$)', text)
     if risk_section_match:
-        risk_section = risk_section_match.group(1)
+        risk_section = risk_section_match.group(0)
         # Should have at least some content beyond "暂无"
         if re.search(r'暂无[，,。]', risk_section) and has_risk_content:
             issues.append('✗ [话术] 正文提到风险/延期，但风险章节写"暂无" — 矛盾')

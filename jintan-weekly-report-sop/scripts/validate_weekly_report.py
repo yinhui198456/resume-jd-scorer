@@ -153,15 +153,12 @@ def run_validation(doc_path, source_data):
     # or contains only the placeholder text with no real task content)
     placeholder_found = False
     for row in table.rows:
-        cell_texts = []
-        for cell in row.cells:
-            cell_texts.append(cell.text.strip())
+        cell_texts = [cell.text.strip() for cell in row.cells]
         # A row is a placeholder only if ALL cells have the same minimal placeholder text
-        # and no real task content (no numbering like 1) 一、 etc.)
-        if all(t in ('', 'ODS-DWD-DWS-DM', 'ODS-DWD-DWS-DM：') for t in cell_texts):
-            if any(t == '' for t in cell_texts) and all(t in ('', 'ODS-DWD-DWS-DM', 'ODS-DWD-DWS-DM：') for t in cell_texts):
-                placeholder_found = True
-                break
+        # and at least one cell is empty (no numbering like 1) 一、 etc.)
+        if all(t in ('', 'ODS-DWD-DWS-DM', 'ODS-DWD-DWS-DM：') for t in cell_texts) and any(t == '' for t in cell_texts):
+            placeholder_found = True
+            break
     if placeholder_found:
         issues.append('✗ [L1] 存在空任务占位符')
 

@@ -16,12 +16,14 @@ import os
 import zipfile
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont
+import yaml
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-XLSX_PATH = os.path.join(PROJECT_DIR, "data", "金坛二期项目跟进表.xlsx")
+CONFIG_PATH = os.path.join(PROJECT_DIR, "config.yaml")
 OUTPUT_PATH = "/tmp/milestone_progress_v9.png"
 
-CONFIG = {
+# 默认配置；若存在 config.yaml，则优先从 config.yaml 读取
+DEFAULT_CONFIG = {
     "width": 1600,
     "header_height": 50,
     "font_size": 28,
@@ -57,6 +59,57 @@ CONFIG = {
         "付款比例": "付款比例",
     }
 }
+
+
+def load_config():
+    """Load milestone image config from config.yaml if present."""
+    cfg = DEFAULT_CONFIG.copy()
+    if not os.path.exists(CONFIG_PATH):
+        return cfg
+
+    try:
+        with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
+            doc = yaml.safe_load(f)
+    except Exception as e:
+        print(f"  ⚠️ 读取 config.yaml 失败，使用默认配置: {e}")
+        return cfg
+
+    source = doc.get('source', {}) if doc else {}
+    mi = doc.get('milestone_image', {}) if doc else {}
+
+    # XLSX path
+    xlsx = source.get('xlsx_path')
+    if xlsx:
+        if not os.path.isabs(xlsx):
+            xlsx = os.path.normpath(os.path.join(PROJECT_DIR, xlsx))
+        cfg['xlsx_path'] = xlsx
+
+    # Display map
+    dmap = source.get('milestone_display_map')
+    if dmap:
+        cfg['display_map'] = dmap
+
+    # Image dimensions and style
+    for key in ('width', 'header_height', 'font_size', 'font_size_bold'):
+        if key in mi:
+            cfg[key] = mi[key]
+
+    # Padding / spacing defaults if not in config
+    cfg['cell_padding_x'] = mi.get('cell_padding_x', cfg['cell_padding_x'])
+    cfg['cell_padding_y'] = mi.get('cell_padding_y', cfg['cell_padding_y'])
+    cfg['line_spacing'] = mi.get('line_spacing', cfg['line_spacing'])
+
+    # Colors
+    colors = mi.get('colors')
+    if colors:
+        cfg['colors'].update(colors)
+
+    # Columns
+    columns = mi.get('columns')
+    if columns:
+        cfg['columns'] = columns
+
+    return cfg
 
 def parse_excel(filepath):
     """Parse sheet 2 (02-项目里程碑) from xlsx via XML."""
@@ -170,11 +223,12 @@ def calc_required_height(text, font, max_width, line_spacing):
 
 def main():
     print("📊 生成里程碑进度图 v3...")
-    rows = parse_excel(XLSX_PATH)
+    cfg = load_config()
+    xlsx_path = cfg.get('xlsx_path', os.path.join(PROJECT_DIR, "data", "金坛二期项目跟进表.xlsx"))
+    rows = parse_excel(xlsx_path)
     if not rows:
         print("  ⚠️ 未找到里程碑数据"); return
 
-    cfg = CONFIG
     colors = cfg["colors"]
     cols = cfg["columns"]
     dmap = cfg["display_map"]

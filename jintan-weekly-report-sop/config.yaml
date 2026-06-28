@@ -174,8 +174,8 @@ milestone_image:
   width: 1770
   header_height: 60
   row_height: 260
-  font_size: 26
-  font_size_bold: 28
+  font_size: 28
+  font_size_bold: 32
   
   # 颜色（对齐原始 Sheet 02）
   colors:

@@ -266,8 +266,8 @@ class ReportGenerator:
                     import datetime
                     note_date = datetime.datetime(datetime.datetime.now().year, mm, dd)
                     
-                    # Check if within report week (Monday to Friday)
-                    if self.monday.date() <= note_date.date() <= self.friday.date():
+                    # Check if within report week (Monday to Sunday to include weekend updates)
+                    if self.monday.date() <= note_date.date() <= self.sunday.date():
                         relevant_notes.append(content)
                     else:
                         # If it's an older date, store it as fallback but lower priority
@@ -314,9 +314,10 @@ class ReportGenerator:
             return text
         # Strip date prefixes that weren't caught by clean_notes
         text = re.sub(r'^\d{4,6}[\：:]\s*', '', text)
-        # Rephrase vague "进行中" to concrete status
+        # Rephrase vague "进行中" / "进展中" to concrete status
         text = re.sub(r'(\S+?)开发进行中', r'\1开发尚未完成', text)
         text = re.sub(r'(?<!\S)进行中(?!\S)', '尚未完成', text)
+        text = re.sub(r'(\S+?)进展中', r'\1尚未完成', text)
         return text
     
     def filter_plans(self, plans, week_end=None, is_next_week=False):
@@ -357,78 +358,180 @@ class ReportGenerator:
         except (ValueError, TypeError):
             return None
     
-    def build_progress_items(self, plans, source_type='this_week'):
-        """Build structured items for progress/plan sections."""
+    def _parse_progress(self, prog_str):
+        """Parse progress string to float value (0.0-1.0)."""
+        if not prog_str:
+            return 0.0
+        try:
+            p_str = prog_str.replace('%', '').strip()
+            v = float(p_str)
+            if '%' in prog_str:
+                v /= 100.0
+            return min(max(v, 0.0), 1.0)
+        except ValueError:
+            return 0.0
+
+    def _format_progress(self, v):
+        """Format float progress to percentage string."""
+        if v <= 0:
+            return ''
+        if v >= 1:
+            return '100%'
+        return str(int(v * 100)) + "%"
+
+    def build_progress_items(self, plans, source_type='this_week', all_plans=None):
+        """Build structured items for progress/plan sections.
+
+        Fixes:
+        1. Aggregate progress at stage level (average of ALL sub-tasks, including completed)
+        2. Merge notes from all sub-tasks, keeping latest dated notes
+        3. List all sub-tasks under each stage
+        """
         items = []
         current_unit = ''
-        current_stage = ''
         unit_num = 0
-        stage_num = 0
-        task_num = 0
-        
+
+        # Use all_plans for progress calculation, plans for display filtering
+        calc_plans = all_plans if all_plans else plans
+
+        # Group ALL tasks by unit -> stage for progress calculation
+        unit_stages_all = {}
+        for r in calc_plans:
+            unit = r.get(self.columns.get('work_unit', '工作单元'), '').strip()
+            stage = r.get(self.columns.get('stage', '任务阶段'), '').strip()
+            task = r.get(self.columns.get('task', '任务'), '').strip()
+
+            if not task or self.is_empty_task(r):
+                continue
+
+            if unit not in unit_stages_all:
+                unit_stages_all[unit] = {}
+            if stage not in unit_stages_all[unit]:
+                unit_stages_all[unit][stage] = []
+            unit_stages_all[unit][stage].append(r)
+
+        # Group filtered tasks by unit -> stage for display
+        unit_stages = {}
         for r in plans:
             unit = r.get(self.columns.get('work_unit', '工作单元'), '').strip()
             stage = r.get(self.columns.get('stage', '任务阶段'), '').strip()
             task = r.get(self.columns.get('task', '任务'), '').strip()
-            
+
             if not task or self.is_empty_task(r):
                 continue
-            
-            if unit and unit != current_unit:
+
+            if unit not in unit_stages:
+                unit_stages[unit] = {}
+            if stage not in unit_stages[unit]:
+                unit_stages[unit][stage] = []
+            unit_stages[unit][stage].append(r)
+
+        # Build items from grouped data
+        for unit in unit_stages:
+            if unit != current_unit:
                 current_unit = unit
-                current_stage = ''
                 unit_num += 1
-                stage_num = 0
-                task_num = 0
                 items.append({'type': 'unit', 'text': unit, 'num': unit_num})
-            
-            if stage and stage != current_stage:
-                current_stage = stage
+
+            stage_num = 0
+            for stage in unit_stages[unit]:
                 stage_num += 1
-                task_num = 0
-                items.append({'type': 'stage', 'text': stage, 'num': stage_num})
-            
-            task_num += 1
-            notes = self.clean_notes(r.get(self.columns.get('notes', '备注'), ''))
-            prog = r.get(self.columns.get('progress', '进度'), '')
-            prog_val = ''
-            if prog:
-                try:
-                    p_str = prog.replace('%', '').strip()
-                    v = float(p_str)
-                    if '%' in prog:
-                        v /= 100.0
-                    if 0 < v <= 1:
-                        prog_val = str(int(v*100)) + "%"
-                except ValueError:
-                    pass
-            
-            desc = task
-            if notes:
-                desc += "：" + notes
-            
-            # Add action suffix for next week
-            if source_type == 'next_week' and prog:
-                try:
-                    pv_str = prog.replace('%', '').strip()
-                    pv = float(pv_str)
-                    if '%' in prog:
-                        pv /= 100.0
-                    if 0 < pv < 1:
-                        desc += "（继续推进）"
-                    elif pv >= 1:
-                        desc += "（确认完成）"
-                    else:
-                        desc = task + "：启动准备工作"
-                except ValueError:
-                    desc = task + "：启动准备工作"
-            
-            if prog_val and source_type == 'this_week':
-                desc += " " + prog_val
-            
-            items.append({'type': 'task', 'text': desc, 'num': task_num})
-        
+
+                # Calculate aggregated progress from ALL tasks in this stage (including completed)
+                all_tasks = unit_stages_all.get(unit, {}).get(stage, [])
+                progress_values = [self._parse_progress(t.get(self.columns.get('progress', '进度'), '')) for t in all_tasks]
+                if progress_values:
+                    stage_progress = sum(progress_values) / len(progress_values)
+                else:
+                    stage_progress = 0.0
+
+                # Merge notes from all tasks in this stage
+                all_notes = [t.get(self.columns.get('notes', '备注'), '') for t in all_tasks]
+                merged_notes = self._merge_notes(all_notes)
+
+                items.append({
+                    'type': 'stage',
+                    'text': stage,
+                    'num': stage_num,
+                    'progress': self._format_progress(stage_progress),
+                    'notes': merged_notes
+                })
+
+                # Add individual task items under this stage (only non-completed)
+                tasks = unit_stages[unit][stage]
+                for task_idx, r in enumerate(tasks, 1):
+                    task = r.get(self.columns.get('task', '任务'), '').strip()
+                    notes = self.clean_notes(r.get(self.columns.get('notes', '备注'), ''))
+                    prog = r.get(self.columns.get('progress', '进度'), '')
+                    prog_val = self._format_progress(self._parse_progress(prog))
+
+                    desc = task
+                    if notes:
+                        desc += "：" + notes
+
+                    # Add action suffix for next week
+                    if source_type == 'next_week' and prog:
+                        pv = self._parse_progress(prog)
+                        if 0 < pv < 1:
+                            desc += "（继续推进）"
+                        elif pv >= 1:
+                            desc += "（确认完成）"
+                        else:
+                            desc += "（启动准备工作）"
+
+                    # Show progress for both this_week and next_week
+                    if prog_val and source_type in ('this_week', 'next_week'):
+                        desc += " " + prog_val
+
+                    items.append({'type': 'task', 'text': desc, 'num': task_idx})
+
         return items
+
+    def _merge_notes(self, notes_list):
+        """Merge notes from multiple sub-tasks, keeping latest dated notes.
+
+        Strategy:
+        1. Parse all notes into date-tagged entries
+        2. For same date, keep the latest/most detailed entry
+        3. Return merged notes sorted by date (newest first)
+        """
+        if not notes_list:
+            return ''
+
+        date_pattern = re.compile(r'^(\d{2})[\/\.-]?(\d{2})[:：]\s*(.*)')
+        dated_notes = {}  # date_key -> (date_obj, content)
+        undated_notes = []
+
+        for notes in notes_list:
+            if not notes:
+                continue
+            lines = [line.strip() for line in notes.replace('\n', '|').split('|') if line.strip()]
+            for line in lines:
+                match = date_pattern.match(line)
+                if match:
+                    mm, dd = int(match.group(1)), int(match.group(2))
+                    content = match.group(3).strip()
+                    try:
+                        note_date = datetime(datetime.now().year, mm, dd)
+                        date_key = (mm, dd)
+                        # Keep the longest/most detailed entry for same date
+                        if date_key not in dated_notes or len(content) > len(dated_notes[date_key][1]):
+                            dated_notes[date_key] = (note_date, content)
+                    except ValueError:
+                        undated_notes.append(line)
+                else:
+                    undated_notes.append(line)
+
+        # Sort by date (newest first) and merge
+        sorted_notes = sorted(dated_notes.values(), key=lambda x: x[0], reverse=True)
+        result = [content for _, content in sorted_notes]
+
+        # Add undated notes at the end
+        if undated_notes:
+            result.extend(undated_notes)
+
+        merged = ' | '.join(result) if result else ''
+        return self._sanitize_note_text(merged)
     
     def find_coordination_items(self, plans):
         """Identify delayed tasks with external reasons."""
@@ -663,11 +766,11 @@ class ReportGenerator:
         
         # Build items
         this_week_plans = self.filter_plans(plans, is_next_week=False)
-        this_week_items = self.build_progress_items(this_week_plans, 'this_week')
+        this_week_items = self.build_progress_items(this_week_plans, 'this_week', all_plans=plans)
         print(f"  本周任务: {len(this_week_items)} 条")
-        
+
         next_week_plans = self.filter_plans(plans, is_next_week=True)
-        next_week_items = self.build_progress_items(next_week_plans, 'next_week')
+        next_week_items = self.build_progress_items(next_week_plans, 'next_week', all_plans=plans)
         print(f"  下周任务: {len(next_week_items)} 条")
         
         issues_items = self.build_issues_grouped(issues)
@@ -694,20 +797,18 @@ class ReportGenerator:
             self._set_run_font(run, size=self.font_size_header, bold=True)
             
             cell = table.cell(row_idx, 0)
-            
+
             # Clear ALL paragraphs in this cell (may span multiple visual rows due to merging)
             for para in list(cell.paragraphs):
                 para.clear()
-            
-            # Add header "一、项目总体进度"
+
+            # First paragraph holds the milestone image
             if cell.paragraphs:
                 header_p = cell.paragraphs[0]
             else:
                 header_p = cell.add_paragraph()
-            run = header_p.add_run("一、项目总体进度")
-            self._set_run_font(run, size=self.font_size_header, bold=True)
             header_p.paragraph_format.space_after = Pt(4)
-            
+
             # Add milestone image inline with header
             img_path = "/tmp/milestone_progress_v9.png"
             if os.path.exists(img_path):
@@ -802,13 +903,16 @@ class ReportGenerator:
                     run = p.add_run(text)
                     self._set_run_font(run, size=self.font_size_body)
             else:
-                cell.text = "暂无。"
-        
+                cell.text = ""
+                p = cell.paragraphs[0]
+                run = p.add_run("暂无。")
+                self._set_run_font(run, size=self.font_size_body)
+
         # Issues section
         issues_section = sections.get('issues', {})
         if issues_section.get('enabled', True):
             row_idx = issues_section.get('table_row', 12)
-            
+
             # Write header to Row 11
             header_row = table.rows[row_idx - 1]
             for hcell in header_row.cells:
@@ -822,7 +926,10 @@ class ReportGenerator:
             if issues_items:
                 self.write_content_to_cell(cell, issues_items, 'issues')
             else:
-                cell.text = "暂无。"
+                cell.text = ""
+                p = cell.paragraphs[0]
+                run = p.add_run("暂无。")
+                self._set_run_font(run, size=self.font_size_body)
         
         # NOTE: Do NOT delete empty rows - template structure must be preserved
         # Header rows (5, 7, 9, 11) are cleared but should remain as structure
@@ -887,8 +994,8 @@ class ReportGenerator:
         # Generate summaries
         plans = self.data.get('plan', [])
         this_week_plans = self.filter_plans(plans, is_next_week=False)
-        this_week_items = self.build_progress_items(this_week_plans, 'this_week')
-        
+        this_week_items = self.build_progress_items(this_week_plans, 'this_week', all_plans=plans)
+
         # This week summary (first 5 items)
         this_week_lines = []
         current_unit = ''
@@ -901,10 +1008,10 @@ class ReportGenerator:
             elif item['type'] == 'task' and len(this_week_lines) < 10:
                 this_week_lines.append("    - " + item['text'][:60])
         this_week_summary = '\n'.join(this_week_lines) if this_week_lines else "本周无新增任务。"
-        
+
         # Next week summary
         next_week_plans = self.filter_plans(plans, is_next_week=True)
-        next_week_items = self.build_progress_items(next_week_plans, 'next_week')
+        next_week_items = self.build_progress_items(next_week_plans, 'next_week', all_plans=plans)
         next_week_lines = []
         for item in next_week_items[:8]:
             if item['type'] == 'unit':
@@ -990,9 +1097,9 @@ def main():
     parser = ExcelParser(config)
     xlsx_path = config.get('source', {}).get('xlsx_path', '')
     data = parser.parse(xlsx_path)
-    print(f"  {config['source']['sheets'].get('plan', '?')}-项目计划: {len(data.get(config['source']['sheets'].get('plan', '01'), []))} 行")
-    print(f"  {config['source']['sheets'].get('milestone', '?')}-项目里程碑: {len(data.get(config['source']['sheets'].get('milestone', '02'), []))} 行")
-    print(f"  {config['source']['sheets'].get('issues', '?')}-应用问题跟踪表: {len(data.get(config['source']['sheets'].get('issues', '04'), []))} 行")
+    print(f"  plan-项目计划: {len(data.get('plan', []))} 行")
+    print(f"  milestone-项目里程碑: {len(data.get('milestone', []))} 行")
+    print(f"  issues-应用问题跟踪表: {len(data.get('issues', []))} 行")
     
     # Generate report
     generator = ReportGenerator(config, data)

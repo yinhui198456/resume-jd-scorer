@@ -11,14 +11,19 @@
 jintan-weekly-report-sop/
 ├── SKILL.md                          # 主 SOP 文档（完整工作流 + Pitfalls）
 ├── config.yaml                       # 周报 YAML 配置（列名/格式/过滤/章节）
+├── task_plan.md                      # 当前修复任务计划
+├── findings.md                       # 问题与技术决策记录
+├── progress.md                       # 会话进度日志
 ├── DEPLOYMENT.md                     # 本部署手册
 ├── scripts/
+│   ├── report_engine_v9.py           # YAML 配置驱动的通用生成引擎（v9+）
+│   ├── validate_weekly_report.py     # L1 结构 / L2 数据 / L3 视觉 QA 校验
+│   ├── validate_report_tone.py       # 话术校验（模糊用语/量化/风险/编号）
 │   ├── fetch-online-sheet.py         # 从腾讯文档拉取最新数据（mcporter）
 │   ├── fetch-jintan-data.py          # 金坛专用数据拉取（硬编码 sheet_id）
 │   ├── generate-milestone-image.py   # 里程碑进度 PNG 图（Pillow + NotoSansCJK）
-│   ├── validate_report_tone.py       # 话术校验（模糊用语/量化/风险/编号）
-│   ├── project_report.py             # 旧版引擎 v5（XML 解析，硬编码）
-│   └── jintan_report.py              # 旧版引擎 v3（XML 解析，硬编码）
+│   ├── project_report.py             # 旧版引擎 v5（XML 解析，硬编码，legacy）
+│   └── jintan_report.py              # 旧版引擎 v3（XML 解析，硬编码，legacy）
 └── references/
     ├── cjk-font-fix.md               # CJK 字体乱码修复记录
     ├── manual-report-generation.md   # 手动生成方案（引擎缺失时的备选）
@@ -26,14 +31,7 @@ jintan-weekly-report-sop/
     └── progress-parsing-fix.md       # 进度 % 解析补丁
 ```
 
-**⚠️ 关键缺失文件（SOP 中引用但不存在）：**
-
-| 文件 | SOP 中的角色 | 状态 |
-|------|-------------|------|
-| `scripts/report_engine_v9.py` | YAML 配置驱动的通用生成引擎（v9+） | ❌ 不存在，仅有 v3/v5 旧版 |
-| `scripts/validate_weekly_report.py` | L1 结构 / L2 数据 / L3 视觉 QA 校验 | ❌ 不存在 |
-
-这意味着 SOP 描述的核心引擎尚未实现。当前可用的脚本是早期迭代版本（v3/v5），不具备 YAML 配置驱动能力。
+**当前状态**：v9 引擎与两层自动校验脚本均已可用，推荐直接使用 `report_engine_v9.py` 生成周报。旧版 v3/v5 脚本保留作为 legacy 参考。
 
 ---
 
@@ -77,11 +75,11 @@ apt-get install fonts-noto-cjk  # 或手动下载 NotoSansCJK
   - `04-应用问题跟踪表` → sheet_id: `BB08J2`
 
 ### 3.2 Word 模板
-- **模板路径**: `docs/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260420-0424.docx`
+- **模板路径**: `templates/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260420-0424.docx`
 - 模板包含预定义的表格结构，引擎填充 Row 6/8/10/12
 
 ### 3.3 本地数据文件
-- **xlsx 路径**: `docs/金坛二期项目跟进表.xlsx`
+- **xlsx 路径**: `data/金坛二期项目跟进表.xlsx`
 - 由 `fetch-online-sheet.py` 或 `fetch-jintan-data.py` 从在线文档拉取
 
 ---
@@ -96,31 +94,28 @@ python3 scripts/fetch-online-sheet.py DYm9pRHBFa0NMRmta
 # Step 0b: 生成里程碑进度图（必须在引擎前运行）
 python3 scripts/generate-milestone-image.py
 
-# Step 1: 生成周报（使用现有可用引擎）
-python3 scripts/jintan_report.py       # v3 引擎
-# 或
-python3 scripts/project_report.py      # v5 引擎（含 SOW 上下文语义重写）
+# Step 1: 生成周报（v9 YAML 配置驱动引擎）
+# 引擎尾部会自动触发 validate_weekly_report.py 和 validate_report_tone.py
+python3 scripts/report_engine_v9.py
 
-# Step 2: 话术校验
-python3 scripts/validate_report_tone.py <生成的docx路径>
-
-# Step 3: 发送到飞书群
-cd docs && lark-cli im +messages-send \
+# Step 2: 发送到飞书群（注意 --file 只接受 cwd 相对路径）
+cd output && \
+  /root/.nvm/versions/node/v22.22.1/bin/lark-cli im +messages-send \
   --chat-id "oc_63e348c1b3c23f50ad587113be8bfa4a" \
   --file "常州市金坛第一人民医院数据指挥中心二期项目-工作周报-YYYYMMDD-MMDD.docx"
 ```
 
-### 4.2 v9 YAML 引擎（需自行实现）
-SOP 中描述的 `report_engine_v9.py` 核心能力：
+### 4.2 v9 YAML 引擎（已可用）
+`scripts/report_engine_v9.py` 已具备以下能力：
 - 读取 `config.yaml` 配置，不绑定特定项目
 - 自动触发 `validate_weekly_report.py`（L1/L2/L3）和 `validate_report_tone.py`（话术）
 - `_set_run_font()` 统一设置 CJK eastAsia 字体
 - `_fix_template_fonts()` 清理模板占位文字 + 补设头部行字体
 - `_sanitize_note_text()` 将"进行中"改写为"尚未完成"
 - `clean_notes()` 智能提取本周最新备注
-- 自动删除模板遗留空行
+- 生成邮件正文并保存到 `output/email_body_*.txt`
 
-这些能力目前分散在 v3/v5 脚本中，需要通过 Claude Code 实现统一的 v9 引擎。
+旧版 `jintan_report.py` / `project_report.py` 仅作为 legacy 参考保留。
 
 ---
 
@@ -208,10 +203,10 @@ Output: 格式正确的 .docx 周报
 
 | 层级 | 脚本 | 检查项 | 阻塞等级 |
 |------|------|--------|---------|
-| L1 结构 | validate_weekly_report.py（需实现） | Markdown/编号/空任务 | FAIL |
-| L2 数据对照 | validate_weekly_report.py（需实现） | 日期/文件名/条目数 | FAIL |
-| L3 视觉 | validate_weekly_report.py（需实现） | 字体/CJK/图片 | FAIL |
-| L4 话术 | validate_report_tone.py（已有） | 模糊用语/量化/风险 | FAIL |
+| L1 结构 | validate_weekly_report.py | Markdown/编号/空任务 | FAIL |
+| L2 数据对照 | validate_weekly_report.py | 日期/文件名/条目数 | FAIL |
+| L3 视觉 | validate_weekly_report.py | 字体/CJK/图片 | FAIL |
+| L4 话术 | validate_report_tone.py | 模糊用语/量化/风险 | FAIL |
 
 ---
 
@@ -233,9 +228,11 @@ Output: 格式正确的 .docx 周报
 ## 9. 文件输出路径约定
 
 ```
-docs/
+data/
 ├── 金坛二期项目跟进表.xlsx                    # 数据源（从在线文档拉取）
+templates/
 ├── 常州市金坛第一人民医院...工作周报-模板.docx  # Word 模板
+output/
 └── 常州市金坛第一人民医院...工作周报-YYYYMMDD-MMDD.docx  # 生成结果
 
 /tmp/
