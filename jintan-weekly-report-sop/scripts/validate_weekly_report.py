@@ -116,6 +116,45 @@ def check_milestone_image(doc):
     return img_count
 
 
+def find_empty_numbered_paragraphs(doc):
+    """Find paragraphs that render numbering but have no visible text."""
+    issues = []
+    for table_idx, table in enumerate(doc.tables):
+        for row_idx, row in enumerate(table.rows):
+            for cell_idx, cell in enumerate(row.cells):
+                for para_idx, para in enumerate(cell.paragraphs):
+                    text = para.text.strip()
+                    ppr = para._p.pPr
+                    has_numbering = ppr is not None and ppr.numPr is not None
+                    if not text and has_numbering:
+                        issues.append(
+                            f'✗ [L1] 空编号段落: table={table_idx}, row={row_idx}, cell={cell_idx}, paragraph={para_idx}'
+                        )
+    return issues
+
+
+def find_next_week_plan_issues(doc):
+    """Validate that next-week plan is future action, not current status replay."""
+    issues = []
+    if not doc.tables:
+        return issues
+    table = doc.tables[0]
+    if len(table.rows) <= 8:
+        return issues
+
+    text = table.cell(8, 0).text
+    forbidden_patterns = [
+        (r'继续推进', '下周计划不应使用空泛状态词"继续推进"'),
+        (r'确认完成', '下周计划不应复述已完成状态"确认完成"'),
+        (r'100%', '下周计划不应包含 100% 已完成任务'),
+    ]
+    for pattern, message in forbidden_patterns:
+        if re.search(pattern, text):
+            issues.append(f'✗ [L1] {message}')
+
+    return issues
+
+
 def run_validation(doc_path, source_data):
     doc = Document(doc_path)
     table = doc.tables[0] if doc.tables else None
@@ -148,6 +187,20 @@ def run_validation(doc_path, source_data):
         issues.append('✗ [L1] 文档中存在 Markdown 符号')
     else:
         passes.append('✅ [L1] Markdown: 已清除')
+
+    empty_numbering_issues = find_empty_numbered_paragraphs(doc)
+    if empty_numbering_issues:
+        issues.extend(empty_numbering_issues[:10])
+        if len(empty_numbering_issues) > 10:
+            issues.append(f'✗ [L1] 空编号段落: 另有 {len(empty_numbering_issues) - 10} 处')
+    else:
+        passes.append('✅ [L1] 空编号段落: 无')
+
+    next_week_issues = find_next_week_plan_issues(doc)
+    if next_week_issues:
+        issues.extend(next_week_issues)
+    else:
+        passes.append('✅ [L1] 下周计划: 无状态复述')
 
     # Check for empty task placeholder (only if the cell is essentially empty
     # or contains only the placeholder text with no real task content)

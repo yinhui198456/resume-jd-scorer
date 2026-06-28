@@ -152,6 +152,7 @@ class ReportGenerator:
         self.monday = today - timedelta(days=today.weekday())
         self.friday = self.monday + timedelta(days=4)
         self.sunday = self.monday + timedelta(days=6)  # Full week for notes/checks
+        self.next_monday = self.monday + timedelta(days=7)
         self.next_friday = self.friday + timedelta(days=7)
         self.next_sunday = self.sunday + timedelta(days=7)
         
@@ -176,6 +177,45 @@ class ReportGenerator:
             run.font.size = size
         if bold is not None:
             run.font.bold = bold
+
+    def _clear_cell_content(self, cell):
+        """Remove all paragraphs from a cell and return one clean paragraph.
+
+        python-docx paragraph.clear() leaves paragraph properties intact,
+        including Word numbering (w:numPr). Empty numbered paragraphs render as
+        orphan bullets/numbers in PDF, so target cells must be rebuilt.
+        """
+        for child in list(cell._tc):
+            if child.tag == qn('w:p'):
+                cell._tc.remove(child)
+        return cell.add_paragraph()
+
+    def _normalize_business_terms(self, text):
+        """Normalize recurring raw-note wording into report-safe terms."""
+        if not text:
+            return ''
+        text = re.sub(r'smartbi', 'Smartbi', text, flags=re.IGNORECASE)
+        text = re.sub(r'smart\s*开发', 'Smartbi 开发', text, flags=re.IGNORECASE)
+        text = re.sub(r'svn', 'SVN', text, flags=re.IGNORECASE)
+        text = text.replace('稳序', '程序')
+        text = text.replace('乡下反馈', '基层机构反馈')
+        text = text.replace('数据都翻翻了', '数据出现翻倍异常')
+        text = text.replace('翻翻了', '出现翻倍异常')
+        text = text.replace('先看一下', '需核查')
+        text = text.replace('看一下', '核查')
+        text = text.replace('找一下', '核查定位')
+        text = text.replace('沟通一下', '沟通确认')
+        text = re.sub(r'手工数据的台账\s*SVN\s*上核查定位', '需在 SVN 上核查手工数据台账', text)
+        text = re.sub(r'([\u4e00-\u9fff]{2,8})\1', r'\1', text)
+        return text
+
+    def clean_issue_text(self, text):
+        """Clean raw issue tracker wording before writing to the report."""
+        text = self._normalize_business_terms(text or '').strip()
+        text = re.sub(r'^\s*\d+[、.]\s*(?:问题\s*\d*\s*)?', '', text).strip()
+        if re.fullmatch(r'[（(].+[）)]', text):
+            text = text[1:-1].strip()
+        return text
     
     def _fix_template_fonts(self, doc):
         """Fix CJK eastAsia fonts on template header rows and clear placeholder text."""
@@ -299,14 +339,14 @@ class ReportGenerator:
                     pass
         
         if latest_note:
-            return self._sanitize_note_text(latest_note)
+            return self._normalize_business_terms(self._sanitize_note_text(latest_note))
             
         # Fallback: If no specific weekly update found, return the first line (cleaned of old date prefixes if any)
         # Or just the last line? Usually the last line in Excel is the latest update.
         last_line = lines[-1]
         # Clean old date prefixes from fallback
         fallback = re.sub(r'^\d{2}[\/\.-]?\d{2}[:：]\s*', '', last_line)
-        return self._sanitize_note_text(fallback.strip())
+        return self._normalize_business_terms(self._sanitize_note_text(fallback.strip()))
     
     def _sanitize_note_text(self, text):
         """Rephrase vague progress language in notes for tone compliance."""
@@ -379,6 +419,91 @@ class ReportGenerator:
             return '100%'
         return str(int(v * 100)) + "%"
 
+    def _should_include_next_week_task(self, row):
+        """Whether a row should appear in next-week planning."""
+        progress = self._parse_progress(row.get(self.columns.get('progress', '进度'), ''))
+        if progress >= 1.0:
+            return False
+
+        plan_start = self._parse_date(row.get(self.columns.get('plan_start', '计划开始')))
+        if plan_start is None:
+            return True
+
+        return plan_start <= self.next_friday
+
+    def _infer_next_week_action(self, row):
+        """Infer a PMO-style next-week action from stage, dates and notes.
+
+        This is deterministic scaffolding for the future LLM step: Python
+        selects the task and builds a semantic action target instead of copying
+        current-week status into next-week plan.
+        """
+        task = self._normalize_business_terms(row.get(self.columns.get('task', '任务'), '').strip())
+        stage = row.get(self.columns.get('stage', '任务阶段'), '').strip()
+        notes = self.clean_notes(row.get(self.columns.get('notes', '备注'), ''))
+        progress = self._parse_progress(row.get(self.columns.get('progress', '进度'), ''))
+        progress_text = self._format_progress(progress)
+        plan_start = self._parse_date(row.get(self.columns.get('plan_start', '计划开始')))
+        plan_end = self._parse_date(row.get(self.columns.get('plan_end', '计划完成')))
+
+        is_starting_next_week = plan_start is not None and self.next_monday <= plan_start <= self.next_friday
+        is_due_next_week = plan_end is not None and plan_end <= self.next_friday
+        verb = "启动" if is_starting_next_week or progress <= 0 else "完成"
+
+        stage_task = stage + task
+        combined = stage + task + notes
+
+        if any(keyword in stage_task for keyword in ["测试", "UAT", "缺陷", "发布"]):
+            target = f"{verb}{task}，开展测试验证、缺陷修复和复测闭环"
+        elif any(keyword in combined for keyword in ["调研", "需求", "口径"]):
+            target = "完成需求口径确认，形成可进入设计/开发的输入"
+        elif any(keyword in combined for keyword in ["原型", "高保真", "设计", "评审"]):
+            if "评审" in task + notes:
+                target = f"{verb}{task}，明确评审形式、评审要求并推动意见闭环"
+            else:
+                target = f"{verb}{task}，完成设计内容确认并同步相关方"
+        elif any(keyword in combined for keyword in ["开发", "数据清洗", "ODS", "DWD", "DWS", "DM", "接口"]):
+            target = f"{verb}{task}，补齐数据/接口依赖并完成联调验证"
+        elif any(keyword in combined for keyword in ["资源", "平台", "权限", "存储", "计算"]):
+            target = f"{verb}{task}，完成资源方案确认并推进验证"
+        else:
+            target = f"{verb}{task}，明确责任人与下周交付结果"
+
+        if is_due_next_week and progress < 0.8:
+            target += "；该事项临近计划完成节点，需作为下周重点跟踪"
+
+        if progress_text:
+            target += f"（当前进度{progress_text}）"
+
+        return self._normalize_business_terms(target)
+
+    def build_next_week_plan_items(self, plans):
+        """Build next-week plan items as future actions, not status replay."""
+        items = []
+        unit_stages = {}
+
+        for row in plans:
+            unit = row.get(self.columns.get('work_unit', '工作单元'), '').strip()
+            stage = row.get(self.columns.get('stage', '任务阶段'), '').strip()
+            task = row.get(self.columns.get('task', '任务'), '').strip()
+
+            if not task or self.is_empty_task(row) or not self._should_include_next_week_task(row):
+                continue
+
+            unit_stages.setdefault(unit, {}).setdefault(stage, []).append(row)
+
+        unit_num = 0
+        for unit, stages in unit_stages.items():
+            unit_num += 1
+            items.append({'type': 'unit', 'text': unit or '其他', 'num': unit_num})
+
+            for stage_num, (stage, tasks) in enumerate(stages.items(), 1):
+                items.append({'type': 'stage', 'text': stage or '其他', 'num': stage_num})
+                for task_idx, row in enumerate(tasks, 1):
+                    items.append({'type': 'task', 'text': self._infer_next_week_action(row), 'num': task_idx})
+
+        return items
+
     def build_progress_items(self, plans, source_type='this_week', all_plans=None):
         """Build structured items for progress/plan sections.
 
@@ -387,6 +512,9 @@ class ReportGenerator:
         2. Merge notes from all sub-tasks, keeping latest dated notes
         3. List all sub-tasks under each stage
         """
+        if source_type == 'next_week':
+            return self.build_next_week_plan_items(plans)
+
         items = []
         current_unit = ''
         unit_num = 0
@@ -483,6 +611,7 @@ class ReportGenerator:
                     if prog_val and source_type in ('this_week', 'next_week'):
                         desc += " " + prog_val
 
+                    desc = self._normalize_business_terms(desc)
                     items.append({'type': 'task', 'text': desc, 'num': task_idx})
 
         return items
@@ -531,7 +660,7 @@ class ReportGenerator:
             result.extend(undated_notes)
 
         merged = ' | '.join(result) if result else ''
-        return self._sanitize_note_text(merged)
+        return self._normalize_business_terms(self._sanitize_note_text(merged))
     
     def find_coordination_items(self, plans):
         """Identify delayed tasks with external reasons."""
@@ -591,6 +720,7 @@ class ReportGenerator:
                 # Rephrase vague "进行中" to concrete status description
                 issue_summary = re.sub(r'(\S+?)开发进行中', r'\1开发尚未完成', issue_summary)
                 issue_summary = re.sub(r'进行中', '尚未完成', issue_summary)
+                issue_summary = self._normalize_business_terms(issue_summary)
                 coordination_items.append({
                     'unit': unit,
                     'task': task,
@@ -615,40 +745,36 @@ class ReportGenerator:
         
         groups = {}
         for r in active_issues:
-            app = r.get(app_col, '').strip() or r.get('B', '').strip()
-            mod = r.get(mod_col, '').strip() or r.get('C', '').strip()
+            app = self._normalize_business_terms(r.get(app_col, '').strip() or r.get('B', '').strip())
+            mod = self._normalize_business_terms(r.get(mod_col, '').strip() or r.get('C', '').strip())
             desc = r.get(issue_col, '').strip() or r.get('D', '').strip()
             status = r.get(status_col, '').strip() or r.get('H', '').strip()
             
             if not desc:
                 continue
             
-            desc_simplified = self.clean_notes(desc)
+            desc_simplified = self.clean_issue_text(self.clean_notes(desc))
             if not desc_simplified:
-                desc_simplified = desc.split('\n')[0][:60]
+                desc_simplified = self.clean_issue_text(desc.split('\n')[0][:60])
             
-            key = (app, mod)
-            if key not in groups:
-                groups[key] = []
-            groups[key].append({'desc': desc_simplified, 'status': status})
+            if app not in groups:
+                groups[app] = {}
+            if mod not in groups[app]:
+                groups[app][mod] = []
+            groups[app][mod].append({'desc': desc_simplified, 'status': status})
         
         items = []
-        current_app = ''
         app_num = 0
-        mod_num = 0
-        for (app, mod), issues_list in groups.items():
-            if app and app != current_app:
-                current_app = app
-                app_num += 1
-                mod_num = 0  # Reset module counter for each app
-                items.append({'type': 'app_group', 'text': app, 'num': app_num})
-            
-            mod_num += 1
-            items.append({'type': 'mod_group', 'text': mod if mod else '其他', 'num': mod_num})
-            
-            for i, issue in enumerate(issues_list, 1):
-                status_tag = "[" + issue['status'] + "]" if issue['status'] else ''
-                items.append({'type': 'issue', 'text': (issue['desc'] + " " + status_tag).strip(), 'num': i})
+        for app, modules in groups.items():
+            app_num += 1
+            items.append({'type': 'app_group', 'text': app or '其他', 'num': app_num})
+
+            for mod_num, (mod, issues_list) in enumerate(modules.items(), 1):
+                items.append({'type': 'mod_group', 'text': mod if mod else '其他', 'num': mod_num})
+
+                for i, issue in enumerate(issues_list, 1):
+                    status_tag = "[" + issue['status'] + "]" if issue['status'] else ''
+                    items.append({'type': 'issue', 'text': (issue['desc'] + " " + status_tag).strip(), 'num': i})
         
         return items
     
@@ -679,11 +805,11 @@ class ReportGenerator:
     
     def write_content_to_cell(self, cell, items, section_type='progress'):
         """Write structured items to a Word cell."""
-        cell.text = ""
+        first_paragraph = self._clear_cell_content(cell)
         
         for i, item in enumerate(items):
             if i == 0:
-                p = cell.paragraphs[0]
+                p = first_paragraph
             else:
                 p = cell.add_paragraph()
             
@@ -797,16 +923,9 @@ class ReportGenerator:
             self._set_run_font(run, size=self.font_size_header, bold=True)
             
             cell = table.cell(row_idx, 0)
-
-            # Clear ALL paragraphs in this cell (may span multiple visual rows due to merging)
-            for para in list(cell.paragraphs):
-                para.clear()
+            header_p = self._clear_cell_content(cell)
 
             # First paragraph holds the milestone image
-            if cell.paragraphs:
-                header_p = cell.paragraphs[0]
-            else:
-                header_p = cell.add_paragraph()
             header_p.paragraph_format.space_after = Pt(4)
 
             # Add milestone image inline with header
@@ -815,7 +934,7 @@ class ReportGenerator:
                 try:
                     # Add image right after header in same paragraph
                     run = header_p.add_run()
-                    run.add_picture(img_path, width=Inches(6.5))
+                    run.add_picture(img_path, width=Inches(4.5))
                 except Exception as e:
                     print(f"  ️ 图片插入失败: {e}")
             
@@ -865,7 +984,6 @@ class ReportGenerator:
             self._set_run_font(run, size=self.font_size_header, bold=True)
             
             cell = table.cell(row_idx, 0)
-            cell.text = ""
             self.write_content_to_cell(cell, next_week_items, 'next_week')
         
         # Coordination section
@@ -903,8 +1021,7 @@ class ReportGenerator:
                     run = p.add_run(text)
                     self._set_run_font(run, size=self.font_size_body)
             else:
-                cell.text = ""
-                p = cell.paragraphs[0]
+                p = self._clear_cell_content(cell)
                 run = p.add_run("暂无。")
                 self._set_run_font(run, size=self.font_size_body)
 
@@ -926,8 +1043,7 @@ class ReportGenerator:
             if issues_items:
                 self.write_content_to_cell(cell, issues_items, 'issues')
             else:
-                cell.text = ""
-                p = cell.paragraphs[0]
+                p = self._clear_cell_content(cell)
                 run = p.add_run("暂无。")
                 self._set_run_font(run, size=self.font_size_body)
         

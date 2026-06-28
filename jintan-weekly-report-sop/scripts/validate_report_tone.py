@@ -146,6 +146,33 @@ def check_completed_repeat(doc_path, last_week_path):
     return issues
 
 
+def check_quality_language(text):
+    """Check raw-note artifacts and low-quality delivery language."""
+    issues = []
+
+    duplicate_match = re.search(r'([\u4e00-\u9fff]{2,8})\1', text)
+    if duplicate_match:
+        issues.append(f'✗ [话术] 重复短语: "{duplicate_match.group(0)}"')
+
+    quality_patterns = [
+        (r'稳序', '疑似错词 — 请改为明确对象，如"程序"或"流程"'),
+        (r'乡下反馈', '口语化 — 建议改为"基层机构反馈"或"分院反馈"'),
+        (r'翻翻了', '口语化 — 建议改为"数据出现翻倍异常"'),
+        (r'看一下', '口语化 — 建议改为"核查"或"确认"'),
+        (r'找一下', '口语化 — 建议改为"核查"或"定位"'),
+        (r'一下', '口语化 — 删除弱化语气，改为明确动作'),
+        (r'smartbi', '术语写法 — 建议统一为"Smartbi"'),
+        (r'smart\s*开发', '术语写法 — 建议统一为"Smartbi 开发"'),
+        (r'svn', '术语写法 — 建议统一为"SVN"'),
+    ]
+    for pattern, reason in quality_patterns:
+        for match in re.finditer(pattern, text):
+            ctx = text[max(0, match.start() - 15):match.end() + 15]
+            issues.append(f'✗ [话术] {reason}: "...{ctx.strip()}..."')
+
+    return issues
+
+
 def run_tone_check(doc_path, last_week_path=None):
     """Run all tone/style checks."""
     doc = Document(doc_path)
@@ -157,6 +184,7 @@ def run_tone_check(doc_path, last_week_path=None):
     all_issues.extend(check_risk_visibility(text))
     all_issues.extend(check_numbering(text))
     all_issues.extend(check_completed_repeat(doc_path, last_week_path))
+    all_issues.extend(check_quality_language(text))
     
     passes = []
     if not any('话术' in i and '模糊' in i for i in all_issues):
@@ -167,6 +195,8 @@ def run_tone_check(doc_path, last_week_path=None):
         passes.append('✅ [话术] 未重复已完成项')
     if not any('格式' in i for i in all_issues):
         passes.append('✅ [格式] 编号层级完整')
+    if not any('疑似错词' in i or '口语化' in i or '术语写法' in i or '重复短语' in i for i in all_issues):
+        passes.append('✅ [话术] 无原始备注残留')
     
     has_high = any(i.startswith('✗') for i in all_issues)
     status = 'FAIL' if has_high else 'PASS'
