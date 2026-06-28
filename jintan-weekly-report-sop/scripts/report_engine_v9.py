@@ -183,12 +183,18 @@ class ReportGenerator:
 
         python-docx paragraph.clear() leaves paragraph properties intact,
         including Word numbering (w:numPr). Empty numbered paragraphs render as
-        orphan bullets/numbers in PDF, so target cells must be rebuilt.
+        orphan bullets/numbers in PDF, so target cells must be rebuilt and
+        stripped of any residual numbering properties.
         """
         for child in list(cell._tc):
             if child.tag == qn('w:p'):
                 cell._tc.remove(child)
-        return cell.add_paragraph()
+        p = cell.add_paragraph()
+        pPr = p._p.get_or_add_pPr()
+        numPr = pPr.find(qn('w:numPr'))
+        if numPr is not None:
+            pPr.remove(numPr)
+        return p
 
     def _normalize_business_terms(self, text):
         """Normalize recurring raw-note wording into report-safe terms."""

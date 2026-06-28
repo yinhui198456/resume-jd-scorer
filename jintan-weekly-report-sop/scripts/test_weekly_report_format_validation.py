@@ -85,8 +85,9 @@ class WeeklyReportFormatValidationTests(unittest.TestCase):
 
         self.assertEqual(paragraph.text, "")
         self.assertEqual(len(cell.paragraphs), 1)
-        self.assertFalse(
-            paragraph._p.pPr is not None and paragraph._p.pPr.numPr is not None,
+        pPr = paragraph._p.find(qn("w:pPr"))
+        self.assertTrue(
+            pPr is None or pPr.find(qn("w:numPr")) is None,
             "cleared cell must not retain numbering",
         )
 
