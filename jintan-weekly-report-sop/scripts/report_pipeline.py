@@ -17,6 +17,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPTS_DIR = os.path.join(PROJECT_DIR, 'scripts')
 sys.path.insert(0, SCRIPTS_DIR)
 
+from report_auto_fix import apply_fix
 from report_engine_v9 import (
     ExcelParser,
     ReportGenerator,
@@ -40,15 +41,6 @@ def classify_issue(issue):
         if kw in issue:
             return 'human'
     return 'human'
-
-
-def apply_fix(doc_path, issue):
-    """Apply an automatic fix for a single issue.
-
-    Returns a description of the fix, or None if no automatic fix is available.
-    """
-    # Placeholder: actual fixes implemented in report_auto_fix.py (Task 6)
-    return None
 
 
 def run_generation(config_path):
