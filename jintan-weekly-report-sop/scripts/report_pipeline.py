@@ -9,6 +9,7 @@
     1 - 参数/运行错误
     2 - 需要人工审查
 """
+import fcntl
 import json
 import os
 import sys
@@ -16,6 +17,30 @@ import sys
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPTS_DIR = os.path.join(PROJECT_DIR, 'scripts')
 sys.path.insert(0, SCRIPTS_DIR)
+
+LOCK_DIR = os.path.join(os.path.dirname(PROJECT_DIR), '.locks')
+REPORT_LOCK_PATH = os.path.join(LOCK_DIR, 'jintan-weekly-report.lock')
+
+
+class FlockGuard:
+    """Context manager for exclusive flock-based locking."""
+
+    def __init__(self, lock_path):
+        self.lock_path = lock_path
+        self.fd = None
+
+    def __enter__(self):
+        os.makedirs(os.path.dirname(self.lock_path), exist_ok=True)
+        self.fd = os.open(self.lock_path, os.O_CREAT | os.O_RDWR)
+        fcntl.flock(self.fd, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.fd is not None:
+            fcntl.flock(self.fd, fcntl.LOCK_UN)
+            os.close(self.fd)
+            self.fd = None
+
 
 from report_auto_fix import apply_fix
 from report_engine_v9 import (
@@ -88,74 +113,75 @@ def run_validation(doc_path, xlsx_path=None):
 
 def run_pipeline(config_path, max_iterations=3):
     """Generate, validate, auto-fix, and re-validate the weekly report."""
-    report_info = run_generation(config_path)
-    doc_path = report_info['doc_path']
-    xlsx_path = os.path.join(PROJECT_DIR, 'data', '金坛二期项目跟进表.xlsx')
+    with FlockGuard(REPORT_LOCK_PATH):
+        report_info = run_generation(config_path)
+        doc_path = report_info['doc_path']
+        xlsx_path = os.path.join(PROJECT_DIR, 'data', '金坛二期项目跟进表.xlsx')
 
-    fixes_applied = []
-    validation = None
+        fixes_applied = []
+        validation = None
 
-    for iteration in range(max_iterations):
-        validation = run_validation(doc_path, xlsx_path)
-        all_issues = []
-        for result in validation.values():
-            all_issues.extend(result.get('issues', []))
+        for iteration in range(max_iterations):
+            validation = run_validation(doc_path, xlsx_path)
+            all_issues = []
+            for result in validation.values():
+                all_issues.extend(result.get('issues', []))
 
-        if not all_issues:
-            return {
-                'report': report_info,
-                'validation': validation,
-                'fixes_applied': fixes_applied,
-                'human_review_needed': False,
-            }
+            if not all_issues:
+                return {
+                    'report': report_info,
+                    'validation': validation,
+                    'fixes_applied': fixes_applied,
+                    'human_review_needed': False,
+                }
 
-        auto_issues = [i for i in all_issues if classify_issue(i) == 'auto']
-        human_issues = [i for i in all_issues if classify_issue(i) == 'human']
+            auto_issues = [i for i in all_issues if classify_issue(i) == 'auto']
+            human_issues = [i for i in all_issues if classify_issue(i) == 'human']
 
-        if human_issues:
-            # Structural or ambiguous issues need human review.
-            return {
-                'report': report_info,
-                'validation': validation,
-                'fixes_applied': fixes_applied,
-                'human_review_needed': True,
-                'human_issues': human_issues,
-            }
+            if human_issues:
+                # Structural or ambiguous issues need human review.
+                return {
+                    'report': report_info,
+                    'validation': validation,
+                    'fixes_applied': fixes_applied,
+                    'human_review_needed': True,
+                    'human_issues': human_issues,
+                }
 
-        if not auto_issues:
-            # No fixable issues but still failing; give up and ask human.
-            return {
-                'report': report_info,
-                'validation': validation,
-                'fixes_applied': fixes_applied,
-                'human_review_needed': True,
-                'human_issues': all_issues,
-            }
+            if not auto_issues:
+                # No fixable issues but still failing; give up and ask human.
+                return {
+                    'report': report_info,
+                    'validation': validation,
+                    'fixes_applied': fixes_applied,
+                    'human_review_needed': True,
+                    'human_issues': all_issues,
+                }
 
-        # Apply one round of auto-fixes.
-        round_fixes = []
-        for issue in auto_issues:
-            fix_desc = apply_fix(doc_path, issue)
-            if fix_desc:
-                round_fixes.append(fix_desc)
-        if not round_fixes:
-            # Nothing could be fixed automatically.
-            return {
-                'report': report_info,
-                'validation': validation,
-                'fixes_applied': fixes_applied,
-                'human_review_needed': True,
-                'human_issues': all_issues,
-            }
-        fixes_applied.extend(round_fixes)
+            # Apply one round of auto-fixes.
+            round_fixes = []
+            for issue in auto_issues:
+                fix_desc = apply_fix(doc_path, issue)
+                if fix_desc:
+                    round_fixes.append(fix_desc)
+            if not round_fixes:
+                # Nothing could be fixed automatically.
+                return {
+                    'report': report_info,
+                    'validation': validation,
+                    'fixes_applied': fixes_applied,
+                    'human_review_needed': True,
+                    'human_issues': all_issues,
+                }
+            fixes_applied.extend(round_fixes)
 
-    return {
-        'report': report_info,
-        'validation': validation,
-        'fixes_applied': fixes_applied,
-        'human_review_needed': True,
-        'human_issues': all_issues,
-    }
+        return {
+            'report': report_info,
+            'validation': validation,
+            'fixes_applied': fixes_applied,
+            'human_review_needed': True,
+            'human_issues': all_issues,
+        }
 
 
 if __name__ == '__main__':

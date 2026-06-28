@@ -19,10 +19,33 @@ from io import StringIO
 import sys
 import time
 import os
+import fcntl
 
 FILE_ID = "DYm9pRHBFa0NMRmta"
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_PATH = os.path.join(PROJECT_DIR, "data", "金坛二期项目跟进表.xlsx")
+LOCK_PATH = os.path.join(os.path.dirname(PROJECT_DIR), ".locks", "jintan-weekly-report.lock")
+
+
+class FlockGuard:
+    """Exclusive flock lock for shared xlsx writes."""
+
+    def __init__(self, lock_path):
+        self.lock_path = lock_path
+        self.fd = None
+
+    def __enter__(self):
+        os.makedirs(os.path.dirname(self.lock_path), exist_ok=True)
+        self.fd = os.open(self.lock_path, os.O_CREAT | os.O_RDWR)
+        fcntl.flock(self.fd, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.fd is not None:
+            fcntl.flock(self.fd, fcntl.LOCK_UN)
+            os.close(self.fd)
+            self.fd = None
+
 
 SHEETS = [
     {"name": "01-项目计划", "sheet_id": "uj7enc", "cols": 20},
@@ -50,42 +73,43 @@ def get_cell_data(sheet_id, end_col=26):
 
 def main():
     print(f"📡 正在从腾讯文档拉取金坛二期最新数据 (file_id={FILE_ID})...")
-    
-    wb = xlsxwriter.Workbook(OUTPUT_PATH)
-    
-    for sheet_conf in SHEETS:
-        name = sheet_conf["name"]
-        sheet_id = sheet_conf["sheet_id"]
-        cols = sheet_conf["cols"]
-        
-        print(f"   📥 拉取 {name}...")
-        data = get_cell_data(sheet_id, end_col=cols)
-        time.sleep(3)  # rate limit delay
-        
-        if not data:
-            print(f"   ⚠️  {name}: 数据为空")
-            continue
-        
-        # 跳过标题行（首行不含"序号"/"编号"/"工作单元"）
-        first_row_vals = [str(v).strip() for v in data[0] if v]
-        has_header = any(kw in first_row_vals for kw in ["序号", "编号", "工作单元"])
-        if not has_header:
-            print(f"   ⏭️  跳过标题行: {data[0][0] if data[0] else '?'}")
-            data = data[1:]
-        
-        ws = wb.add_worksheet(name)
-        for r_idx, row in enumerate(data):
-            for c_idx, val in enumerate(row):
-                if val:
-                    try:
-                        val = float(val) if "." in val else int(val)
-                    except (ValueError, TypeError):
-                        pass
-                    ws.write(r_idx, c_idx, val)
-        print(f"   ✅ 写入 {len(data)} 行")
-    
-    wb.close()
-    print(f"\n💾 已保存: {OUTPUT_PATH}")
+
+    with FlockGuard(LOCK_PATH):
+        wb = xlsxwriter.Workbook(OUTPUT_PATH)
+
+        for sheet_conf in SHEETS:
+            name = sheet_conf["name"]
+            sheet_id = sheet_conf["sheet_id"]
+            cols = sheet_conf["cols"]
+
+            print(f"   📥 拉取 {name}...")
+            data = get_cell_data(sheet_id, end_col=cols)
+            time.sleep(3)  # rate limit delay
+
+            if not data:
+                print(f"   ⚠️  {name}: 数据为空")
+                continue
+
+            # 跳过标题行（首行不含"序号"/"编号"/"工作单元"）
+            first_row_vals = [str(v).strip() for v in data[0] if v]
+            has_header = any(kw in first_row_vals for kw in ["序号", "编号", "工作单元"])
+            if not has_header:
+                print(f"   ⏭️  跳过标题行: {data[0][0] if data[0] else '?'}")
+                data = data[1:]
+
+            ws = wb.add_worksheet(name)
+            for r_idx, row in enumerate(data):
+                for c_idx, val in enumerate(row):
+                    if val:
+                        try:
+                            val = float(val) if "." in val else int(val)
+                        except (ValueError, TypeError):
+                            pass
+                        ws.write(r_idx, c_idx, val)
+            print(f"   ✅ 写入 {len(data)} 行")
+
+        wb.close()
+        print(f"\n💾 已保存: {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     main()
