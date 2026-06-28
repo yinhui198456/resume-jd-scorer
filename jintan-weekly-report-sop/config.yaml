@@ -9,7 +9,10 @@ project:
 # Excel 数据源配置
 source:
   xlsx_path: "./data/金坛二期项目跟进表.xlsx"
-  template_path: "./templates/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260420-0424.docx"
+  # v2 模板：移除了内容行固定高度，为章节标题行添加 cantSplit，避免分页断裂
+  template_path: "./templates/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-v2-模板.docx"
+  # 旧模板（如需回滚）：
+  # template_path: "./templates/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260420-0424.docx"
   output_dir: "./output"
   
   sheets:
