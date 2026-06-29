@@ -27,3 +27,40 @@ The following commands make real external calls and require explicit approval:
 .venv/bin/python -m digest.jobs.daily --smoke-minimax
 .venv/bin/python -m digest.jobs.daily --smoke-feishu --message "Daily AI Digest delivery test"
 ```
+
+## Learning plan tracking
+
+The learning-plan tracker records user-selected Daily AI Digest items into the Feishu spreadsheet `学习计划追踪 2026`, sheet `主任务`.
+
+Preview only:
+
+```bash
+PYTHONPATH=src .venv/bin/python -m digest.jobs.learning_plan \
+  --title "Graphify" \
+  --summary "将代码和文档转为知识图谱。" \
+  --url "https://github.com/safishamsi/graphify" \
+  --source-date "2026-06-29" \
+  --intent "感兴趣" \
+  --stars 5154
+```
+
+Apply after user confirmation:
+
+```bash
+PYTHONPATH=src .venv/bin/python -m digest.jobs.learning_plan \
+  --title "Graphify" \
+  --summary "将代码和文档转为知识图谱。" \
+  --url "https://github.com/safishamsi/graphify" \
+  --source-date "2026-06-29" \
+  --intent "感兴趣" \
+  --stars 5154 \
+  --apply
+```
+
+Rules:
+
+- Never apply without explicit user confirmation.
+- Do not record every digest item automatically.
+- The tracker writes only columns A-I.
+- Duplicate rows update notes/link only.
+- Real write smoke tests require user approval.
