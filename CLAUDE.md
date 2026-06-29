@@ -28,6 +28,7 @@
 5. 目录名应与 `SKILL.md` frontmatter 的 `name` 保持一致；历史短名只能作为 symlink alias。
 6. 修改 Skill 时只改 `skills/<skill-name>/` 主源；禁止直接修改项目内 `.agents/skills/` 或 `~/.claude/skills/` 的副本。
 7. 详细规范维护在 `docs/SKILLS_UNIFIED.md`，同步/校验脚本为 `sync-skills.sh`。
+8. 新增 Skill 的具体步骤见 `docs/SKILLS_UNIFIED.md` 的“新增 Skill 流程”。
 
 ## Shared Skills
 
@@ -53,6 +54,45 @@ Skill主源：
 
 涉及库存、偏好、历史菜单、复盘记录写入时，必须使用锁：
 /opt/personal-agent-workspace/.locks/weekend-lunch.lock
+
+### 金坛项目周报
+Skill主源：
+/opt/personal-agent-workspace/skills/jintan-weekly-report-sop
+
+项目目录：
+/opt/personal-agent-workspace/jintan-weekly-report-sop
+
+涉及周报生成、校验、版式检查或修复时，优先进入项目目录操作；输出类内容写入项目 `output/` 目录。
+
+### 简历 JD 匹配度评估
+Skill主源：
+/opt/personal-agent-workspace/skills/resume-jd-scorer
+
+项目目录：
+/opt/personal-agent-workspace/resume-jd-scorer
+
+涉及简历评估、JD 匹配度分析、上传 JD/简历文件时使用。
+
+### 每日 AI 资讯摘要（待建 Skill）
+项目目录：
+/opt/personal-agent-workspace/daily-ai-digest
+
+该 Skill 尚未创建，目前只在项目目录内维护代码与配置。
+
+## Git 凭证配置
+
+工作区项目如需推送到 GitHub，使用全局 Git 凭证文件：
+
+- 凭证文件：`~/.git-credentials`
+- 格式：`https://<token>:x-oauth-basic@github.com`
+- 权限：`chmod 600 ~/.git-credentials`
+- 启用凭证助手：`git config --global credential.helper store`
+
+配置完成后，所有项目的 `git push origin <branch>` / `git pull` 都会自动读取 token，无需每次输入。
+
+**注意**：
+- token 文件不要提交到仓库，也不要写入 `CLAUDE.md` 等共享文档正文。
+- token 泄露后应立即到 GitHub Settings → Developer settings → Personal access tokens 中轮换。
 
 ### Multi-session Rules
 飞书多个会话可以并行读取同一工作区，但写共享数据前必须：
