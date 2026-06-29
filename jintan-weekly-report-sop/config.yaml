@@ -174,11 +174,11 @@ sections:
 # 里程碑截图配置
 milestone_image:
   enabled: true
-  width: 1770
-  header_height: 60
-  row_height: 260
-  font_size: 28
-  font_size_bold: 32
+  width: 1200
+  header_height: 40
+  row_height: 160
+  font_size: 18
+  font_size_bold: 20
   
   # 颜色（对齐原始 Sheet 02）
   colors:
@@ -220,3 +220,14 @@ email:
   smtp_password: "${SMTP_PASSWORD}"
   from: "${SMTP_USER}"
   to: []  # 收件人列表
+
+# LLM 下周计划推断配置
+llm_next_week:
+  enabled: false  # 设为 true 启用 LLM 推断下周计划
+  provider: "minimax"  # 当前支持 minimax
+  model: "MiniMax-M3"
+  base_url: "https://api.minimaxi.com/v1"
+  # API key 从环境变量 MINIMAX_API_KEY 读取
+  timeout: 30
+  # 当 LLM 失败或返回无效结果时，自动回退到规则引擎
+  fallback_to_rule: true

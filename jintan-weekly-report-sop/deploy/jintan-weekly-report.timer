@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Jintan Phase II Weekly Report every 2 hours
+Requires=jintan-weekly-report.service
+
+[Timer]
+OnCalendar=*-*-* 00/2:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

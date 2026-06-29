@@ -81,3 +81,19 @@ github_repository_search:
     sort: stars
     order: desc
     limit: 20
+  - id: github-codex-skills
+    tier: 2
+    content_group: github_projects
+    candidate_pool: true
+    query: topic:codex topic:agent-skills stars:>5 pushed:>=2026-01-01
+    sort: stars
+    order: desc
+    limit: 20
+  - id: github-claude-code-skills
+    tier: 2
+    content_group: github_projects
+    candidate_pool: true
+    query: topic:claude-code topic:agent-skills stars:>5 pushed:>=2026-01-01
+    sort: stars
+    order: desc
+    limit: 20

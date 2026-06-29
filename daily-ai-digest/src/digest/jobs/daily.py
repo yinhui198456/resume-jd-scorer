@@ -17,7 +17,7 @@ from digest.deliver.feishu import FeishuDelivery
 from digest.filter.quality import dedupe_exact, hard_filter, tag_topics, weighted_score
 from digest.generate.render import render_digest, render_fault_digest, render_feishu_section_posts
 from digest.generate.minimax import MiniMaxGenerator
-from digest.generate.common import fallback_generation
+from digest.generate.common import compact_text, fallback_generation
 from digest.models import AppConfig, DigestItem, NewsItem, RawItem, StageCheckpoint, StageStatus
 from digest.parse.normalize import normalize_raw_item
 from digest.storage.state import StateStore, atomic_write_json, run_lock
@@ -156,6 +156,43 @@ def _practice_allowed(cluster: list[NewsItem], config: AppConfig) -> bool:
     return not include or any(keyword in text for keyword in include)
 
 
+def _newsworthy_allowed(cluster: list[NewsItem]) -> bool:
+    text = _cluster_text(cluster)
+    maintenance_markers = (
+        "maintenance-only",
+        "maintenance only",
+        "no user-facing changes",
+        "no user visible changes",
+        "no user-visible changes",
+        "no user-facing capability",
+        "no user-visible capability",
+        "internal maintenance",
+    )
+    return not any(marker in text for marker in maintenance_markers)
+
+
+def _github_star_count(
+    cluster: list[NewsItem],
+    raw_by_id: dict[str, RawItem],
+    groups: dict[str, str],
+) -> int | None:
+    for news in cluster:
+        for raw_id in news.raw_ids:
+            raw = raw_by_id.get(raw_id)
+            if not raw or groups.get(raw.source_id) != "github_projects":
+                continue
+            match = re.search(r"(?im)^stars:\s*([0-9][0-9,]*)\b", raw.raw_body)
+            if match:
+                return int(match.group(1).replace(",", ""))
+    return None
+
+
+def _with_github_stars(summary: str, stars: int | None) -> str:
+    if stars is None or summary.startswith("⭐ "):
+        return summary
+    return compact_text(f"⭐ {stars:,} · {summary}", 100)
+
+
 def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies, run_id: str, now: datetime) -> RunReport:
     data_dir = root / "data"
     state_dir = data_dir / "state"
@@ -261,6 +298,8 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
             for cluster in ranked_clusters:
                 cluster_key = cluster[0].news_id
                 group = _cluster_group(cluster, raw_by_id, source_groups)
+                if not _newsworthy_allowed(cluster):
+                    continue
                 if group == "practice_methodology" and not _practice_allowed(cluster, config):
                     continue
                 if group in {"github_projects", "practice_methodology"} and counts["生产力项目"] < productivity_limit:
@@ -278,13 +317,15 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                 if cluster_key in selected_keys:
                     continue
                 group = _cluster_group(cluster, raw_by_id, source_groups)
+                if not _newsworthy_allowed(cluster):
+                    continue
                 if group == "practice_methodology" and not _practice_allowed(cluster, config):
                     continue
-                if group in {"github_projects", "practice_methodology"} and counts["生产力项目"] < productivity_limit:
+                if group in {"github_projects", "practice_methodology"}:
                     selected.append(("生产力项目", cluster))
                     selected_keys.add(cluster_key)
                     counts["生产力项目"] += 1
-                elif group == "default" and counts["重点资讯"] < top_limit:
+                elif group == "default":
                     selected.append(("重点资讯", cluster))
                     selected_keys.add(cluster_key)
                     counts["重点资讯"] += 1
@@ -294,7 +335,11 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                 primary = cluster[0]
                 section_counts[section] = section_counts.get(section, 0) + 1
                 generated = dependencies.generator(primary)
-                digest_items.append(DigestItem(run_id, 1, hashlib.sha256(primary.news_id.encode()).hexdigest(), [item.news_id for item in cluster], section, section_counts[section], generated["chinese_title"], generated["summary"], generated["why_it_matters"], primary.language, generated.get("translation_status", "translated"), [primary.canonical_url] if primary.canonical_url else [], now.isoformat()))
+                summary = _with_github_stars(
+                    generated["summary"],
+                    _github_star_count(cluster, raw_by_id, source_groups),
+                )
+                digest_items.append(DigestItem(run_id, 1, hashlib.sha256(primary.news_id.encode()).hexdigest(), [item.news_id for item in cluster], section, section_counts[section], generated["chinese_title"], summary, generated["why_it_matters"], primary.language, generated.get("translation_status", "translated"), [primary.canonical_url] if primary.canonical_url else [], now.isoformat()))
             generation_path = run_dir / "generated.json"
             atomic_write_json(generation_path, [asdict(item) for item in digest_items])
             _checkpoint(store, run_id, "translate", StageStatus.SUCCEEDED, now, len(digest_items), [str(generation_path)])

@@ -40,7 +40,7 @@
     "M03_Prompt工程": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-24",
+      "last_studied": "2026-06-29",
       "topics_done": 72,
       "total_topics": 72
     },
@@ -89,14 +89,14 @@
     "M10_MultiAgent": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-27",
+      "last_studied": "2026-06-29",
       "topics_done": 36,
       "total_topics": 70
     },
     "M11_RAG": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-27",
+      "last_studied": "2026-06-29",
       "topics_done": 20,
       "total_topics": 80
     },
@@ -110,7 +110,7 @@
     "M13_安全评估": {
       "started": true,
       "completed": false,
-      "last_studied": "2026-06-25",
+      "last_studied": "2026-06-29",
       "topics_done": 6,
       "total_topics": 74
     },
@@ -245,7 +245,7 @@
       "module": "M04_Context工程",
       "first_learned": "2026-05-19",
       "last_reviewed": "2026-06-24",
-      "review_count": 4,
+      "review_count": 5,
       "next_review": "2026-07-24",
       "confidence": 5,
       "status": "reviewing",
@@ -304,7 +304,7 @@
       "module": "M04_Context工程",
       "first_learned": "2026-05-19",
       "last_reviewed": "2026-06-02",
-      "review_count": 4,
+      "review_count": 5,
       "next_review": "2026-06-18",
       "confidence": 5,
       "status": "reviewing",
@@ -405,7 +405,7 @@
       "review_count": 2,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-21",
@@ -468,7 +468,7 @@
       "review_count": 2,
       "next_review": "2026-05-27",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-21",
@@ -499,7 +499,7 @@
       "module": "M06_MCP协议",
       "first_learned": "2026-05-21",
       "last_reviewed": "2026-06-22",
-      "review_count": 5,
+      "review_count": 6,
       "next_review": "2026-09-20",
       "confidence": 2,
       "status": "reviewing",
@@ -632,7 +632,7 @@
       "module": "M07_Skills",
       "first_learned": "2026-05-24",
       "last_reviewed": "2026-06-24",
-      "review_count": 3,
+      "review_count": 4,
       "next_review": "2026-07-08",
       "confidence": 5,
       "status": "reviewing",
@@ -681,7 +681,7 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-25",
       "last_reviewed": "2026-06-24",
-      "review_count": 3,
+      "review_count": 5,
       "next_review": "2026-07-08",
       "confidence": 5,
       "status": "reviewing",
@@ -743,7 +743,7 @@
       "review_count": 1,
       "next_review": "2026-05-29",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-26",
@@ -764,10 +764,10 @@
       "module": "M06_MCP协议",
       "first_learned": "2026-05-21",
       "last_reviewed": "2026-05-24",
-      "review_count": 1,
+      "review_count": 2,
       "next_review": "2026-05-25",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-21",
@@ -797,10 +797,10 @@
     "Q-M05_FunctionCalling37": {
       "first_learned": "2026-05-22",
       "last_reviewed": "2026-05-24",
-      "review_count": 1,
+      "review_count": 2,
       "next_review": "2026-05-25",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-22",
@@ -831,7 +831,7 @@
     "Q-M05_FunctionCalling38": {
       "first_learned": "2026-05-23",
       "last_reviewed": "2026-06-25",
-      "review_count": 3,
+      "review_count": 4,
       "next_review": "2026-07-09",
       "confidence": 5,
       "status": "reviewing",
@@ -881,7 +881,7 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-27",
       "last_reviewed": "2026-06-25",
-      "review_count": 2,
+      "review_count": 3,
       "next_review": "2026-07-02",
       "confidence": 5,
       "status": "reviewing",
@@ -1096,7 +1096,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -1115,7 +1115,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -1134,7 +1134,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -1153,7 +1153,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -1172,7 +1172,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1184,7 +1184,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1196,7 +1196,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1208,7 +1208,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1220,7 +1220,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1266,7 +1266,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1278,7 +1278,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1290,7 +1290,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1302,7 +1302,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1314,7 +1314,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1326,7 +1326,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1338,7 +1338,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1350,7 +1350,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1362,7 +1362,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1374,7 +1374,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1386,7 +1386,7 @@
       "review_count": 0,
       "next_review": "2026-05-26",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0,
@@ -1399,7 +1399,7 @@
       "review_count": 0,
       "next_review": "2026-05-27",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [],
       "confidence_history": [],
       "wrong_count": 0
@@ -1408,10 +1408,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1432,10 +1432,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": "2026-06-02",
-      "review_count": 2,
+      "review_count": 3,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1476,10 +1476,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1500,10 +1500,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1524,10 +1524,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1548,10 +1548,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": "2026-06-02",
-      "review_count": 1,
+      "review_count": 2,
       "next_review": "2026-06-02",
       "confidence": 5,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1582,10 +1582,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1606,7 +1606,7 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": "2026-06-02",
-      "review_count": 2,
+      "review_count": 3,
       "next_review": "2026-06-06",
       "confidence": 5,
       "status": "reviewing",
@@ -1650,10 +1650,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1674,10 +1674,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1698,10 +1698,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1722,10 +1722,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1746,10 +1746,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1770,10 +1770,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1794,10 +1794,10 @@
       "module": "M08_Agent架构",
       "first_learned": "2026-05-30",
       "last_reviewed": null,
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-05-31",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-30",
@@ -1821,7 +1821,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -1845,7 +1845,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -1869,7 +1869,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -1893,7 +1893,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -1917,7 +1917,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -1980,7 +1980,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2004,7 +2004,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2028,7 +2028,7 @@
       "review_count": 3,
       "next_review": "2026-07-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2121,7 +2121,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2145,7 +2145,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2169,7 +2169,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2193,7 +2193,7 @@
       "review_count": 1,
       "next_review": "2026-06-03",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-05-31",
@@ -2217,7 +2217,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2241,7 +2241,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2265,7 +2265,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2289,7 +2289,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2313,7 +2313,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2337,7 +2337,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2361,7 +2361,7 @@
       "review_count": 1,
       "next_review": "2026-06-04",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-01",
@@ -2385,7 +2385,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2409,7 +2409,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2433,7 +2433,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2457,7 +2457,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2481,7 +2481,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2505,7 +2505,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2529,7 +2529,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2553,7 +2553,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2577,7 +2577,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2601,7 +2601,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2625,7 +2625,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2649,7 +2649,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2673,7 +2673,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2697,7 +2697,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2755,7 +2755,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2779,7 +2779,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2803,7 +2803,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2827,7 +2827,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2851,7 +2851,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2875,7 +2875,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -2967,7 +2967,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3025,7 +3025,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3049,7 +3049,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3073,7 +3073,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3131,7 +3131,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3189,7 +3189,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3213,7 +3213,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3237,7 +3237,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3261,7 +3261,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3285,7 +3285,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3309,7 +3309,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3333,7 +3333,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3357,7 +3357,7 @@
       "review_count": 3,
       "next_review": "2026-06-16",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3401,7 +3401,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3425,7 +3425,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3551,7 +3551,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3575,7 +3575,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3599,7 +3599,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3623,7 +3623,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3647,7 +3647,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3671,7 +3671,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3798,7 +3798,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3822,7 +3822,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3846,7 +3846,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3870,7 +3870,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3928,7 +3928,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3952,7 +3952,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -3976,7 +3976,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4000,7 +4000,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4020,9 +4020,9 @@
     "Q-M13_安全评估28": {
       "module": "M13_安全评估",
       "first_learned": "2026-06-02",
-      "last_reviewed": "2026-06-02",
-      "review_count": 2,
-      "next_review": "2026-06-09",
+      "last_reviewed": "2026-06-29",
+      "review_count": 3,
+      "next_review": "2026-07-13",
       "confidence": 5,
       "status": "reviewing",
       "review_history": [
@@ -4033,6 +4033,11 @@
         },
         {
           "date": "2026-06-02",
+          "confidence": 5,
+          "result": "pass"
+        },
+        {
+          "date": "2026-06-29",
           "confidence": 5,
           "result": "pass"
         }
@@ -4058,7 +4063,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4082,7 +4087,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4140,7 +4145,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4164,7 +4169,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4222,7 +4227,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4280,7 +4285,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4304,7 +4309,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4328,7 +4333,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4352,7 +4357,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4376,7 +4381,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4400,7 +4405,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4424,7 +4429,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4448,7 +4453,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4472,7 +4477,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4530,7 +4535,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4554,7 +4559,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4574,10 +4579,10 @@
     "Q-M13_安全评估08": {
       "module": "M13_安全评估",
       "first_learned": "2026-06-02",
-      "last_reviewed": "2026-06-02",
-      "review_count": 2,
-      "next_review": "2026-06-09",
-      "confidence": 5,
+      "last_reviewed": "2026-06-29",
+      "review_count": 3,
+      "next_review": "2026-07-13",
+      "confidence": 4,
       "status": "reviewing",
       "review_history": [
         {
@@ -4589,6 +4594,11 @@
           "date": "2026-06-02",
           "confidence": 5,
           "result": "pass"
+        },
+        {
+          "date": "2026-06-29",
+          "confidence": 4,
+          "result": "fail"
         }
       ],
       "confidence_history": [
@@ -4612,7 +4622,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4636,7 +4646,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4660,7 +4670,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4684,7 +4694,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4708,7 +4718,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4732,7 +4742,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4756,7 +4766,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4780,7 +4790,7 @@
       "review_count": 1,
       "next_review": "2026-06-05",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-02",
@@ -4804,7 +4814,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4828,7 +4838,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4852,7 +4862,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4876,7 +4886,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4900,7 +4910,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4924,7 +4934,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4948,7 +4958,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4972,7 +4982,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -4996,7 +5006,7 @@
       "review_count": 3,
       "next_review": "2026-07-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5035,7 +5045,7 @@
       "review_count": 9,
       "next_review": "2026-09-25",
       "confidence": 3,
-      "status": "mastered",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5129,7 +5139,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5153,7 +5163,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5177,7 +5187,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5201,7 +5211,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5225,7 +5235,7 @@
       "review_count": 3,
       "next_review": "2026-06-17",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5269,7 +5279,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5293,7 +5303,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5317,7 +5327,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5341,7 +5351,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5365,7 +5375,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5389,7 +5399,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5413,7 +5423,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5437,7 +5447,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5461,7 +5471,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5485,7 +5495,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5509,7 +5519,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5533,7 +5543,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5557,7 +5567,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5581,7 +5591,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5605,7 +5615,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5629,7 +5639,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5653,7 +5663,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5677,7 +5687,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5701,7 +5711,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5725,7 +5735,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5749,7 +5759,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5773,7 +5783,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5797,7 +5807,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5821,7 +5831,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5845,7 +5855,7 @@
       "review_count": 1,
       "next_review": "2026-06-06",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-03",
@@ -5869,7 +5879,7 @@
       "review_count": 1,
       "next_review": "2026-06-09",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-06",
@@ -5893,7 +5903,7 @@
       "review_count": 1,
       "next_review": "2026-06-09",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-06",
@@ -5917,7 +5927,7 @@
       "review_count": 1,
       "next_review": "2026-06-09",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-06",
@@ -5941,7 +5951,7 @@
       "review_count": 3,
       "next_review": "2026-06-21",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -5986,7 +5996,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6010,7 +6020,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6034,7 +6044,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6058,7 +6068,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6082,7 +6092,7 @@
       "review_count": 3,
       "next_review": "2026-06-21",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6122,11 +6132,11 @@
     "Q-M10_MultiAgent16": {
       "module": "M10_MultiAgent",
       "first_learned": "2026-06-07",
-      "last_reviewed": "2026-06-27",
-      "review_count": 4,
-      "next_review": "2026-07-27",
-      "confidence": 1,
-      "status": "learning",
+      "last_reviewed": "2026-06-29",
+      "review_count": 5,
+      "next_review": "2026-09-27",
+      "confidence": 2,
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6147,6 +6157,11 @@
           "date": "2026-06-27",
           "confidence": 1,
           "result": "fail"
+        },
+        {
+          "date": "2026-06-29",
+          "confidence": 2,
+          "result": "pass"
         }
       ],
       "confidence_history": [
@@ -6170,7 +6185,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6194,7 +6209,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6252,7 +6267,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6276,7 +6291,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6300,7 +6315,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6324,7 +6339,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6348,7 +6363,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6372,7 +6387,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6396,7 +6411,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6420,7 +6435,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6444,7 +6459,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6468,7 +6483,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6492,7 +6507,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6516,7 +6531,7 @@
       "review_count": 1,
       "next_review": "2026-06-10",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-07",
@@ -6540,7 +6555,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6564,7 +6579,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6588,7 +6603,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6612,7 +6627,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6636,7 +6651,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6660,7 +6675,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6684,7 +6699,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6708,7 +6723,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6732,7 +6747,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6756,7 +6771,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6780,7 +6795,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6804,7 +6819,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6828,7 +6843,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6852,7 +6867,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6876,7 +6891,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6900,7 +6915,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6924,7 +6939,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6948,7 +6963,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6972,7 +6987,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -6996,7 +7011,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7020,7 +7035,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7044,7 +7059,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7068,7 +7083,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7092,7 +7107,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7116,7 +7131,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7140,7 +7155,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7164,7 +7179,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7188,7 +7203,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7212,7 +7227,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7236,7 +7251,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7260,7 +7275,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7284,7 +7299,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7308,7 +7323,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7332,7 +7347,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7356,7 +7371,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7380,7 +7395,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7404,7 +7419,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7428,7 +7443,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7452,7 +7467,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7476,7 +7491,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7500,7 +7515,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7524,7 +7539,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7548,7 +7563,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7572,7 +7587,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7596,7 +7611,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7620,7 +7635,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7644,7 +7659,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7669,7 +7684,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7694,7 +7709,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7719,7 +7734,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7744,7 +7759,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7769,7 +7784,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7794,7 +7809,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7819,7 +7834,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7844,7 +7859,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7869,7 +7884,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7894,7 +7909,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7919,7 +7934,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7944,7 +7959,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7969,7 +7984,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -7994,7 +8009,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8019,7 +8034,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8044,7 +8059,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8069,7 +8084,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8094,7 +8109,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8119,7 +8134,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8144,7 +8159,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8169,7 +8184,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8194,7 +8209,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8219,7 +8234,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8244,7 +8259,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8269,7 +8284,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8294,7 +8309,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8319,7 +8334,7 @@
       "review_count": 1,
       "next_review": "2026-06-11",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-08",
@@ -8344,7 +8359,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8369,7 +8384,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8394,7 +8409,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8419,7 +8434,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8444,7 +8459,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8465,11 +8480,11 @@
     "Q-M11_RAG13": {
       "module": "M11_RAG",
       "first_learned": "2026-06-09",
-      "last_reviewed": "2026-06-27",
-      "review_count": 3,
-      "next_review": "2026-07-11",
+      "last_reviewed": "2026-06-29",
+      "review_count": 4,
+      "next_review": "2026-07-29",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8478,6 +8493,11 @@
         },
         {
           "date": "2026-06-27",
+          "confidence": 1,
+          "result": "fail"
+        },
+        {
+          "date": "2026-06-29",
           "confidence": 1,
           "result": "fail"
         }
@@ -8499,7 +8519,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8524,7 +8544,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8549,7 +8569,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8574,7 +8594,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8599,7 +8619,7 @@
       "review_count": 1,
       "next_review": "2026-06-12",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-09",
@@ -8663,7 +8683,7 @@
       "review_count": 4,
       "next_review": "2026-07-24",
       "confidence": 3,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8703,7 +8723,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8733,7 +8753,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8741,16 +8761,7 @@
           "result": "pass"
         }
       ],
-      "module": "M03_Prompt工程",
-      "wrong_count": 0,
-      "confidence_history": [
-        {
-          "date": "2026-06-10",
-          "confidence": 1,
-          "result": "pass"
-        }
-      ],
-      "result": "pass"
+      "module": "M03_Prompt工程"
     },
     "Q-M03_Prompt工程05": {
       "first_learned": "2026-06-10",
@@ -8758,7 +8769,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8783,7 +8794,7 @@
       "review_count": 2,
       "next_review": "2026-06-17",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8818,7 +8829,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8843,7 +8854,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8868,7 +8879,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8893,7 +8904,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8918,7 +8929,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8943,7 +8954,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8968,7 +8979,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -8993,7 +9004,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9018,7 +9029,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9043,7 +9054,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9068,7 +9079,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9093,7 +9104,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9118,7 +9129,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9143,7 +9154,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9168,7 +9179,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9193,8 +9204,14 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-10",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M03_Prompt工程"
@@ -9205,7 +9222,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9230,7 +9247,7 @@
       "review_count": 1,
       "next_review": "2026-06-13",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-10",
@@ -9255,7 +9272,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9280,7 +9297,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9305,7 +9322,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9330,8 +9347,14 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-11",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M03_Prompt工程"
@@ -9342,7 +9365,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9367,7 +9390,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9392,7 +9415,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9417,7 +9440,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9442,7 +9465,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9467,7 +9490,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -9492,8 +9515,14 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-12",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9504,7 +9533,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9529,8 +9558,14 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-12",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9541,7 +9576,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9566,8 +9601,14 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-12",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9578,7 +9619,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9603,7 +9644,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9628,8 +9669,14 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-12",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9640,7 +9687,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9665,7 +9712,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -9690,7 +9737,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9715,8 +9762,14 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-15",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9727,7 +9780,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9752,8 +9805,14 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-15",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -9764,7 +9823,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9789,7 +9848,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9814,7 +9873,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9839,7 +9898,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9864,7 +9923,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9889,7 +9948,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9914,7 +9973,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9939,7 +9998,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9964,7 +10023,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -9989,7 +10048,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10014,7 +10073,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10039,7 +10098,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10064,7 +10123,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10089,7 +10148,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10114,7 +10173,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10139,7 +10198,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10164,7 +10223,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10189,7 +10248,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10214,7 +10273,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10239,7 +10298,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10264,7 +10323,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10289,7 +10348,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10314,7 +10373,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10339,7 +10398,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10364,7 +10423,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10389,8 +10448,14 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-15",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -10401,7 +10466,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10426,7 +10491,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10452,7 +10517,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10477,7 +10542,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10502,7 +10567,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10527,7 +10592,7 @@
       "review_count": 1,
       "next_review": "2026-06-14",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-11",
@@ -10552,7 +10617,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10577,8 +10642,14 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-12",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "confidence_history": [],
       "wrong_count": 1,
       "result": "skipped"
@@ -10590,7 +10661,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10615,7 +10686,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10640,7 +10711,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10665,7 +10736,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10690,7 +10761,7 @@
       "review_count": 1,
       "next_review": "2026-06-15",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-12",
@@ -10714,7 +10785,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10739,7 +10810,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10764,7 +10835,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10789,7 +10860,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10814,7 +10885,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10839,7 +10910,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10864,7 +10935,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10889,7 +10960,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10914,7 +10985,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10939,7 +11010,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10964,7 +11035,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -10990,7 +11061,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11015,7 +11086,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11040,7 +11111,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11065,7 +11136,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11090,7 +11161,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11115,7 +11186,7 @@
       "review_count": 1,
       "next_review": "2026-06-18",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-15",
@@ -11134,12 +11205,13 @@
       "result": "pass"
     },
     "Q-M04_Context工程52": {
-      "status": "learning",
+      "status": "reviewing",
       "first_learned": "2026-06-15",
       "review_count": 0,
       "next_review": "2026-06-16",
       "confidence": 3,
-      "module": "M04_Context工程"
+      "module": "M04_Context工程",
+      "last_reviewed": "2026-06-15"
     },
     "Q-M04_Context工程54": {
       "first_learned": "2026-06-17",
@@ -11147,8 +11219,14 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-17",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -11159,7 +11237,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11184,7 +11262,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11209,7 +11287,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11234,7 +11312,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11259,7 +11337,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11284,7 +11362,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11309,7 +11387,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11334,7 +11412,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11359,8 +11437,14 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-17",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M04_Context工程"
@@ -11371,7 +11455,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11396,7 +11480,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -11421,7 +11505,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11446,7 +11530,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11471,7 +11555,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11496,7 +11580,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11521,7 +11605,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11551,7 +11635,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11581,7 +11665,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11611,7 +11695,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11641,7 +11725,7 @@
       "review_count": 2,
       "next_review": "2026-06-29",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11671,8 +11755,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -11683,7 +11773,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11708,7 +11798,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11733,8 +11823,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -11745,8 +11841,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -11757,7 +11859,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11782,7 +11884,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11807,7 +11909,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11832,8 +11934,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -11844,7 +11952,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11869,7 +11977,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11894,7 +12002,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11919,7 +12027,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11944,7 +12052,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -11969,8 +12077,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -11981,7 +12095,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12006,7 +12120,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12031,7 +12145,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12056,7 +12170,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12081,7 +12195,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12106,8 +12220,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "wrong_count": 1,
       "result": "skipped",
       "module": "M05_FunctionCalling"
@@ -12118,7 +12238,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12143,7 +12263,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12168,7 +12288,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12193,7 +12313,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12218,7 +12338,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12243,7 +12363,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12268,7 +12388,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12293,7 +12413,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12318,7 +12438,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12343,7 +12463,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12368,7 +12488,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12393,7 +12513,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12418,7 +12538,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12443,7 +12563,7 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-18",
@@ -12466,10 +12586,10 @@
       "module": "M04_Context工程",
       "first_learned": "2026-06-17",
       "last_reviewed": "2026-06-17",
-      "review_count": 0,
+      "review_count": 1,
       "next_review": "2026-09-15",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -12488,7 +12608,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -12513,7 +12633,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -12538,7 +12658,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -12563,7 +12683,7 @@
       "review_count": 1,
       "next_review": "2026-06-20",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-17",
@@ -12588,8 +12708,14 @@
       "review_count": 1,
       "next_review": "2026-06-21",
       "confidence": 1,
-      "status": "learning",
-      "review_history": [],
+      "status": "reviewing",
+      "review_history": [
+        {
+          "date": "2026-06-18",
+          "confidence": 1,
+          "result": "fail"
+        }
+      ],
       "confidence_history": [],
       "wrong_count": 1,
       "result": "skipped"
@@ -12601,7 +12727,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12626,7 +12752,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12651,7 +12777,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12676,7 +12802,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12701,7 +12827,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12726,7 +12852,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12751,7 +12877,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12776,7 +12902,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12801,7 +12927,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12826,7 +12952,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12851,7 +12977,7 @@
       "review_count": 1,
       "next_review": "2026-06-22",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-19",
@@ -12876,7 +13002,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -12901,7 +13027,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -12926,7 +13052,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -12951,7 +13077,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -12976,7 +13102,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -13001,7 +13127,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 2,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -13026,7 +13152,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -13051,7 +13177,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -13076,7 +13202,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",
@@ -13101,7 +13227,7 @@
       "review_count": 1,
       "next_review": "2026-06-23",
       "confidence": 4,
-      "status": "learning",
+      "status": "reviewing",
       "review_history": [
         {
           "date": "2026-06-20",

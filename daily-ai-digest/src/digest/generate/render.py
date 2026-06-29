@@ -1,14 +1,10 @@
 from datetime import datetime
 
 from digest.models import DigestItem
+from digest.generate.common import compact_text
 
 
 SECTIONS = ["今日结论", "重点资讯", "GitHub 热门项目", "实践/方法论", "Codex / CC 实践", "海外信号", "国内观察", "候选池"]
-
-
-def compact_text(text: str, limit: int = 100) -> str:
-    normalized = " ".join(text.split())
-    return normalized if len(normalized) <= limit else normalized[: limit - 1] + "…"
 
 
 def _link_line(label: str, url: str) -> list[dict[str, object]]:

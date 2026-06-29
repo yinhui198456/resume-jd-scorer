@@ -212,6 +212,31 @@ def test_digest_reserves_sections_for_github_and_practice_sources(tmp_path):
     }
 
 
+def test_digest_backfills_productivity_when_top_stories_are_short(tmp_path):
+    items = [
+        *(raw_section(i, "openai-news", 1, f"Official Agent update {i}") for i in range(2)),
+        *(raw_section(100 + i, "github-hot-ai-projects", 2, f"GitHub AI project {i}") for i in range(8)),
+        *(raw_section(200 + i, "simon-willison-ai-practice", 2, f"Claude Code skills workflow {i}") for i in range(8)),
+    ]
+    generator = FakeGenerator()
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector(items), generator, FakeDelivery()),
+        "run-backfill-productivity",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-backfill-productivity/generated.json").read_text())
+    assert report.item_count == 15
+    assert generator.call_count == 15
+    assert Counter(item["section"] for item in generated) == {
+        "重点资讯": 2,
+        "生产力项目": 13,
+    }
+
+
 def test_productivity_sources_do_not_enter_top_stories(tmp_path):
     items = [
         *(raw_section(i, "openai-news", 1, f"Broad AI policy story {i}") for i in range(12)),
@@ -243,6 +268,71 @@ def test_productivity_sources_do_not_enter_top_stories(tmp_path):
 
     assert "github-hot-ai-projects" not in top_sources
     assert "simon-willison-ai-practice" not in top_sources
+
+
+def test_maintenance_only_patch_releases_are_not_selected(tmp_path):
+    items = [
+        raw_section(
+            1,
+            "openai-codex-changelog",
+            1,
+            "Codex 0.142.3 maintenance-only patch release",
+        ),
+        *(raw_section(100 + i, "github-hot-ai-projects", 2, f"GitHub AI project {i}") for i in range(15)),
+    ]
+    items[0].raw_body = (
+        "Maintenance-only patch release with no user-facing changes. "
+        "No user-visible capability changes since the previous version."
+    )
+
+    run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector(items), FakeGenerator(), FakeDelivery()),
+        "run-maintenance-release",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    raw_items = json.loads((tmp_path / "data/raw/run-maintenance-release.json").read_text())
+    filtered = json.loads((tmp_path / "data/filtered/run-maintenance-release.json").read_text())
+    generated = json.loads((tmp_path / "data/state/runs/run-maintenance-release/generated.json").read_text())
+    raw_by_id = {item["raw_id"]: item for item in raw_items}
+    news_by_id = {item["news_id"]: item for item in filtered}
+    selected_titles = []
+    for digest_item in generated:
+        for news_id in digest_item["news_ids"]:
+            for raw_id in news_by_id[news_id]["raw_ids"]:
+                selected_titles.append(raw_by_id[raw_id]["title"])
+
+    assert "Codex 0.142.3 maintenance-only patch release" not in selected_titles
+
+
+def test_github_project_summaries_include_star_count(tmp_path):
+    item = raw_section(
+        1,
+        "github-hot-ai-projects",
+        2,
+        "GitHub AI project with stars",
+        run_id="run-github-stars",
+    )
+    item.raw_body = (
+        "Agent workflow tool with benchmark demo code documentation links.\n"
+        "stars: 12345\n"
+        "forks: 100"
+    )
+
+    run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector([item]), FakeGenerator(), FakeDelivery()),
+        "run-github-stars",
+        datetime(2026, 6, 22, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-github-stars/generated.json").read_text())
+
+    assert generated[0]["section"] == "生产力项目"
+    assert generated[0]["summary"].startswith("⭐ 12,345 · ")
 
 
 def test_practice_section_excludes_legal_safety_and_keeps_productivity_items(tmp_path):

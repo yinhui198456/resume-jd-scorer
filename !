@@ -1,0 +1,6 @@
+error: unexpected argument 'info' found
+
+Usage: codex [OPTIONS] [PROMPT]
+       codex [OPTIONS] <COMMAND> [ARGS]
+
+For more information, try '--help'.

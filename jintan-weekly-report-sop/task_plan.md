@@ -1,69 +1,81 @@
-# Task Plan: 修复金坛二期周报 SOP 已知问题
+# 金坛二期周报 loop engineering 持续优化计划
 
-## Goal
-修复 `jintan-weekly-report-sop` 中文档、配置与脚本的不一致及已知缺陷，使完整生成流程（拉取数据 → 生成图片 → 生成周报 → QA/话术校验）可稳定运行并通过校验。
+## 目标
+通过多轮迭代（生成 → 诊断 → 修复 → 验证），持续提升金坛二期周报的数据质量、版式质量、校验覆盖率和自动化程度。
 
-## Current Phase
-Phase 2
+## 当前基线
+- `report_pipeline.py` 一次通过：结构校验 11/11 PASS，话术校验 5/5 PASS
+- 脚本测试：35/35 通过（含 LLM planner 新增 6 个）
+- 最新周报：`output/常州市金坛第一人民医院数据指挥中心二期项目-工作周报-20260629-0703.docx`
+- PDF 版式：4 页，无明显断裂
+- 数据源已刷新为腾讯文档最新版本
 
-## Phases
+## 优化方向
 
-### Phase 1: 问题盘点与优先级确认
-- [x] 检查项目目录结构与文件清单
-- [x] 识别文档/配置/脚本中的不一致和潜在缺陷
-- [x] 将问题记录到 `findings.md`
-- **Status:** complete
+### 任务 1：数据 freshness（刷新数据源）— 已完成
+- 重新运行 `fetch-jintan-data.py` 拉取腾讯文档最新数据
+- 重跑 pipeline，确认新数据下仍能通过校验
+- 数据变化：本周任务 27→21 条，下周任务 23→21 条，协调事务 0→1 条
 
-### Phase 2: 文档与配置同步
-- [x] 更新 `DEPLOYMENT.md`，删除"核心引擎不存在"等过时描述
-- [x] 统一 `config.yaml` 与 `generate-milestone-image.py` 的硬编码参数
-- [x] 核对 `fetch-online-sheet.py` 的 `SHEETS` 列数配置（列数足够覆盖实际字段，保持现状）
-- **Status:** complete
+### 任务 2：PDF 版式微调 — 已完成
+- 检查首页留白、章节分页、表格边界、里程碑图可读性
+- 重新导出 PDF，4 页 345KB，无明显版式问题
 
-### Phase 3: 引擎代码修复
-- [x] 修复 `report_engine_v9.py` 主函数打印 bug（`data.get("1")` → 正确使用键名）
-- [x] 清理 Row 5 与 Row 6 的重复标题写入
-- [x] 统一 `clean_notes()` 的"本周"范围为周一至周日
-- [x] 简化或修正下周任务 `action_suffix` 的已完成分支
-- **Status:** complete
+### 任务 3：校验增强 — 已完成
+- 在 `validate_weekly_report.py` 中增加语义矛盾检查
+- 在 `validate_report_tone.py` 中扩展模糊用语和口语化模式
+- 全部测试与 pipeline 仍通过
 
-### Phase 4: 校验脚本修复
-- [x] 修复 `validate_report_tone.py` 的 `check_risk_visibility()` 正则，匹配当前模板结构
-- [x] 确认 `validate_weekly_report.py` 的空任务占位符检查不过激
-- **Status:** complete
+### 任务 4：模板美化
+- 评估当前 v2 模板的行距、表格边框、标题样式
+- 如需调整，修改模板或引擎样式代码
+- 确保美化后不影响校验通过
 
-### Phase 5: 集成验证
-- [x] 运行 `fetch-jintan-data.py` 拉取最新数据
-- [x] 运行 `generate-milestone-image.py` 生成里程碑图
-- [x] 运行 `report_engine_v9.py` 生成周报
-- [x] 检查 `validate_weekly_report.py` 和 `validate_report_tone.py` 输出（均 PASS）
-- [x] 将测试结果记录到 `progress.md`
-- **Status:** complete
+### 任务 5：自动化闭环
+- 评估是否将 pipeline 加入定时任务（systemd/cron）或 git hook
+- 增加轻量状态通知或失败告警机制
+- 不引入额外运维负担
 
-### Phase 6: 交付
-- [x] 汇总变更文件列表
-- [x] 输出 git status 摘要
-- [x] 向用户报告修复结果
-- **Status:** complete
+### 任务 6：下周计划的 LLM 逻辑理解能力 — 已完成
+- 当前在线文档没有专门的"下周计划"字段，依赖规则推断
+- 引入 LLM 对任务上下文进行理解，从备注/状态/进度中推断合理的下周行动
+- 设计 prompt、输出 schema、兜底规则，确保可解释和可回滚
+- 新增 `scripts/llm_next_week_planner.py` 模块与对应测试
+- A/B 对比验证：LLM 版下周计划更具体（如"推进ODS至DWD层数据清洗转换"）
 
-## Key Questions
-1. 是否需要保留旧版引擎 `jintan_report.py` / `project_report.py`？（当前建议保留，不破坏现有路径）
-2. `generate-milestone-image.py` 是否应完全改为读取 `config.yaml`，还是仅同步关键参数？
-3. 校验失败时是否应让引擎退出码非零？当前仅打印告警。
+## 当前阶段
+全部 6 项计划任务已完成。下一 loop 等待新数据、新需求或实际使用反馈。
 
-## Decisions Made
-| Decision | Rationale |
-|----------|-----------|
-| 轻量修复，不重写架构 | 当前 v9 引擎已能生成可用周报，优先修复不一致和明显 bug |
-| 规划文件放在项目目录 | 便于与项目代码一起被 git 跟踪 |
-| 旧版脚本保留 | 避免破坏潜在依赖，仅标记为 legacy |
+建议后续触发时机：
+1. 每周五自动生成周报前，先运行 pipeline 检查
+2. 腾讯文档数据有重大更新后，重跑并复核 PDF
+3. 收到具体版式/内容反馈时，按检查-修复-运行-检查循环处理
 
-## Errors Encountered
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-| 暂无 | - | - |
+## 执行原则
+1. 每轮只聚焦 1 个任务，完成后验证再进入下一轮
+2. 所有修改必须伴随测试或 pipeline 验证
+3. 不删除历史周报和原始数据
+4. 涉及真实数据源写入前需用户确认
 
-## Notes
-- 修复前先读取相关文件，避免误改
-- 每次修改后优先运行脚本验证，不依赖"目测"
-- 所有外部内容（如网页搜索）仅写入 `findings.md`，不混入 `task_plan.md`
+## 决策记录
+| 决策 | 理由 |
+|------|------|
+| 先刷新数据再做版式/LLM 优化 | 避免在旧数据上做无意义优化 |
+| LLM 下周计划默认禁用、可配置启用 | 避免无意的 API 调用和费用，保持现有流程稳定 |
+| LLM 失败时自动回退到规则引擎 | 保证周报生成不依赖外部 LLM 可用性 |
+| 模板美化放在校验增强之后 | 先保证内容质量，再优化视觉 |
+
+## 待启用 LLM 的方法
+编辑 `config.yaml`：
+
+```yaml
+llm_next_week:
+  enabled: true
+  provider: "minimax"
+  model: "MiniMax-M3"
+  base_url: "https://api.minimaxi.com/v1"
+  timeout: 30
+  fallback_to_rule: true
+```
+
+确保环境变量 `MINIMAX_API_KEY` 已设置，再运行 `python3 scripts/report_pipeline.py config.yaml`。

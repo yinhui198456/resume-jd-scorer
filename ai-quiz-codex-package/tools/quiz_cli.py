@@ -34,19 +34,22 @@ def cmd_start(mode="mixed"):
         mode: "review" (due questions), "new" (new questions),
               "wrong" (wrong questions), "mixed" (all types)
     """
-    session = QuizSession()
+    session = QuizSession(restore_session=False)
+    session.reset_session(mode=mode)
     today = datetime.now().strftime("%Y-%m-%d")
 
     # Check if questions were already answered today
-    today_new = [qid for qid, q in session.q_tracking.items()
-                 if q.get("first_learned") == today]
-    today_reviewed = [qid for qid, q in session.q_tracking.items()
-                      if q.get("last_reviewed") == today]
+    today_new = {qid for qid, q in session.q_tracking.items()
+                 if q.get("first_learned") == today}
+    today_reviewed = {qid for qid, q in session.q_tracking.items()
+                      if q.get("last_reviewed") == today}
+    # A question learned and reviewed today should only count as new
+    today_review_only = today_reviewed - today_new
 
     print(f"=== AI 刷题会话 — {today} ===\n")
     print(f"总体进度: {sum(m.get('topics_done', 0) for m in session.modules.values())}/"
           f"{sum(m.get('total_topics', 0) for m in session.modules.values())}")
-    print(f"今日已刷: 新学 {len(today_new)} 题, 复习 {len(today_reviewed)} 题\n")
+    print(f"今日已刷: 新学 {len(today_new)} 题, 复习 {len(today_review_only)} 题\n")
 
     # Get questions based on mode
     if mode == "wrong":
@@ -86,9 +89,6 @@ def cmd_start(mode="mixed"):
                 print(f"{labels[j]}) {opt}")
             print()
 
-    # Save session state
-    session._save()
-
     print("---\n")
     print("请逐题回复答案（A/B/C/D），输入 '不会' 表示不知道")
     print("输入 'stats' 查看统计，输入 'exit' 结束会话")
@@ -97,6 +97,8 @@ def cmd_start(mode="mixed"):
 def cmd_get(mode="review", limit=5, modules=None):
     """Get questions without starting a full session."""
     session = QuizSession()
+    if not session.session_id:
+        session.reset_session(mode=mode)
 
     if mode == "wrong":
         qids = session.get_wrong_questions(limit)
@@ -135,11 +137,15 @@ def cmd_submit(qid, user_answer):
 
     # Handle "不会" (don't know)
     if user_answer in ["不会", "不知道", "PASS"]:
-        is_correct = False
         is_new = qid not in session.q_tracking or not session.q_tracking[qid].get("first_learned")
         session.record_answer(qid, False, is_new=is_new)
         explanation = q.get("explanation", "暂无解析")
         print(format_unknown(correct_answer, explanation))
+        return
+
+    # Validate answer format
+    if user_answer not in ["A", "B", "C", "D"]:
+        print(" 无效答案，请输入 A/B/C/D 或 '不会'")
         return
 
     is_correct = user_answer == correct_answer
@@ -215,16 +221,41 @@ def cmd_session_info():
             print(f"  {status} {a['qid']}{new_tag}")
 
 
+def cmd_help():
+    """Show detailed help message."""
+    print("""AI 刷题命令行工具
+
+用法:
+  python tools/quiz_cli.py start [mixed|wrong|new|review]
+  python tools/quiz_cli.py get <mode> [limit] [modules...]
+  python tools/quiz_cli.py submit <qid> <answer>
+  python tools/quiz_cli.py stats
+  python tools/quiz_cli.py session-info
+  python tools/quiz_cli.py --help
+
+说明:
+  start    启动新会话（默认 mixed：3 错题 + 2 到期复习）
+  get      获取题目但不启动完整会话
+  submit   提交答案（A/B/C/D 或 不会）
+  stats    查看学习统计
+  session-info  查看当前会话状态
+""")
+
+
 # ============================================================
 # Main
 # ============================================================
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(__doc__)
+        cmd_help()
         sys.exit(1)
 
     command = sys.argv[1]
+
+    if command in ("--help", "-h"):
+        cmd_help()
+        sys.exit(0)
 
     if command == "start":
         mode = sys.argv[2] if len(sys.argv) > 2 else "mixed"
@@ -249,6 +280,6 @@ if __name__ == "__main__":
         cmd_session_info()
 
     else:
-        print(f"Unknown command: {command}")
-        print(__doc__)
+        print(f"未知命令: {command}")
+        cmd_help()
         sys.exit(1)

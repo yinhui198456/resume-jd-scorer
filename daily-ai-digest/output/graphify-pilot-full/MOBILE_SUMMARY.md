@@ -6,15 +6,15 @@
 
 ## 2. 图谱概况
 
-- 253 nodes · 523 edges · 29 communities (12 shown, 17 thin omitted)
+- 247 nodes · 488 edges · 31 communities (13 shown, 18 thin omitted)
 
 ## 3. 核心入口
 
 - `run_daily()`
 - `PipelineDependencies`
-- `RawItem`
-- `AppConfig`
-- `NewsItem`
+- `FakeDelivery`
+- `FakeCollector`
+- `FakeGenerator`
 
 ## 4. 主要模块
 

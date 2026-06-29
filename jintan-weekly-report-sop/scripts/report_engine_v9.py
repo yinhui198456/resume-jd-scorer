@@ -20,6 +20,13 @@ import sys
 import json
 import yaml
 
+# Optional LLM-based next-week planner (falls back to rule engine when disabled)
+try:
+    from llm_next_week_planner import LLMNextWeekPlanner, NextWeekCandidate
+except Exception:
+    LLMNextWeekPlanner = None
+    NextWeekCandidate = None
+
 # ============================================================================
 # YAML Config Loader (with env var expansion)
 # ============================================================================
@@ -163,6 +170,16 @@ class ReportGenerator:
         self.font_size_header = Pt(self.format_config.get('font_size_header', 12))
         
         self.chinese_nums = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十']
+
+        # Optional LLM next-week planner
+        self._llm_planner = None
+        llm_cfg = config.get('llm_next_week', {})
+        if llm_cfg.get('enabled') and LLMNextWeekPlanner is not None:
+            self._llm_planner = LLMNextWeekPlanner(
+                api_key=os.environ.get('MINIMAX_API_KEY'),
+                model=llm_cfg.get('model', 'MiniMax-M3'),
+                base_url=llm_cfg.get('base_url', 'https://api.minimaxi.com/v1'),
+            )
     
     def _set_run_font(self, run, size=None, bold=None):
         """Set both Latin and East Asian font for a run (CJK fix)."""
@@ -200,9 +217,11 @@ class ReportGenerator:
         """Normalize recurring raw-note wording into report-safe terms."""
         if not text:
             return ''
+        # Terminology normalization
         text = re.sub(r'smartbi', 'Smartbi', text, flags=re.IGNORECASE)
         text = re.sub(r'smart\s*开发', 'Smartbi 开发', text, flags=re.IGNORECASE)
         text = re.sub(r'svn', 'SVN', text, flags=re.IGNORECASE)
+        # Oral expressions
         text = text.replace('稳序', '程序')
         text = text.replace('乡下反馈', '基层机构反馈')
         text = text.replace('数据都翻翻了', '数据出现翻倍异常')
@@ -211,10 +230,23 @@ class ReportGenerator:
         text = text.replace('看一下', '核查')
         text = text.replace('找一下', '核查定位')
         text = text.replace('沟通一下', '沟通确认')
+        # Normalize raw date formats like 0611, 6.11, 6/11, 0629号 to 6月11日/6月29日 (avoid 4-digit years)
+        text = re.sub(r'\b(0[1-9]|1[0-2])([0-2][0-9]|3[01])\b', lambda m: f'{int(m.group(1))}月{int(m.group(2))}日', text)
+        text = re.sub(r'(?<![\d/])\b(\d{1,2})[./](\d{1,2})\b(?![\d/])', lambda m: f'{int(m.group(1))}月{int(m.group(2))}日', text)
+        text = re.sub(r'(0[1-9]|1[0-2])([0-2][0-9]|3[01])号', lambda m: f'{int(m.group(1))}月{int(m.group(2))}日', text)
+        # Remove leading oral numbering from source notes, e.g. "2、已与公卫..."
+        text = re.sub(r'^\s*\d+[、.．]\s*', '', text)
+        # Normalize informal vendor references
+        text = re.sub(r'通知\s*smart(?![a-zA-Z])', '通知 Smartbi', text, flags=re.IGNORECASE)
+        text = text.replace('美化UI', '美化 UI')
+        text = text.replace('UI后', 'UI 后')
+        text = text.replace('UI后', 'UI 后')
+        text = text.replace('可以开始推进', '启动推进')
+        text = text.replace('发给李江了', '已提交李江')
+        text = text.replace('已跟火树反馈', '已向火树反馈')
         text = re.sub(r'手工数据的台账\s*SVN\s*上核查定位', '需在 SVN 上核查手工数据台账', text)
         text = re.sub(r'([\u4e00-\u9fff]{2,8})\1', r'\1', text)
         return text
-
     def clean_issue_text(self, text):
         """Clean raw issue tracker wording before writing to the report."""
         text = self._normalize_business_terms(text or '').strip()
@@ -443,6 +475,10 @@ class ReportGenerator:
         This is deterministic scaffolding for the future LLM step: Python
         selects the task and builds a semantic action target instead of copying
         current-week status into next-week plan.
+
+        When ``llm_next_week.enabled`` is true and the LLM returns a usable
+        action, that action is used; otherwise the deterministic rule engine
+        below is used as fallback.
         """
         task = self._normalize_business_terms(row.get(self.columns.get('task', '任务'), '').strip())
         stage = row.get(self.columns.get('stage', '任务阶段'), '').strip()
@@ -452,9 +488,38 @@ class ReportGenerator:
         plan_start = self._parse_date(row.get(self.columns.get('plan_start', '计划开始')))
         plan_end = self._parse_date(row.get(self.columns.get('plan_end', '计划完成')))
 
+        # Optional LLM inference
+        if self._llm_planner is not None and NextWeekCandidate is not None:
+            try:
+                llm_action = self._llm_planner.infer_action(NextWeekCandidate(
+                    work_unit=row.get(self.columns.get('work_unit', '工作单元'), '').strip(),
+                    stage=stage,
+                    task=task,
+                    progress=progress,
+                    status=row.get(self.columns.get('status', '状态'), '').strip(),
+                    plan_start=plan_start.strftime('%Y-%m-%d') if plan_start else None,
+                    plan_end=plan_end.strftime('%Y-%m-%d') if plan_end else None,
+                    notes=notes,
+                ))
+                if llm_action:
+                    # Preserve progress suffix if the LLM did not include it
+                    if progress_text and progress_text not in llm_action:
+                        llm_action += f"（当前进度{progress_text}）"
+                    return self._normalize_business_terms(llm_action)
+            except Exception:
+                pass
+
         is_starting_next_week = plan_start is not None and self.next_monday <= plan_start <= self.next_friday
         is_due_next_week = plan_end is not None and plan_end <= self.next_friday
-        verb = "启动" if is_starting_next_week or progress <= 0 else "完成"
+        # Choose verb based on actual progress to avoid saying "完成" for 1% tasks
+        if progress <= 0:
+            verb = "启动"
+        elif progress < 0.3:
+            verb = "启动" if is_starting_next_week else "推进"
+        elif progress < 0.8:
+            verb = "推进"
+        else:
+            verb = "完成"
 
         stage_task = stage + task
         combined = stage + task + notes
@@ -940,7 +1005,7 @@ class ReportGenerator:
                 try:
                     # Add image right after header in same paragraph
                     run = header_p.add_run()
-                    run.add_picture(img_path, width=Inches(4.5))
+                    run.add_picture(img_path, width=Inches(3.0))
                 except Exception as e:
                     print(f"  ️ 图片插入失败: {e}")
             

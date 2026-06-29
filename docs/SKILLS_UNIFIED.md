@@ -87,6 +87,9 @@ alias 不能保存独立 `SKILL.md`。
 |---|---|---|---|
 | `ai-quiz` | `skills/ai-quiz/` | `ai-quiz-codex-package/` | 无 |
 | `weekend-lunch-plan` | `skills/weekend-lunch-plan/` | `weekend-lunch-plan-codex/` | `weekend-lunch` |
+| `jintan-weekly-report-sop` | `skills/jintan-weekly-report-sop/` | `jintan-weekly-report-sop/` | 无 |
+| `resume-jd-scorer` | `skills/resume-jd-scorer/` | `resume-jd-scorer/` | 无 |
+| `daily-ai-digest` | 待建 | `daily-ai-digest/` | 无 |
 
 通用 marketplace / 系统 Skill 不强制迁移到工作区；本规范只约束绑定个人项目代码和数据的自定义 Skill。
 

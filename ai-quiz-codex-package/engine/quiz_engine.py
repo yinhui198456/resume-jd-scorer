@@ -13,10 +13,23 @@ import json
 import sys
 import os
 import fcntl
+import logging
 from datetime import datetime, timedelta
 from collections import defaultdict, Counter
 from pathlib import Path
 from typing import Optional
+
+
+# ============================================================
+# Logging
+# ============================================================
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
 
 
 # ============================================================
@@ -26,9 +39,20 @@ from typing import Optional
 ROOT_DIR = Path(__file__).resolve().parent.parent
 BANK_PATH = ROOT_DIR / "data" / "question-bank" / "bank.json"
 PROGRESS_PATH = ROOT_DIR / "data" / "tracking" / "progress.json"
-LOCK_PATH = Path("/opt/personal-agent-workspace/.locks/ai-quiz.lock")
+SESSION_STATE_PATH = ROOT_DIR / "data" / "tracking" / "session_state.json"
+STUDY_LOGS_DIR = ROOT_DIR / "data" / "study-logs"
+LOCK_PATH = Path(os.environ.get(
+    "AI_QUIZ_LOCK_PATH",
+    "/opt/personal-agent-workspace/.locks/ai-quiz.lock"
+))
 
 REVIEW_INTERVALS = [1, 3, 7, 14, 30, 90]
+SESSION_EXPIRY_HOURS = int(os.environ.get("AI_QUIZ_SESSION_EXPIRY_HOURS", "24"))
+
+# Priority scoring weights
+CONFIDENCE_WEIGHT = 10
+MODULE_PROGRESS_WEIGHT = 5
+
 
 # Output templates (Issue #2: standardized format)
 CORRECT_TEMPLATE = "✅ **正确！** 答案是 {answer}。"
@@ -45,14 +69,28 @@ WRONG_OPTION_TEMPLATE = "**错误选项分析**：{wrong_analysis}"
 
 def load_bank():
     """Load question bank from JSON file."""
-    with open(BANK_PATH, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        with open(BANK_PATH, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logger.error(f"Question bank not found: {BANK_PATH}")
+        raise
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse question bank: {e}")
+        raise
 
 
 def load_progress():
     """Load progress tracking data from JSON file."""
-    with open(PROGRESS_PATH, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        with open(PROGRESS_PATH, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logger.error(f"Progress file not found: {PROGRESS_PATH}")
+        raise
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse progress file: {e}")
+        raise
 
 
 def save_progress(progress):
@@ -62,24 +100,82 @@ def save_progress(progress):
 
 
 def save_progress_locked(progress):
-    """Save progress with file lock for concurrency safety."""
+    """Save progress with file lock for concurrency safety.
+
+    Uses atomic rename to avoid corrupting the progress file if the
+    process is interrupted mid-write.
+    """
     os.makedirs(LOCK_PATH.parent, exist_ok=True)
     with open(LOCK_PATH, 'w') as lock_file:
         fcntl.flock(lock_file, fcntl.LOCK_EX)
         try:
-            save_progress(progress)
+            # Backup existing progress file
+            if PROGRESS_PATH.exists():
+                backup_path = PROGRESS_PATH.with_suffix('.json.bak')
+                backup_path.write_text(PROGRESS_PATH.read_text(encoding='utf-8'), encoding='utf-8')
+
+            # Write to temp file and atomically rename
+            temp_path = PROGRESS_PATH.with_suffix('.json.tmp')
+            with open(temp_path, 'w', encoding='utf-8') as f:
+                json.dump(progress, f, ensure_ascii=False, indent=2)
+            os.replace(temp_path, PROGRESS_PATH)
         finally:
             fcntl.flock(lock_file, fcntl.LOCK_UN)
+
+
+def load_session_state():
+    """Load persisted session state if valid."""
+    if not SESSION_STATE_PATH.exists():
+        return None
+    try:
+        with open(SESSION_STATE_PATH, 'r', encoding='utf-8') as f:
+            state = json.load(f)
+        # Validate session expiry
+        started = state.get("started_at", "")
+        if started:
+            started_dt = datetime.strptime(started, "%Y-%m-%d %H:%M:%S")
+            if datetime.now() - started_dt > timedelta(hours=SESSION_EXPIRY_HOURS):
+                return None
+        return state
+    except (json.JSONDecodeError, ValueError, OSError):
+        return None
+
+
+def save_session_state(state):
+    """Save session state to disk."""
+    SESSION_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(SESSION_STATE_PATH, 'w', encoding='utf-8') as f:
+        json.dump(state, f, ensure_ascii=False, indent=2)
+
+
+def append_study_log(entry):
+    """Append a study log entry to today's log file."""
+    STUDY_LOGS_DIR.mkdir(parents=True, exist_ok=True)
+    today = datetime.now().strftime("%Y-%m-%d")
+    log_path = STUDY_LOGS_DIR / f"{today}.jsonl"
+    entry["logged_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(log_path, 'a', encoding='utf-8') as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 
 # ============================================================
 # Question Selection Engine (Issue #1 & #5)
 # ============================================================
 
+def calc_next_review(date_str, review_count):
+    """Calculate next review date based on spaced repetition intervals."""
+    if review_count < len(REVIEW_INTERVALS):
+        days = REVIEW_INTERVALS[review_count]
+    else:
+        days = REVIEW_INTERVALS[-1]
+    d = datetime.strptime(date_str, "%Y-%m-%d") + timedelta(days=days)
+    return d.strftime("%Y-%m-%d")
+
+
 class QuizSession:
     """Manages a quiz session with proper deduplication and tracking."""
 
-    def __init__(self):
+    def __init__(self, restore_session=True):
         self.bank = load_bank()
         self.progress = load_progress()
         self.q_tracking = self.progress.get("question_tracking", {})
@@ -91,8 +187,55 @@ class QuizSession:
         # Track answered questions in this session
         self.answered_questions = []
 
+        # Session metadata
+        self.session_id = None
+        self.session_started_at = None
+        self.session_mode = None
+
+        # Restore persisted session state if available and valid
+        if restore_session:
+            self._load_session_state()
+
         # Build question lookup
         self._build_question_map()
+
+    def _load_session_state(self):
+        """Load session state from disk."""
+        state = load_session_state()
+        if not state:
+            return
+        self.session_id = state.get("session_id")
+        self.session_started_at = state.get("started_at")
+        self.session_mode = state.get("mode")
+        self.presented_questions = set(state.get("presented_questions", []))
+        self.answered_questions = [
+            {"qid": a["qid"], "correct": a["correct"], "is_new": a["is_new"]}
+            for a in state.get("answered_questions", [])
+        ]
+
+    def _save_session_state(self):
+        """Persist current session state."""
+        if not self.session_id:
+            return
+        state = {
+            "session_id": self.session_id,
+            "started_at": self.session_started_at,
+            "mode": self.session_mode,
+            "presented_questions": sorted(self.presented_questions),
+            "answered_questions": self.answered_questions,
+            "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        save_session_state(state)
+
+    def reset_session(self, mode=None):
+        """Start a new session, clearing old state."""
+        self.session_id = datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.session_started_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.session_mode = mode
+        self.presented_questions = set()
+        self.answered_questions = []
+        self._save_session_state()
+        return self.session_id
 
     def _build_question_map(self):
         """Build a flat map of all questions by ID."""
@@ -114,13 +257,15 @@ class QuizSession:
         3. Module weakness (lower % first)
         """
         today = datetime.now().strftime("%Y-%m-%d")
+        answered_qids = {a["qid"] for a in self.answered_questions}
 
         due = []
         for qid, q in self.q_tracking.items():
+            status = q.get("status", "")
             if (q.get("next_review") and q.get("next_review") <= today
-                and q.get("status") == "reviewing"
+                and status in ("reviewing", "learning")
                 and qid not in self.presented_questions
-                and qid not in [a["qid"] for a in self.answered_questions]):
+                and qid not in answered_qids):
 
                 conf = q.get("confidence", 5)
                 module = q.get("module", "")
@@ -133,7 +278,7 @@ class QuizSession:
                     "module": module,
                     "module_progress": mod_progress,
                     "next_review": q.get("next_review", ""),
-                    "priority_score": conf * 10 + mod_progress * 5  # Lower score = higher priority
+                    "priority_score": conf * CONFIDENCE_WEIGHT + mod_progress * MODULE_PROGRESS_WEIGHT
                 })
 
         # Sort by priority
@@ -150,6 +295,7 @@ class QuizSession:
             # Default: prioritize weakest modules
             modules = self._get_weakest_modules()
 
+        answered_qids = {a["qid"] for a in self.answered_questions}
         selected = []
         for mod_name in modules:
             if mod_name not in self.bank["modules"]:
@@ -159,7 +305,7 @@ class QuizSession:
             for q in mod_qs:
                 if (q["id"] not in self.q_tracking
                     and q["id"] not in self.presented_questions
-                    and q["id"] not in [a["qid"] for a in self.answered_questions]):
+                    and q["id"] not in answered_qids):
                     selected.append((q["id"], mod_name))
                     if len(selected) >= limit:
                         return selected
@@ -168,15 +314,15 @@ class QuizSession:
 
     def get_wrong_questions(self, limit=5):
         """Get questions that were answered incorrectly recently."""
+        answered_qids = {a["qid"] for a in self.answered_questions}
         wrong = []
         for qid, q in self.q_tracking.items():
             conf = q.get("confidence", 5)
-            last_reviewed = q.get("last_reviewed", "")
 
             # Confidence <= 2 indicates wrong answer
             if (conf <= 2
                 and qid not in self.presented_questions
-                and qid not in [a["qid"] for a in self.answered_questions]):
+                and qid not in answered_qids):
                 wrong.append((qid, conf, q.get("module", "")))
 
         # Sort by confidence (lowest first)
@@ -198,6 +344,7 @@ class QuizSession:
     def mark_presented(self, qid):
         """Mark a question as presented to user (for deduplication)."""
         self.presented_questions.add(qid)
+        self._save_session_state()
 
     def get_question(self, qid):
         """Get question data by ID."""
@@ -233,10 +380,13 @@ class QuizSession:
         """
         q = self.q_tracking.get(qid)
         if not q:
-            return
+            logger.error(f"Question {qid} not found in tracking; cannot record answer")
+            raise ValueError(f"Question {qid} not found in tracking")
 
         today = datetime.now().strftime("%Y-%m-%d")
         module = q.get("module", "")
+
+        logger.info(f"Recording answer for {qid}: correct={is_correct}, is_new={is_new}")
 
         if is_new:
             # First time learning
@@ -293,14 +443,23 @@ class QuizSession:
             "is_new": is_new
         })
 
+        # Persist session state
+        self._save_session_state()
+
+        # Append study log
+        append_study_log({
+            "qid": qid,
+            "module": module,
+            "is_correct": is_correct,
+            "is_new": is_new,
+            "confidence": q.get("confidence"),
+            "review_count": q.get("review_count"),
+            "next_review": q.get("next_review")
+        })
+
     def _calc_next_review(self, date_str, review_count):
         """Calculate next review date based on spaced repetition intervals."""
-        if review_count < len(REVIEW_INTERVALS):
-            days = REVIEW_INTERVALS[review_count]
-        else:
-            days = REVIEW_INTERVALS[-1]
-        d = datetime.strptime(date_str, "%Y-%m-%d") + timedelta(days=days)
-        return d.strftime("%Y-%m-%d")
+        return calc_next_review(date_str, review_count)
 
     def _save(self):
         """Save progress with lock."""

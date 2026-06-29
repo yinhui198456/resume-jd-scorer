@@ -29,3 +29,9 @@
 - Added product-version title clustering so repeated same-product releases such as Claude Code/Codex versions collapse into one cluster even when URLs are not GitHub release URLs.
 - Added a GitHub repository search date guard verifying `pushed_at` is used as `published_at`.
 - Full test suite passed: 54 tests.
+- Added Codex and Claude Code skill repository search sources to `configs/sources.yml`.
+- Updated source policy docs to describe the new skill repository sources and current 6/9 compact quota model.
+- Found and fixed a live-selection gap where only 11 items were selected when top stories were scarce; productivity projects now backfill to the 15-item target.
+- Real no-delivery selection check succeeded with 15 items: 2 top stories and 13 productivity projects.
+- Full test suite passed after source/backfill changes: 56 tests.
+- Refreshed Graphify output after the source and selection changes.

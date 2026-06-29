@@ -64,6 +64,20 @@
 - Added missing protection for same-product version-title clustering outside GitHub release URLs.
 - Added explicit test that GitHub repository search uses `pushed_at` as the item timestamp, preventing old created projects with recent pushes from being treated as 2024 news.
 
+## Source expansion and live selection check
+
+- Added `github-codex-skills`:
+  - query: `topic:codex topic:agent-skills stars:>5 pushed:>=2026-01-01`
+  - group: `github_projects`
+- Added `github-claude-code-skills`:
+  - query: `topic:claude-code topic:agent-skills stars:>5 pushed:>=2026-01-01`
+  - group: `github_projects`
+- Real GitHub API check returned 20 items from each new source.
+- Real all-source collection check returned 364 raw items and 0 failures.
+- Initial real selection produced only 11 items because top stories were scarce and productivity was capped at 9.
+- Fixed selection so the first pass respects 6/9 quotas, then a second pass backfills any eligible section to the 15-item target.
+- Post-fix no-delivery selection produced 15 items, including Codex/Claude Code skill repository sources.
+
 ## Query checks
 
 - `render_feishu_post()` was found at `src/digest/generate/render.py`.

@@ -183,6 +183,38 @@ def find_next_week_plan_issues(doc):
     return issues
 
 
+def check_next_week_semantic_consistency(doc):
+    """Check for contradictions in next-week plan items.
+
+    Looks for items that claim completion but appear in next-week section,
+    or items with 0% progress that still say '完成'.
+    """
+    issues = []
+    if not doc.tables:
+        return issues
+    table = doc.tables[0]
+    if len(table.rows) <= 8:
+        return issues
+
+    cell = table.cell(8, 0)
+    text = cell.text
+    # Extract individual task lines (三级编号 1) ...)
+    for line in text.split('\n'):
+        line = line.strip()
+        if not re.match(r'^\d+\)', line):
+            continue
+
+        # Progress 100% in next-week plan
+        if re.search(r'100%|已完成|已交付|已关闭|已上线', line):
+            issues.append(f'✗ [L2] 下周计划包含已完成项: "{line[:60]}..."')
+
+        # Contradiction: 0% but says "完成"
+        if re.search(r'完成|交付|上线', line) and re.search(r'当前进度\s*0%|进度\s*0%', line):
+            issues.append(f'✗ [L2] 下周计划进度为 0 却写完成: "{line[:60]}..."')
+
+    return issues
+
+
 def run_validation(doc_path, source_data):
     doc = Document(doc_path)
     table = doc.tables[0] if doc.tables else None
@@ -229,6 +261,12 @@ def run_validation(doc_path, source_data):
         issues.extend(next_week_issues)
     else:
         passes.append('✅ [L1] 下周计划: 无状态复述')
+
+    semantic_issues = check_next_week_semantic_consistency(doc)
+    if semantic_issues:
+        issues.extend(semantic_issues)
+    else:
+        passes.append('✅ [L2] 下周计划: 无语义矛盾')
 
     # Check for empty task placeholder (only if the cell is essentially empty
     # or contains only the placeholder text with no real task content)

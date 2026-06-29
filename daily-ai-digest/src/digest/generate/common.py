@@ -5,6 +5,11 @@ import re
 REQUIRED_GENERATION_FIELDS = {"chinese_title", "summary", "why_it_matters"}
 
 
+def compact_text(text: str, limit: int = 100) -> str:
+    normalized = " ".join(text.split())
+    return normalized if len(normalized) <= limit else normalized[: limit - 1] + "…"
+
+
 def parse_generation(text: str) -> dict[str, str]:
     if not isinstance(text, str):
         raise ValueError("invalid generation response")
@@ -20,13 +25,16 @@ def parse_generation(text: str) -> dict[str, str]:
         for key in REQUIRED_GENERATION_FIELDS
     ):
         raise ValueError("invalid generation response")
+    value["chinese_title"] = " ".join(value["chinese_title"].split())
+    value["summary"] = compact_text(value["summary"], 100)
+    value["why_it_matters"] = " ".join(value["why_it_matters"].split())
     return value
 
 
 def fallback_generation(title: str, body: str, language: str) -> dict[str, str]:
     return {
         "chinese_title": title.strip(),
-        "summary": " ".join(body.split())[:160],
+        "summary": compact_text(body, 100),
         "why_it_matters": "该条目来自已验证的官方或发布来源，建议查看原文。",
         "translation_status": "pending" if language == "en" else "not_required",
     }

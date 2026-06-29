@@ -48,6 +48,17 @@ def test_parse_generation_accepts_minimax_think_prefix():
     assert result["chinese_title"] == "MCP 更新"
 
 
+def test_parse_generation_caps_summary_at_100_characters():
+    result = parse_generation(
+        '{"chinese_title":"MCP 更新","summary":"'
+        + "甲" * 140
+        + '","why_it_matters":"影响工具集成"}'
+    )
+
+    assert result["summary"] == "甲" * 99 + "…"
+    assert len(result["summary"]) == 100
+
+
 def test_fallback_marks_english_translation_pending():
     result = fallback_generation("Codex update", "New MCP support", "en")
     assert result["translation_status"] == "pending"
