@@ -66,9 +66,8 @@ class FeishuSheetsClient:
         range_name: str,
         values: list[list[object]],
     ) -> dict[str, object]:
-        encoded_range = urllib.parse.quote(f"{sheet_id}!{range_name}", safe="")
         response = self.session.post(
-            f"https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/{spreadsheet_token}/values_append/{encoded_range}",
+            f"https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/{spreadsheet_token}/values_append",
             headers=self._headers(),
             json={"valueRange": {"range": f"{sheet_id}!{range_name}", "values": values}},
             timeout=20,
@@ -83,9 +82,8 @@ class FeishuSheetsClient:
         range_name: str,
         values: list[list[object]],
     ) -> dict[str, object]:
-        encoded_range = urllib.parse.quote(f"{sheet_id}!{range_name}", safe="")
         response = self.session.put(
-            f"https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/{spreadsheet_token}/values/{encoded_range}",
+            f"https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/{spreadsheet_token}/values",
             headers=self._headers(),
             json={"valueRange": {"range": f"{sheet_id}!{range_name}", "values": values}},
             timeout=20,

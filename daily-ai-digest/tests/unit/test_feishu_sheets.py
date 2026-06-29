@@ -67,6 +67,8 @@ def test_append_values_posts_values_payload():
     assert result["updatedRange"] == "349176!A36:I36"
     method, url, kwargs = session.calls[-1]
     assert method == "POST"
+    assert url == "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/spreadsheet-token/values_append"
+    assert kwargs["json"]["valueRange"]["range"] == "349176!A:I"
     assert kwargs["json"]["valueRange"]["values"] == [["L36"]]
 
 
@@ -77,4 +79,8 @@ def test_update_values_puts_values_payload():
     result = client.update_values("spreadsheet-token", "349176", "H36:I36", [["note", "link"]])
 
     assert result["updatedRange"] == "349176!H36:I36"
-    assert session.calls[-1][0] == "PUT"
+    method, url, kwargs = session.calls[-1]
+    assert method == "PUT"
+    assert url == "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/spreadsheet-token/values"
+    assert kwargs["json"]["valueRange"]["range"] == "349176!H36:I36"
+    assert kwargs["json"]["valueRange"]["values"] == [["note", "link"]]
