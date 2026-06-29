@@ -85,13 +85,36 @@
 - Before：第 1 页只有标题和项目信息，第 2 页才开始 milestone 图
 - After：第 1 页包含标题 + milestone 图 + "本周重点工作" 起始内容
 
+### Loop 第4轮：自动化安装与自动提交 — 已完成
+- **检查：** 用户要求安装自动化、每 2 小时触发、自动提交 git
+- **修复：**
+  - 修改 `deploy/jintan-weekly-report.timer`：`OnCalendar` 从每周五 09:00 改为 `*-*-* 00/2:00:00`（每 2 小时）
+  - 修改 `deploy/jintan-weekly-report.service`：增加 `ExecStartPost` 自动 `git add -A`、`git commit`、`git push`
+  - 更新 `deploy/README.md` 说明新的触发周期和自动提交行为
+  - 创建 `agent` 系统用户并设置目录/日志/`.git` 权限
+  - 安装并启用 systemd timer，下次触发：14:00
+- **运行：** 手动触发 service → pipeline PASS，自动 commit 成功（`d93dcbc auto: weekly report update 2026-06-29-12:47`）
+- **再检查：**
+  - service 状态：`Deactivated successfully`
+  - timer 状态：`active (waiting)`，下次触发 14:00
+  - git push 失败：缺少 GitHub token（`could not read Username for 'https://github.com'`）
+
+## 待处理事项
+| 事项 | 状态 | 说明 |
+|------|------|------|
+| 自动 commit | ✓ 已工作 | service 运行后自动生成 commit |
+| 自动 push | ✗ 需 token | 需要 `~/.git-credentials` 或配置 GitHub token |
+| 提交范围 | 待确认 | 当前 `git add -A` 会提交整个 workspace 的变更，不只是金坛项目 |
+
 ## 测试结果
 | 测试 | 输入 | 预期 | 实际 | 状态 |
 |------|------|------|------|------|
 | Pipeline 生成校验 | config.yaml | PASS | PASS | ✓ |
 | 脚本单元测试 | scripts/ | 全部通过 | 35 passed | ✓ |
-| PDF 导出 | output/*.docx | 成功 | 4 页 | ✓ |
-| 首页留白检查 | /tmp/jintan-report-check/*.pdf | 无过度留白 | milestone 图已在首页 | ✓ |
+| systemd timer | systemctl list-timers | enabled | enabled, 每 2 小时 | ✓ |
+| 手动触发 service | systemctl start | success | Deactivated successfully | ✓ |
+| 自动 git commit | git log | 有 auto commit | d93dcbc | ✓ |
+| 自动 git push | git log on remote | pushed | 失败，需 token | ✗ |
 
 ## 5-Question Reboot Check
 | 问题 | 答案 |

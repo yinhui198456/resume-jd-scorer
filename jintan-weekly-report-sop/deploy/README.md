@@ -45,11 +45,16 @@ sudo systemctl start jintan-weekly-report.service
 服务在 pipeline 成功后执行：
 
 ```bash
-cd /opt/personal-agent-workspace/jintan-weekly-report-sop
-git add -A
+cd /opt/personal-agent-workspace
+git add --all /opt/personal-agent-workspace/jintan-weekly-report-sop/
 # 只有存在变更时才提交并推送
-git diff --cached --quiet || (git commit -m "auto: weekly report update <timestamp>" && git push origin <current-branch>)
+git diff --cached --quiet || (
+  git commit -m "auto: jintan weekly report update <timestamp>" &&
+  git push origin $(git branch --show-current)
+)
 ```
+
+**注意：** 只提交 `jintan-weekly-report-sop/` 项目目录的变更，不会提交 workspace 下其他项目的文件。
 
 ## 失败告警（可选）
 
