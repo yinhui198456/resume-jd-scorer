@@ -65,11 +65,19 @@ def plan_learning_write(
         row_number, row = duplicate
         task_id = _cell(row, 0)
         notes = _append_source_note(_cell(row, 7), candidate.source_date)
-        link = _cell(row, 8) or candidate.url
+        link = _cell(row, 8)
+        if link:
+            return LearningPlanWritePlan(
+                action="update",
+                range_name=f"H{row_number}:H{row_number}",
+                values=[[notes]],
+                message=f"已更新已有任务：{task_id}｜{_cell(row, 2)}｜补充来源到备注",
+                existing_task_id=task_id,
+            )
         return LearningPlanWritePlan(
             action="update",
             range_name=f"H{row_number}:I{row_number}",
-            values=[[notes, link]],
+            values=[[notes, candidate.url]],
             message=f"已更新已有任务：{task_id}｜{_cell(row, 2)}｜补充来源到备注",
             existing_task_id=task_id,
         )

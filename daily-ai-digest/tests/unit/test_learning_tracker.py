@@ -67,11 +67,27 @@ def test_plan_append_for_new_candidate():
     assert plan.message == "准备记录：L36｜Agentic Coding｜Graphify 项目学习｜优先级：中｜状态：待开始。确认写入？"
 
 
-def test_plan_update_for_duplicate_only_updates_notes_and_empty_link():
+def test_plan_update_for_duplicate_with_existing_link_only_updates_notes():
+    now = datetime(2026, 6, 29, 10, 0, tzinfo=ZoneInfo("Asia/Shanghai"))
+    rich_link = [{"text": "Graphify", "link": "https://github.com/safishamsi/graphify"}]
+    values = [
+        HEADER,
+        ["L35", "Agentic Coding", "Graphify 项目学习", "手工输出", "进行中", "", "高", "原备注", rich_link],
+    ]
+
+    plan = plan_learning_write(values, candidate(), now)
+
+    assert plan.action == "update"
+    assert plan.range_name == "H2:H2"
+    assert plan.existing_task_id == "L35"
+    assert plan.values == [["原备注；再次出现：2026-06-29 每日 AI 资讯"]]
+
+
+def test_plan_update_for_duplicate_with_empty_link_updates_notes_and_link():
     now = datetime(2026, 6, 29, 10, 0, tzinfo=ZoneInfo("Asia/Shanghai"))
     values = [
         HEADER,
-        ["L35", "Agentic Coding", "Graphify 项目学习", "手工输出", "进行中", "", "高", "原备注", "https://github.com/safishamsi/graphify"],
+        ["L35", "Agentic Coding", "Graphify 项目学习", "手工输出", "进行中", "", "高", "原备注", ""],
     ]
 
     plan = plan_learning_write(values, candidate(), now)
