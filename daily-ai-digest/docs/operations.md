@@ -13,6 +13,15 @@ anonymous API rate limits return HTTP 403 or 429. Partial failures are recorded
 under `data/state/runs/<run-id>/source_health.json` and mirrored to
 `data/state/source_health.json`.
 
+During selection, the pipeline reads `学习计划追踪 2026` → `主任务` and suppresses
+GitHub/productivity projects that already exist in the user's learning plan.
+Existing projects can still be recommended when the current item is a recent
+feature/release update, or when GitHub stars have grown quickly relative to
+`data/state/github_star_history.json`. Defaults are configured in
+`configs/filters.yml` under `learning_plan_suppression`: at least +500 stars and
++15% since the last recorded snapshot. If the Feishu lookup fails, the digest
+continues without this suppression rather than blocking delivery.
+
 Normal digests are delivered as one compact Feishu rich-text Post through the
 existing `Codex-学习助理` application: at most 8 top stories and 3 candidates,
 with complete top-story summaries capped at 100 characters and one primary link per item.
@@ -63,4 +72,6 @@ Rules:
 - Do not record every digest item automatically.
 - The tracker writes only columns A-I.
 - Duplicate rows update notes/link only.
+- Items already present in `主任务` are not re-recommended by the daily digest
+  unless they have a new feature/release signal or sudden GitHub star growth.
 - Real write smoke tests require user approval.

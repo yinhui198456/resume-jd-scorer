@@ -17,6 +17,10 @@ def _cell(row: list[object], index: int) -> str:
     return str(value)
 
 
+def cell_text(row: list[object], index: int) -> str:
+    return _cell(row, index)
+
+
 def validate_headers(values: list[list[object]]) -> None:
     if not values or tuple(str(value) for value in values[0][: len(SHEET_HEADERS)]) != SHEET_HEADERS:
         raise ValueError("LEARNING_PLAN_HEADER_MISMATCH")

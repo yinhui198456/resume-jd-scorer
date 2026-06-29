@@ -176,6 +176,36 @@ Non-triggers:
 - Requests to resend or reformat the daily digest.
 - Fully automatic daily runs.
 
+## Daily recommendation suppression
+
+The daily digest should use the same `主任务` read model as a recommendation
+guardrail. Before final selection, compare GitHub/productivity project
+candidates with existing learning-plan rows:
+
+1. Normalize GitHub links in column I to the repository root
+   (`https://github.com/<owner>/<repo>`), so release URLs and repository URLs
+   match the same project.
+2. Also compare candidate title/body with existing task names and notes for
+   non-GitHub productivity items.
+3. If the project/topic already exists, do not recommend it again by default.
+
+Allowed exceptions:
+
+- The current item is a recent feature, launch, release, or capability update
+  for that project.
+- GitHub stars have grown quickly since the last local star snapshot. The
+  default threshold is at least +500 stars and +15%, configured by
+  `learning_plan_suppression` in `configs/filters.yml`.
+
+Operational behavior:
+
+- The daily digest should fail open if the Feishu read is unavailable: continue
+  delivery without suppression rather than blocking the daily post.
+- Store GitHub star snapshots locally under `data/state/github_star_history.json`
+  so later runs can detect sudden growth.
+- This suppression affects recommendations only; it must not write to the
+  Feishu sheet and must not change existing `主任务` rows.
+
 ## Row creation rules
 
 ### Task id

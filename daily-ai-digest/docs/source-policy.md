@@ -12,3 +12,11 @@ Current Tier 2 groups:
 - Methodology and experience-sharing feeds from curated AI practitioners.
 
 Delivery uses explicit section quotas so Tier 2 signals are visible instead of being crowded out by Tier 1 official sources. The default compact digest contains 15 items: 6 top stories and 9 productivity projects.
+
+Learning-plan suppression is part of the recommendation policy. Before final
+selection, GitHub/productivity project candidates are compared with
+`学习计划追踪 2026` → `主任务`. If a project already exists there, the digest should
+not recommend it again unless the new item is a recent feature/release update or
+the project's GitHub stars have risen quickly since the last local snapshot.
+This keeps the daily digest focused on new opportunities instead of repeatedly
+surfacing projects the user has already decided to track.

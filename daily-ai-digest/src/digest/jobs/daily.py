@@ -18,6 +18,8 @@ from digest.filter.quality import dedupe_exact, hard_filter, tag_topics, weighte
 from digest.generate.render import render_digest, render_fault_digest, render_feishu_section_posts
 from digest.generate.minimax import MiniMaxGenerator
 from digest.generate.common import compact_text, fallback_generation
+from digest.learn.sheets import FeishuSheetsClient
+from digest.learn.tracker import cell_text
 from digest.models import AppConfig, DigestItem, NewsItem, RawItem, StageCheckpoint, StageStatus
 from digest.parse.normalize import normalize_raw_item
 from digest.storage.state import StateStore, atomic_write_json, run_lock
@@ -31,6 +33,7 @@ class PipelineDependencies:
     collector: Callable
     generator: Callable
     delivery: object
+    learning_plan_values: Callable[[AppConfig], list[list[object]]] | None = None
 
 
 @dataclass(slots=True)
@@ -187,6 +190,138 @@ def _github_star_count(
     return None
 
 
+def _github_project_url(url: str) -> str:
+    match = re.match(r"^https://github\.com/([^/\s]+)/([^/\s#?]+)", url.strip())
+    if not match:
+        return url.strip()
+    owner, repo = match.groups()
+    return f"https://github.com/{owner}/{repo.removesuffix('.git')}"
+
+
+def _cluster_project_url(cluster: list[NewsItem]) -> str:
+    for item in cluster:
+        if item.canonical_url:
+            return _github_project_url(item.canonical_url)
+    return ""
+
+
+def _learning_plan_project_keys(values: list[list[object]] | None) -> set[str]:
+    if not values:
+        return set()
+    keys: set[str] = set()
+    for row in values[1:]:
+        link = cell_text(row, 8)
+        if link:
+            keys.add(_github_project_url(link).casefold())
+        task_name = cell_text(row, 2).casefold().strip()
+        if task_name:
+            keys.add(task_name)
+        notes = cell_text(row, 7).casefold().strip()
+        if notes:
+            keys.add(notes)
+    return keys
+
+
+def _cluster_matches_learning_plan(
+    cluster: list[NewsItem],
+    learning_plan_keys: set[str],
+) -> bool:
+    if not learning_plan_keys:
+        return False
+    project_url = _cluster_project_url(cluster).casefold()
+    if project_url and project_url in learning_plan_keys:
+        return True
+    text = _cluster_text(cluster)
+    return any(key and (key in text or text in key) for key in learning_plan_keys if not key.startswith("http"))
+
+
+def _feature_update_allowed(cluster: list[NewsItem]) -> bool:
+    text = _cluster_text(cluster)
+    markers = (
+        "new feature",
+        "release",
+        "released",
+        "launch",
+        "launched",
+        "introduces",
+        "now supports",
+        "adds ",
+        "added ",
+        "major update",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _read_github_star_history(path: Path) -> dict[str, dict[str, object]]:
+    if not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, dict):
+        return {
+            str(key): value
+            for key, value in payload.items()
+            if isinstance(value, dict)
+        }
+    return {}
+
+
+def _star_growth_allowed(
+    cluster: list[NewsItem],
+    raw_by_id: dict[str, RawItem],
+    groups: dict[str, str],
+    history: dict[str, dict[str, object]],
+    config: AppConfig,
+) -> bool:
+    project_url = _cluster_project_url(cluster)
+    stars = _github_star_count(cluster, raw_by_id, groups)
+    if not project_url or stars is None:
+        return False
+    previous = history.get(project_url) or history.get(project_url.casefold())
+    if not previous:
+        return False
+    previous_stars = int(previous.get("stars") or 0)
+    if previous_stars <= 0 or stars <= previous_stars:
+        return False
+    rules = config.filters.get("learning_plan_suppression", {})
+    min_delta = int(rules.get("star_growth_min_delta", 500))
+    min_ratio = float(rules.get("star_growth_min_ratio", 0.15))
+    return (stars - previous_stars) >= min_delta and ((stars - previous_stars) / previous_stars) >= min_ratio
+
+
+def _update_github_star_history(
+    path: Path,
+    clusters: list[list[NewsItem]],
+    raw_by_id: dict[str, RawItem],
+    groups: dict[str, str],
+    now: datetime,
+) -> None:
+    history = _read_github_star_history(path)
+    for cluster in clusters:
+        project_url = _cluster_project_url(cluster)
+        stars = _github_star_count(cluster, raw_by_id, groups)
+        if project_url and stars is not None:
+            history[project_url] = {"stars": stars, "updated_at": now.isoformat()}
+    if history:
+        atomic_write_json(path, history)
+
+
+def _learning_plan_suppressed(
+    cluster: list[NewsItem],
+    raw_by_id: dict[str, RawItem],
+    groups: dict[str, str],
+    learning_plan_keys: set[str],
+    star_history: dict[str, dict[str, object]],
+    config: AppConfig,
+) -> bool:
+    if not _cluster_matches_learning_plan(cluster, learning_plan_keys):
+        return False
+    if _feature_update_allowed(cluster):
+        return False
+    if _star_growth_allowed(cluster, raw_by_id, groups, star_history, config):
+        return False
+    return True
+
+
 def _with_github_stars(summary: str, stars: int | None) -> str:
     if stars is None or summary.startswith("⭐ "):
         return summary
@@ -282,6 +417,15 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
             )
             source_groups = _source_groups(config)
             candidate_flags = _candidate_flags(config)
+            star_history_path = state_dir / "github_star_history.json"
+            star_history = _read_github_star_history(star_history_path)
+            learning_plan_values = None
+            if dependencies.learning_plan_values:
+                try:
+                    learning_plan_values = dependencies.learning_plan_values(config)
+                except Exception:
+                    learning_plan_values = None
+            learning_plan_keys = _learning_plan_project_keys(learning_plan_values)
             top_limit = int(config.filters.get("quotas", {}).get("top_stories", 10))
             productivity_limit = int(
                 config.filters.get("quotas", {}).get(
@@ -302,6 +446,10 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                     continue
                 if group == "practice_methodology" and not _practice_allowed(cluster, config):
                     continue
+                if group in {"github_projects", "practice_methodology"} and _learning_plan_suppressed(
+                    cluster, raw_by_id, source_groups, learning_plan_keys, star_history, config
+                ):
+                    continue
                 if group in {"github_projects", "practice_methodology"} and counts["生产力项目"] < productivity_limit:
                     selected.append(("生产力项目", cluster))
                     selected_keys.add(cluster_key)
@@ -320,6 +468,10 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                 if not _newsworthy_allowed(cluster):
                     continue
                 if group == "practice_methodology" and not _practice_allowed(cluster, config):
+                    continue
+                if group in {"github_projects", "practice_methodology"} and _learning_plan_suppressed(
+                    cluster, raw_by_id, source_groups, learning_plan_keys, star_history, config
+                ):
                     continue
                 if group in {"github_projects", "practice_methodology"}:
                     selected.append(("生产力项目", cluster))
@@ -342,6 +494,7 @@ def run_daily(root: Path, config: AppConfig, dependencies: PipelineDependencies,
                 digest_items.append(DigestItem(run_id, 1, hashlib.sha256(primary.news_id.encode()).hexdigest(), [item.news_id for item in cluster], section, section_counts[section], generated["chinese_title"], summary, generated["why_it_matters"], primary.language, generated.get("translation_status", "translated"), [primary.canonical_url] if primary.canonical_url else [], now.isoformat()))
             generation_path = run_dir / "generated.json"
             atomic_write_json(generation_path, [asdict(item) for item in digest_items])
+            _update_github_star_history(star_history_path, ranked_clusters, raw_by_id, source_groups, now)
             _checkpoint(store, run_id, "translate", StageStatus.SUCCEEDED, now, len(digest_items), [str(generation_path)])
             _checkpoint(store, run_id, "summarize", StageStatus.SUCCEEDED, now, len(digest_items), [str(generation_path)])
             if digest_items:
@@ -427,10 +580,21 @@ def _dependencies(config: AppConfig) -> PipelineDependencies:
         except Exception:
             return fallback_generation(item.normalized_title, item.normalized_body, item.language)
 
+    def read_learning_plan_values(config: AppConfig) -> list[list[object]]:
+        client = FeishuSheetsClient(config.feishu_app_id, config.feishu_app_secret)
+        sheets = client.get_sheets(config.learning_plan_spreadsheet_token)
+        sheet_id = next(
+            str(sheet["sheet_id"])
+            for sheet in sheets
+            if sheet.get("title") == config.learning_plan_sheet_title
+        )
+        return client.read_values(config.learning_plan_spreadsheet_token, sheet_id, "A1:I225")
+
     return PipelineDependencies(
         _default_collector,
         generate,
         FeishuDelivery(config.feishu_app_id, config.feishu_app_secret, config.feishu_chat_id),
+        read_learning_plan_values,
     )
 
 

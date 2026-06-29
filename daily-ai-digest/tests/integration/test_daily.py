@@ -50,6 +50,13 @@ class FakeDelivery:
         return Result()
 
 
+def learning_plan_values(*rows):
+    return [
+        ["任务序号", "方向", "任务项", "输出", "状态", "月份", "优先级", "备注", "链接"],
+        *rows,
+    ]
+
+
 def config(root: Path) -> AppConfig:
     return AppConfig(str(root), {"blocked_domains": ["csdn.com"]}, {"allowed_languages": ["en", "zh"], "max_age_hours": 72, "thresholds": {"digest": 0.70, "candidate": 0.55}, "weights": {"source_trust": 0.30, "topic_match": 0.25, "information_density": 0.15, "recency": 0.15, "originality": 0.10, "evidence": 0.05}, "quotas": {"top_stories": 8, "candidates": 3}}, {"primary": ["MCP", "Codex"]}, {}, "key", "url", "model", "app", "secret", "chat")
 
@@ -333,6 +340,168 @@ def test_github_project_summaries_include_star_count(tmp_path):
 
     assert generated[0]["section"] == "生产力项目"
     assert generated[0]["summary"].startswith("⭐ 12,345 · ")
+
+
+def test_learning_plan_existing_project_is_not_recommended_again(tmp_path):
+    item = raw_section(
+        1,
+        "github-hot-ai-projects",
+        2,
+        "safishamsi/graphify",
+        run_id="run-learning-suppress",
+    )
+    item.canonical_url = "https://github.com/safishamsi/graphify"
+    item.published_at = "2026-06-29T00:40:00Z"
+    item.fetched_at = "2026-06-29T08:45:00+08:00"
+    item.raw_body = (
+        "Code graph productivity tool with benchmark demo code documentation links.\n"
+        "stars: 5154"
+    )
+    deps = PipelineDependencies(
+        FakeCollector([item]),
+        FakeGenerator(),
+        FakeDelivery(),
+        learning_plan_values=(
+            lambda config: learning_plan_values(
+                ["L36", "Agentic Coding", "Graphify 项目学习", "", "待开始", "2026 年 6 月", "中", "", "https://github.com/safishamsi/graphify"]
+            )
+        ),
+    )
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        deps,
+        "run-learning-suppress",
+        datetime(2026, 6, 29, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    assert report.status == "degraded"
+    assert report.item_count == 0
+
+
+def test_learning_plan_existing_project_with_new_feature_is_recommended(tmp_path):
+    item = raw_section(
+        1,
+        "github-hot-ai-projects",
+        2,
+        "safishamsi/graphify v2 release",
+        run_id="run-learning-feature",
+    )
+    item.canonical_url = "https://github.com/safishamsi/graphify/releases/tag/v2.0.0"
+    item.published_at = "2026-06-29T00:40:00Z"
+    item.fetched_at = "2026-06-29T08:45:00+08:00"
+    item.raw_body = (
+        "New feature release: adds repository dependency maps for coding productivity. "
+        "Benchmark demo code documentation links.\n"
+        "stars: 5154"
+    )
+    deps = PipelineDependencies(
+        FakeCollector([item]),
+        FakeGenerator(),
+        FakeDelivery(),
+        learning_plan_values=(
+            lambda config: learning_plan_values(
+                ["L36", "Agentic Coding", "Graphify 项目学习", "", "待开始", "2026 年 6 月", "中", "", "https://github.com/safishamsi/graphify"]
+            )
+        ),
+    )
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        deps,
+        "run-learning-feature",
+        datetime(2026, 6, 29, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-learning-feature/generated.json").read_text())
+    assert report.status == "succeeded"
+    assert generated[0]["section"] == "生产力项目"
+
+
+def test_learning_plan_existing_project_with_fast_star_growth_is_recommended(tmp_path):
+    item = raw_section(
+        1,
+        "github-hot-ai-projects",
+        2,
+        "safishamsi/graphify",
+        run_id="run-learning-stars",
+    )
+    item.canonical_url = "https://github.com/safishamsi/graphify"
+    item.published_at = "2026-06-29T00:40:00Z"
+    item.fetched_at = "2026-06-29T08:45:00+08:00"
+    item.raw_body = (
+        "Code graph productivity tool with benchmark demo code documentation links.\n"
+        "stars: 5154"
+    )
+    history_path = tmp_path / "data/state/github_star_history.json"
+    history_path.parent.mkdir(parents=True)
+    history_path.write_text(
+        json.dumps(
+            {
+                "https://github.com/safishamsi/graphify": {
+                    "stars": 4000,
+                    "updated_at": "2026-06-28T08:45:00+08:00",
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    deps = PipelineDependencies(
+        FakeCollector([item]),
+        FakeGenerator(),
+        FakeDelivery(),
+        learning_plan_values=(
+            lambda config: learning_plan_values(
+                ["L36", "Agentic Coding", "Graphify 项目学习", "", "待开始", "2026 年 6 月", "中", "", "https://github.com/safishamsi/graphify"]
+            )
+        ),
+    )
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        deps,
+        "run-learning-stars",
+        datetime(2026, 6, 29, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-learning-stars/generated.json").read_text())
+    assert report.status == "succeeded"
+    assert generated[0]["summary"].startswith("⭐ 5,154 · ")
+
+
+def test_learning_plan_lookup_failure_does_not_block_digest(tmp_path):
+    item = raw_section(
+        1,
+        "github-hot-ai-projects",
+        2,
+        "safishamsi/graphify",
+        run_id="run-learning-fail-open",
+    )
+    item.canonical_url = "https://github.com/safishamsi/graphify"
+    item.published_at = "2026-06-29T00:40:00Z"
+    item.fetched_at = "2026-06-29T08:45:00+08:00"
+    item.raw_body = (
+        "Code graph productivity tool with benchmark demo code documentation links.\n"
+        "stars: 5154"
+    )
+
+    def fail(_config):
+        raise RuntimeError("FEISHU_SHEETS_READ_999")
+
+    report = run_daily(
+        tmp_path,
+        section_config(tmp_path),
+        PipelineDependencies(FakeCollector([item]), FakeGenerator(), FakeDelivery(), learning_plan_values=fail),
+        "run-learning-fail-open",
+        datetime(2026, 6, 29, 8, 45, tzinfo=ZoneInfo("Asia/Shanghai")),
+    )
+
+    generated = json.loads((tmp_path / "data/state/runs/run-learning-fail-open/generated.json").read_text())
+    assert report.status == "succeeded"
+    assert generated[0]["section"] == "生产力项目"
 
 
 def test_practice_section_excludes_legal_safety_and_keeps_productivity_items(tmp_path):
