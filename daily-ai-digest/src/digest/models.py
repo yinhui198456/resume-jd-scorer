@@ -98,3 +98,5 @@ class AppConfig:
     feishu_app_id: str
     feishu_app_secret: str
     feishu_chat_id: str
+    learning_plan_spreadsheet_token: str = "R4LAsRmQKhfMXYtV7UacSeaGngg"
+    learning_plan_sheet_title: str = "主任务"

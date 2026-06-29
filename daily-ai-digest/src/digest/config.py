@@ -36,6 +36,15 @@ def load_config(root: Path) -> AppConfig:
     if weights and abs(sum(float(value) for value in weights.values()) - 1.0) > 1e-9:
         raise ValueError("filter weights must sum to 1.0")
 
+    learning_plan_spreadsheet_token = os.environ.get(
+        "DAILY_AI_DIGEST_LEARNING_PLAN_SPREADSHEET_TOKEN",
+        "R4LAsRmQKhfMXYtV7UacSeaGngg",
+    )
+    learning_plan_sheet_title = os.environ.get(
+        "DAILY_AI_DIGEST_LEARNING_PLAN_SHEET_TITLE",
+        "主任务",
+    )
+
     return AppConfig(
         root=str(root),
         sources=documents["sources"],
@@ -48,4 +57,6 @@ def load_config(root: Path) -> AppConfig:
         feishu_app_id=values["CTI_FEISHU_APP_ID"],
         feishu_app_secret=values["CTI_FEISHU_APP_SECRET"],
         feishu_chat_id=values["DAILY_AI_DIGEST_FEISHU_CHAT_ID"],
+        learning_plan_spreadsheet_token=learning_plan_spreadsheet_token,
+        learning_plan_sheet_title=learning_plan_sheet_title,
     )
