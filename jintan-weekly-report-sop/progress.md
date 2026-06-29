@@ -99,12 +99,22 @@
   - timer 状态：`active (waiting)`，下次触发 14:00
   - git push 失败：缺少 GitHub token（`could not read Username for 'https://github.com'`）
 
+### Loop 第5轮：限定自动提交范围为项目目录 — 已完成
+- **检查：** 用户要求按项目提交，不要提交整个 workspace 根目录
+- **修复：**
+  - 修改 `deploy/jintan-weekly-report.service` 的 `ExecStartPost`：
+    - 工作目录改为 git repo 根 `/opt/personal-agent-workspace`
+    - `git add -A` 改为 `git add --all /opt/personal-agent-workspace/jintan-weekly-report-sop/`
+    - commit 信息改为 `auto: jintan weekly report update ...`
+  - 更新 `deploy/README.md` 说明只提交金坛项目目录
+- **运行：** 手动触发 service → pipeline PASS，自动 commit 成功（`7f14fd0`），只包含 3 个金坛项目文件
+- **再检查：** git status 中其他项目的未跟踪/变更文件不再被自动 commit 带入
+
 ## 待处理事项
 | 事项 | 状态 | 说明 |
 |------|------|------|
-| 自动 commit | ✓ 已工作 | service 运行后自动生成 commit |
-| 自动 push | ✗ 需 token | 需要 `~/.git-credentials` 或配置 GitHub token |
-| 提交范围 | 待确认 | 当前 `git add -A` 会提交整个 workspace 的变更，不只是金坛项目 |
+| 自动 commit（按项目） | ✓ 已工作 | 只提交 `jintan-weekly-report-sop/` 目录变更 |
+| 自动 push | ✗ 需 token | 需要 GitHub token 才能 push |
 
 ## 测试结果
 | 测试 | 输入 | 预期 | 实际 | 状态 |
@@ -113,7 +123,7 @@
 | 脚本单元测试 | scripts/ | 全部通过 | 35 passed | ✓ |
 | systemd timer | systemctl list-timers | enabled | enabled, 每 2 小时 | ✓ |
 | 手动触发 service | systemctl start | success | Deactivated successfully | ✓ |
-| 自动 git commit | git log | 有 auto commit | d93dcbc | ✓ |
+| 自动 git commit（按项目） | git log | 只含项目文件 | 3 files changed | ✓ |
 | 自动 git push | git log on remote | pushed | 失败，需 token | ✗ |
 
 ## 5-Question Reboot Check
