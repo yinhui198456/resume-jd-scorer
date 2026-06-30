@@ -1,0 +1,563 @@
+From 8b1244c8099aec9cbfdc0b95d3e1f475638a683b Mon Sep 17 00:00:00 2001
+From: root <root@localhost.localdomain>
+Date: Tue, 30 Jun 2026 20:25:51 +0800
+Subject: [PATCH 1/3] feat(feishu): support CTI_FEISHU_MESSAGE_STYLE=post
+
+Send normal replies as Feishu post messages and skip streaming cards.
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+---
+ src/lib/bridge/adapters/feishu-adapter.ts | 92 ++++++++++++++++-------
+ 1 file changed, 65 insertions(+), 27 deletions(-)
+
+diff --git a/src/lib/bridge/adapters/feishu-adapter.ts b/src/lib/bridge/adapters/feishu-adapter.ts
+index da837a1..d777289 100644
+--- a/src/lib/bridge/adapters/feishu-adapter.ts
++++ b/src/lib/bridge/adapters/feishu-adapter.ts
+@@ -48,7 +48,7 @@ const MAX_FILE_SIZE = 20 * 1024 * 1024;
+ /** Feishu emoji type for typing indicator (same as Openclaw). */
+ const TYPING_EMOJI = 'Typing';
+ 
+-/** State for an active CardKit v2 streaming card. */
++/** State for an active CardKit streaming card. */
+ interface FeishuCardState {
+   cardId: string;
+   messageId: string;
+@@ -267,7 +267,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     const messageId = this.lastIncomingMessageId.get(chatId);
+ 
+     // Create streaming card (fire-and-forget — fallback to traditional if fails)
+-    if (messageId) {
++    if (messageId && !this.prefersTextMessages()) {
+       this.createStreamingCard(chatId, messageId).catch(() => {});
+     }
+ 
+@@ -374,7 +374,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     if (!this.restClient) return false;
+ 
+     try {
+-      // Step 1: Create card via CardKit v2
++      // Step 1: Create card via CardKit
+       const cardBody = {
+         schema: '2.0',
+         config: {
+@@ -393,7 +393,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+         },
+       };
+ 
+-      const createResp = await (this.restClient as any).cardkit.v2.card.create({
++      const createResp = await this.restClient.cardkit.v1.card.create({
+         data: { type: 'card_json', data: JSON.stringify(cardBody) },
+       });
+       const cardId = createResp?.data?.card_id;
+@@ -495,8 +495,8 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     const cardId = state.cardId;
+ 
+     // Fire-and-forget — streaming updates are non-critical
+-    (this.restClient as any).cardkit.v2.card.streamContent({
+-      path: { card_id: cardId },
++    this.restClient.cardkit.v1.cardElement.content({
++      path: { card_id: cardId, element_id: 'streaming_content' },
+       data: { content, sequence: seq },
+     }).then(() => {
+       state.lastUpdateAt = Date.now();
+@@ -542,9 +542,12 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     try {
+       // Step 1: Close streaming mode
+       state.sequence++;
+-      await (this.restClient as any).cardkit.v2.card.settings.streamingMode.set({
++      await this.restClient.cardkit.v1.card.settings({
+         path: { card_id: state.cardId },
+-        data: { streaming_mode: false, sequence: state.sequence },
++        data: {
++          settings: JSON.stringify({ streaming_mode: false }),
++          sequence: state.sequence,
++        },
+       });
+ 
+       // Step 2: Build and apply final card
+@@ -562,9 +565,12 @@ export class FeishuAdapter extends BaseChannelAdapter {
+       const finalCardJson = buildFinalCardJson(responseText, state.toolCalls, footer);
+ 
+       state.sequence++;
+-      await (this.restClient as any).cardkit.v2.card.update({
++      await this.restClient.cardkit.v1.card.update({
+         path: { card_id: state.cardId },
+-        data: { type: 'card_json', data: finalCardJson, sequence: state.sequence },
++        data: {
++          card: { type: 'card_json', data: finalCardJson },
++          sequence: state.sequence,
++        },
+       });
+ 
+       console.log(`[feishu-adapter] Card finalized: cardId=${state.cardId}, status=${status}, elapsed=${formatElapsed(elapsedMs)}`);
+@@ -604,6 +610,8 @@ export class FeishuAdapter extends BaseChannelAdapter {
+    * Creates streaming card on first call, then updates content.
+    */
+   onStreamText(chatId: string, fullText: string): void {
++    if (this.prefersTextMessages()) return;
++
+     if (!this.activeCards.has(chatId)) {
+       // Card should have been created by onMessageStart, but create lazily if not
+       const messageId = this.lastIncomingMessageId.get(chatId);
+@@ -616,10 +624,14 @@ export class FeishuAdapter extends BaseChannelAdapter {
+   }
+ 
+   onToolEvent(chatId: string, tools: ToolCallInfo[]): void {
++    if (this.prefersTextMessages()) return;
++
+     this.updateToolProgress(chatId, tools);
+   }
+ 
+   async onStreamEnd(chatId: string, status: 'completed' | 'interrupted' | 'error', responseText: string): Promise<boolean> {
++    if (this.prefersTextMessages()) return false;
++
+     return this.finalizeCard(chatId, status, responseText);
+   }
+ 
+@@ -642,11 +654,21 @@ export class FeishuAdapter extends BaseChannelAdapter {
+       text = preprocessFeishuMarkdown(text);
+     }
+ 
+-    // If there are inline buttons (permission prompts), send card with action buttons
++    // If there are inline buttons (permission prompts), keep Feishu cards even in
++    // text mode. These messages require button interaction; plain text breaks
++    // the approval flow on Feishu mobile.
+     if (message.inlineButtons && message.inlineButtons.length > 0) {
+       return this.sendPermissionCard(message.address.chatId, text, message.inlineButtons);
+     }
+ 
++    if (this.prefersTextMessages()) {
++      return this.sendAsText(message.address.chatId, text);
++    }
++
++    if (this.prefersPostMessages()) {
++      return this.sendAsPost(message.address.chatId, text);
++    }
++
+     // Rendering strategy (aligned with Openclaw):
+     // - Code blocks / tables → interactive card (schema 2.0 markdown)
+     // - Other text → post (md tag)
+@@ -656,6 +678,37 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     return this.sendAsPost(message.address.chatId, text);
+   }
+ 
++  /**
++   * Send text as a copyable Feishu text message.
++   * Used when mobile copyability is more important than rich rendering.
++   */
++  private async sendAsText(chatId: string, text: string): Promise<SendResult> {
++    try {
++      const res = await this.restClient!.im.message.create({
++        params: { receive_id_type: 'chat_id' },
++        data: {
++          receive_id: chatId,
++          msg_type: 'text',
++          content: JSON.stringify({ text }),
++        },
++      });
++      if (res?.data?.message_id) {
++        return { ok: true, messageId: res.data.message_id };
++      }
++      return { ok: false, error: res?.msg || 'Send failed' };
++    } catch (err) {
++      return { ok: false, error: err instanceof Error ? err.message : 'Send failed' };
++    }
++  }
++
++  private prefersPostMessages(): boolean {
++    return getBridgeContext().store.getSetting('bridge_feishu_message_style') === 'post';
++  }
++
++  private prefersTextMessages(): boolean {
++    return getBridgeContext().store.getSetting('bridge_feishu_message_style') === 'text';
++  }
++
+   /**
+    * Send text as an interactive card (schema 2.0 markdown).
+    * Used for code blocks and tables — card renders them properly.
+@@ -711,22 +764,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     }
+ 
+     // Final fallback: plain text
+-    try {
+-      const res = await this.restClient!.im.message.create({
+-        params: { receive_id_type: 'chat_id' },
+-        data: {
+-          receive_id: chatId,
+-          msg_type: 'text',
+-          content: JSON.stringify({ text }),
+-        },
+-      });
+-      if (res?.data?.message_id) {
+-        return { ok: true, messageId: res.data.message_id };
+-      }
+-      return { ok: false, error: res?.msg || 'Send failed' };
+-    } catch (err) {
+-      return { ok: false, error: err instanceof Error ? err.message : 'Send failed' };
+-    }
++    return this.sendAsText(chatId, text);
+   }
+ 
+   // ── Permission card (with real action buttons) ─────────────
+-- 
+2.43.0
+
+
+From 9963ef7e2194b8469c3131255a915158dba5c8eb Mon Sep 17 00:00:00 2001
+From: root <root@localhost.localdomain>
+Date: Tue, 30 Jun 2026 20:29:45 +0800
+Subject: [PATCH 2/3] fix(feishu): skip streaming cards in post mode
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+---
+ src/lib/bridge/adapters/feishu-adapter.ts | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/src/lib/bridge/adapters/feishu-adapter.ts b/src/lib/bridge/adapters/feishu-adapter.ts
+index d777289..1aeca7b 100644
+--- a/src/lib/bridge/adapters/feishu-adapter.ts
++++ b/src/lib/bridge/adapters/feishu-adapter.ts
+@@ -9,6 +9,8 @@
+  * - Code blocks / tables → interactive card (schema 2.0 markdown)
+  * - Other text → post (msg_type: 'post') with md tag
+  * - Permission prompts → interactive card with action buttons
++ * - Config `CTI_FEISHU_MESSAGE_STYLE=post` forces all normal replies to post
++ *   and disables streaming cards for mobile copyability.
+  *
+  * card.action.trigger events are handled via EventDispatcher (Openclaw pattern):
+  * button clicks are converted to synthetic text messages and routed through
+@@ -267,7 +269,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+     const messageId = this.lastIncomingMessageId.get(chatId);
+ 
+     // Create streaming card (fire-and-forget — fallback to traditional if fails)
+-    if (messageId && !this.prefersTextMessages()) {
++    if (messageId && !this.prefersTextMessages() && !this.prefersPostMessages()) {
+       this.createStreamingCard(chatId, messageId).catch(() => {});
+     }
+ 
+@@ -610,7 +612,7 @@ export class FeishuAdapter extends BaseChannelAdapter {
+    * Creates streaming card on first call, then updates content.
+    */
+   onStreamText(chatId: string, fullText: string): void {
+-    if (this.prefersTextMessages()) return;
++    if (this.prefersTextMessages() || this.prefersPostMessages()) return;
+ 
+     if (!this.activeCards.has(chatId)) {
+       // Card should have been created by onMessageStart, but create lazily if not
+@@ -624,13 +626,13 @@ export class FeishuAdapter extends BaseChannelAdapter {
+   }
+ 
+   onToolEvent(chatId: string, tools: ToolCallInfo[]): void {
+-    if (this.prefersTextMessages()) return;
++    if (this.prefersTextMessages() || this.prefersPostMessages()) return;
+ 
+     this.updateToolProgress(chatId, tools);
+   }
+ 
+   async onStreamEnd(chatId: string, status: 'completed' | 'interrupted' | 'error', responseText: string): Promise<boolean> {
+-    if (this.prefersTextMessages()) return false;
++    if (this.prefersTextMessages() || this.prefersPostMessages()) return false;
+ 
+     return this.finalizeCard(chatId, status, responseText);
+   }
+-- 
+2.43.0
+
+
+From 85d2a3dd5d2fca21315112a7075e0009b19b5e0e Mon Sep 17 00:00:00 2001
+From: root <root@localhost.localdomain>
+Date: Tue, 30 Jun 2026 20:40:12 +0800
+Subject: [PATCH 3/3] test(feishu): add post mode tests
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+---
+ .../unit/bridge-feishu-streaming.test.ts      | 277 ++++++++++++++++++
+ 1 file changed, 277 insertions(+)
+ create mode 100644 src/__tests__/unit/bridge-feishu-streaming.test.ts
+
+diff --git a/src/__tests__/unit/bridge-feishu-streaming.test.ts b/src/__tests__/unit/bridge-feishu-streaming.test.ts
+new file mode 100644
+index 0000000..6d2e4d2
+--- /dev/null
++++ b/src/__tests__/unit/bridge-feishu-streaming.test.ts
+@@ -0,0 +1,277 @@
++import { describe, it } from 'node:test';
++import assert from 'node:assert/strict';
++import { FeishuAdapter } from '../../lib/bridge/adapters/feishu-adapter';
++import { initBridgeContext } from '../../lib/bridge/context';
++import type { BridgeStore } from '../../lib/bridge/host';
++
++function setupContext(settings: Record<string, string | null>) {
++  initBridgeContext({
++    store: {
++      getSetting: (key: string) => settings[key] ?? null,
++      setSetting: () => {},
++      getChannelOffset: () => '0',
++      setChannelOffset: () => {},
++      insertAuditLog: () => {},
++      listPendingPermissionLinksByChat: () => [],
++    } as unknown as BridgeStore,
++    llm: {} as any,
++    permissions: {} as any,
++    lifecycle: {},
++  });
++}
++
++describe('FeishuAdapter streaming cards', () => {
++  it('uses the SDK CardKit v1 lifecycle for create, stream, and finalize', async () => {
++    setupContext({});
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      cardkit: {
++        v1: {
++          card: {
++            create: async (payload: any) => {
++              calls.push({ method: 'card.create', payload });
++              return { code: 0, data: { card_id: 'card-1' } };
++            },
++            settings: async (payload: any) => {
++              calls.push({ method: 'card.settings', payload });
++              return { code: 0, data: {} };
++            },
++            update: async (payload: any) => {
++              calls.push({ method: 'card.update', payload });
++              return { code: 0, data: {} };
++            },
++          },
++          cardElement: {
++            content: async (payload: any) => {
++              calls.push({ method: 'cardElement.content', payload });
++              return { code: 0, data: {} };
++            },
++          },
++        },
++      },
++      im: {
++        message: {
++          reply: async (payload: any) => {
++            calls.push({ method: 'message.reply', payload });
++            return { code: 0, data: { message_id: 'message-1' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++
++    const created = await adapter._doCreateStreamingCard('chat-1', 'incoming-1');
++    assert.equal(created, true);
++    assert.equal(calls[0].method, 'card.create');
++    assert.equal(calls[1].method, 'message.reply');
++
++    adapter.updateCardContent('chat-1', 'partial response');
++    await new Promise((resolve) => setImmediate(resolve));
++
++    const streamCall = calls.find((call) => call.method === 'cardElement.content');
++    assert.ok(streamCall);
++    assert.deepEqual(streamCall.payload.path, {
++      card_id: 'card-1',
++      element_id: 'streaming_content',
++    });
++    assert.equal(streamCall.payload.data.content.includes('partial response'), true);
++
++    const finalized = await adapter.onStreamEnd('chat-1', 'completed', 'final response');
++    assert.equal(finalized, true);
++
++    const settingsCall = calls.find((call) => call.method === 'card.settings');
++    assert.ok(settingsCall);
++    assert.deepEqual(JSON.parse(settingsCall.payload.data.settings), {
++      streaming_mode: false,
++    });
++
++    const updateCall = calls.find((call) => call.method === 'card.update');
++    assert.ok(updateCall);
++    assert.equal(updateCall.payload.data.card.type, 'card_json');
++    assert.equal(updateCall.payload.data.card.data.includes('final response'), true);
++  });
++
++  it('sends copyable text when bridge_feishu_message_style is text', async () => {
++    setupContext({ bridge_feishu_message_style: 'text' });
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      im: {
++        message: {
++          create: async (payload: any) => {
++            calls.push({ method: 'message.create', payload });
++            return { code: 0, data: { message_id: 'message-text' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++
++    const result = await adapter.send({
++      address: { channelType: 'feishu', chatId: 'chat-1', userId: 'user-1' },
++      text: '每日 AI 资讯\\n━━━━━━━━━━━━━━━━\\n01｜测试',
++      parseMode: 'Markdown',
++    });
++
++    assert.equal(result.ok, true);
++    assert.equal(calls[0].payload.data.msg_type, 'text');
++    assert.deepEqual(JSON.parse(calls[0].payload.data.content), {
++      text: '每日 AI 资讯\\n━━━━━━━━━━━━━━━━\\n01｜测试',
++    });
++  });
++
++  it('sends post message when bridge_feishu_message_style is post', async () => {
++    setupContext({ bridge_feishu_message_style: 'post' });
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      im: {
++        message: {
++          create: async (payload: any) => {
++            calls.push({ method: 'message.create', payload });
++            return { code: 0, data: { message_id: 'message-post' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++
++    const result = await adapter.send({
++      address: { channelType: 'feishu', chatId: 'chat-1', userId: 'user-1' },
++      text: '**加粗标题**\n\n- 列表项 A\n- 列表项 B',
++      parseMode: 'Markdown',
++    });
++
++    assert.equal(result.ok, true);
++    assert.equal(calls[0].payload.data.msg_type, 'post');
++    const postContent = JSON.parse(calls[0].payload.data.content);
++    assert.equal(postContent.zh_cn.content[0][0].tag, 'md');
++    assert.equal(postContent.zh_cn.content[0][0].text.includes('加粗标题'), true);
++  });
++
++  it('does not create streaming cards when bridge_feishu_message_style is text', async () => {
++    setupContext({ bridge_feishu_message_style: 'text' });
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      cardkit: {
++        v1: {
++          card: {
++            create: async (payload: any) => {
++              calls.push({ method: 'card.create', payload });
++              return { code: 0, data: { card_id: 'card-1' } };
++            },
++          },
++          cardElement: {
++            content: async (payload: any) => {
++              calls.push({ method: 'cardElement.content', payload });
++              return { code: 0, data: {} };
++            },
++          },
++        },
++      },
++      im: {
++        messageReaction: {
++          create: async (payload: any) => {
++            calls.push({ method: 'messageReaction.create', payload });
++            return { code: 0, data: { reaction_id: 'reaction-1' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++    adapter.lastIncomingMessageId.set('chat-1', 'incoming-1');
++
++    adapter.onMessageStart('chat-1');
++    adapter.onStreamText('chat-1', 'partial response');
++    adapter.onToolEvent('chat-1', [{ id: 'tool-1', name: 'tool', status: 'running' }]);
++    const finalized = await adapter.onStreamEnd('chat-1', 'completed', 'final response');
++    await new Promise((resolve) => setImmediate(resolve));
++
++    assert.equal(finalized, false);
++    assert.equal(calls.some((call) => call.method === 'card.create'), false);
++    assert.equal(calls.some((call) => call.method === 'cardElement.content'), false);
++  });
++
++  it('does not create streaming cards when bridge_feishu_message_style is post', async () => {
++    setupContext({ bridge_feishu_message_style: 'post' });
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      cardkit: {
++        v1: {
++          card: {
++            create: async (payload: any) => {
++              calls.push({ method: 'card.create', payload });
++              return { code: 0, data: { card_id: 'card-1' } };
++            },
++          },
++          cardElement: {
++            content: async (payload: any) => {
++              calls.push({ method: 'cardElement.content', payload });
++              return { code: 0, data: {} };
++            },
++          },
++        },
++      },
++      im: {
++        messageReaction: {
++          create: async (payload: any) => {
++            calls.push({ method: 'messageReaction.create', payload });
++            return { code: 0, data: { reaction_id: 'reaction-1' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++    adapter.lastIncomingMessageId.set('chat-1', 'incoming-1');
++
++    adapter.onMessageStart('chat-1');
++    adapter.onStreamText('chat-1', 'partial response');
++    adapter.onToolEvent('chat-1', [{ id: 'tool-1', name: 'tool', status: 'running' }]);
++    const finalized = await adapter.onStreamEnd('chat-1', 'completed', 'final response');
++    await new Promise((resolve) => setImmediate(resolve));
++
++    assert.equal(finalized, false);
++    assert.equal(calls.some((call) => call.method === 'card.create'), false);
++    assert.equal(calls.some((call) => call.method === 'cardElement.content'), false);
++  });
++
++  it('keeps permission prompts interactive when bridge_feishu_message_style is text', async () => {
++    setupContext({ bridge_feishu_message_style: 'text' });
++    const calls: Array<{ method: string; payload: any }> = [];
++    const client = {
++      im: {
++        message: {
++          create: async (payload: any) => {
++            calls.push({ method: 'message.create', payload });
++            return { code: 0, data: { message_id: 'message-card' } };
++          },
++        },
++      },
++    };
++
++    const adapter = new FeishuAdapter() as any;
++    adapter.restClient = client;
++
++    const result = await adapter.send({
++      address: { channelType: 'feishu', chatId: 'chat-1', userId: 'user-1' },
++      text: '<b>Permission Required</b>',
++      parseMode: 'HTML',
++      inlineButtons: [[
++        { text: 'Allow once', callbackData: 'perm:allow:permission-1' },
++        { text: 'Deny', callbackData: 'perm:deny:permission-1' },
++      ]],
++    });
++
++    assert.equal(result.ok, true);
++    assert.equal(calls[0].payload.data.msg_type, 'interactive');
++    assert.equal(calls[0].payload.data.content.includes('permission-1'), true);
++  });
++});
+-- 
+2.43.0
+
