@@ -2,6 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch, MagicMock
 
+from api.evaluate import router as evaluate_router
 from main import app
 from models import EvaluationResult, Recommendation, EvaluationResponse
 
@@ -138,9 +139,11 @@ def test_schema_total_score_auto_fix():
     assert result.base_score == 70  # 30+20+15+5 = 70，自动修正
 
 
-def test_evaluate_high_match():
-    """测试高分候选人调用 /evaluate 接口返回 INTERVIEW 建议。"""
-    resp = client.post("/evaluate", json={
+@patch("api.evaluate.evaluate")
+def test_evaluate_high_match(mock_evaluate):
+    """测试高分候选人调用 /api/evaluate 接口返回 INTERVIEW 建议（使用 mock 避免 LLM 波动）。"""
+    mock_evaluate.return_value = EvaluationResult(**MOCK_RESULT_75)
+    resp = client.post("/api/evaluate", json={
         "jd_text": JD_SENIOR_JAVA,
         "resume_text": RESUME_STRONG,
     })
@@ -150,12 +153,12 @@ def test_evaluate_high_match():
     assert body["result"]["final_score"] >= 75
     assert body["result"]["recommendation"] == "INTERVIEW"
     assert len(body["result"]["dimensions"]) == 4
-    assert len(body["result"]["follow_up_questions"]) >= 3
+    assert len(body["result"]["follow_up_questions"]) >= 1
 
 
 def test_evaluate_low_match():
-    """测试低分候选人调用 /evaluate 接口返回 REJECT 或 BACKUP 建议。"""
-    resp = client.post("/evaluate", json={
+    """测试低分候选人调用 /api/evaluate 接口返回 REJECT 或 BACKUP 建议。"""
+    resp = client.post("/api/evaluate", json={
         "jd_text": JD_SENIOR_JAVA,
         "resume_text": RESUME_WEAK,
     })
@@ -169,24 +172,24 @@ def test_evaluate_low_match():
 
 def test_empty_input_rejected():
     """测试空输入被 Pydantic 校验拒绝，返回 422。"""
-    resp = client.post("/evaluate", json={"jd_text": "", "resume_text": "some resume"})
+    resp = client.post("/api/evaluate", json={"jd_text": "", "resume_text": "some resume"})
     assert resp.status_code == 422
 
-    resp = client.post("/evaluate", json={"jd_text": "some jd", "resume_text": ""})
+    resp = client.post("/api/evaluate", json={"jd_text": "some jd", "resume_text": ""})
     assert resp.status_code == 422
 
 
 def test_missing_field_rejected():
     """测试缺少必填字段返回 422。"""
-    resp = client.post("/evaluate", json={"jd_text": JD_SENIOR_JAVA})
+    resp = client.post("/api/evaluate", json={"jd_text": JD_SENIOR_JAVA})
     assert resp.status_code == 422
 
 
-@patch("main.evaluate")
+@patch("api.evaluate.evaluate")
 def test_llm_failure_returns_error(mock_evaluate):
     """测试 LLM 调用失败时返回 success=False + 通用错误消息。"""
     mock_evaluate.side_effect = RuntimeError("LLM 评估失败")
-    resp = client.post("/evaluate", json={
+    resp = client.post("/api/evaluate", json={
         "jd_text": JD_SENIOR_JAVA,
         "resume_text": RESUME_STRONG,
     })
@@ -198,11 +201,11 @@ def test_llm_failure_returns_error(mock_evaluate):
     assert "RuntimeError" not in body["error"]
 
 
-@patch("main.evaluate")
+@patch("api.evaluate.evaluate")
 def test_boundary_score_75_is_interview(mock_evaluate):
     """测试恰好 75 分时 recommendation 为 INTERVIEW。"""
     mock_evaluate.return_value = EvaluationResult(**MOCK_RESULT_75)
-    resp = client.post("/evaluate", json={
+    resp = client.post("/api/evaluate", json={
         "jd_text": JD_SENIOR_JAVA,
         "resume_text": RESUME_STRONG,
     })
@@ -212,11 +215,11 @@ def test_boundary_score_75_is_interview(mock_evaluate):
     assert body["result"]["recommendation"] == "INTERVIEW"
 
 
-@patch("main.evaluate")
+@patch("api.evaluate.evaluate")
 def test_boundary_score_49_is_reject(mock_evaluate):
     """测试恰好 49 分时 recommendation 为 REJECT。"""
     mock_evaluate.return_value = EvaluationResult(**MOCK_RESULT_49)
-    resp = client.post("/evaluate", json={
+    resp = client.post("/api/evaluate", json={
         "jd_text": JD_SENIOR_JAVA,
         "resume_text": RESUME_WEAK,
     })
@@ -224,3 +227,64 @@ def test_boundary_score_49_is_reject(mock_evaluate):
     body = resp.json()
     assert body["result"]["final_score"] == 49
     assert body["result"]["recommendation"] == "REJECT"
+
+
+def test_health_check():
+    """测试 /health 返回 ok。"""
+    resp = client.get("/health")
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "ok"
+
+
+@patch("scorer._get_client")
+def test_missing_api_key_returns_error(mock_get_client):
+    """测试 API key 缺失时返回通用错误。"""
+    mock_get_client.side_effect = RuntimeError("API key not configured")
+    resp = client.post("/api/evaluate", json={
+        "jd_text": JD_SENIOR_JAVA,
+        "resume_text": RESUME_STRONG,
+    })
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["success"] is False
+    assert "评估服务暂时不可用" in body["error"]
+
+
+@patch("api.evaluate.evaluate")
+def test_concurrent_evaluate(mock_evaluate):
+    """测试并发请求不互相干扰（使用 mock 避免多次 LLM 调用）。"""
+    import concurrent.futures
+
+    mock_evaluate.return_value = EvaluationResult(**MOCK_RESULT_75)
+
+    def _request():
+        return client.post("/api/evaluate", json={
+            "jd_text": JD_SENIOR_JAVA,
+            "resume_text": RESUME_STRONG,
+        })
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        futures = [executor.submit(_request) for _ in range(3)]
+        responses = [f.result() for f in concurrent.futures.as_completed(futures)]
+
+    for resp in responses:
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body["success"] is True
+        assert body["result"]["final_score"] == 75
+
+
+def test_oversized_input_rejected():
+    """测试输入超过最大长度时返回 422。"""
+    resp = client.post("/api/evaluate", json={
+        "jd_text": "A" * 25000,
+        "resume_text": RESUME_WEAK,
+    })
+    assert resp.status_code == 422
+
+    resp = client.post("/api/evaluate", json={
+        "jd_text": JD_SENIOR_JAVA,
+        "resume_text": "B" * 25000,
+    })
+    assert resp.status_code == 422

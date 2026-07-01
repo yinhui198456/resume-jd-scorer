@@ -1,7 +1,11 @@
+import logging
+
 from fastapi import APIRouter, HTTPException
 
 from models import EvaluationRequest, EvaluationResponse
 from scorer import evaluate
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -12,4 +16,5 @@ def post_evaluate(req: EvaluationRequest):
         result = evaluate(req.jd_text, req.resume_text)
         return EvaluationResponse(success=True, result=result)
     except Exception:
+        logger.exception("Evaluation failed")
         return EvaluationResponse(success=False, error="评估服务暂时不可用，请稍后重试")
