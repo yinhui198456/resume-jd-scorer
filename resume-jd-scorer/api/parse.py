@@ -25,9 +25,9 @@ def parse_upload(file: UploadFile = File(...)):
 
     try:
         result = parse_resume(tmp_path)
-        return {"success": True, **result}
+        return {"success": True, "type": result.get("type"), "name": result.get("name"), "text": result.get("text"), "error": None}
     except ValueError as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "type": None, "name": None, "text": None, "error": str(e)}
     finally:
         try:
             os.unlink(tmp_path)
