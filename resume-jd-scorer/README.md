@@ -140,3 +140,30 @@ pytest test_api.py -v
 - 日志中不会输出候选人 PII 信息（debug 级别仅记录响应长度）
 - 错误响应不暴露内部堆栈或实现细节
 - 评分规则权重和阈值集中在 `scorer.py` 的 `DIMENSION_CONFIG` 常量中，修改时只需改一处
+
+## 前端使用
+
+### 开发模式
+
+```bash
+# 终端 1：启动后端
+cd /opt/personal-agent-workspace/resume-jd-scorer
+uvicorn main:app --reload --port 8000
+
+# 终端 2：启动前端
+cd /opt/personal-agent-workspace/resume-jd-scorer/frontend
+npm run dev
+```
+
+访问 `http://localhost:5173`。
+
+### 生产模式
+
+```bash
+cd /opt/personal-agent-workspace/resume-jd-scorer/frontend
+npm run build
+cd ..
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+访问 `http://localhost:8000`。
