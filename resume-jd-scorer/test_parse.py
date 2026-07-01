@@ -12,7 +12,7 @@ import pytest
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '.agents', 'skills', 'resume-jd-scorer', 'scripts'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.agents', 'skills', 'resume-jd-scorer', 'scripts'))
 from parse_file import extract_candidate_name
 
 
@@ -143,3 +143,19 @@ d3f6f101d1234f3e1HBz0ty8FFdYx4-8UvOZWOelmv7WPxBh Px
 校：南通理工学院
 """
     assert extract_candidate_name(text) == "袁永泉"
+
+
+def test_parse_resume_returns_structure(tmp_path):
+    import sys
+    import os
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'skills', 'resume-jd-scorer', 'scripts'))
+    from parse_file import parse_resume
+
+    txt = tmp_path / "resume.txt"
+    txt.write_text("姓名：张三\n电话：13800138000", encoding="utf-8")
+
+    result = parse_resume(str(txt))
+    assert result["type"] == "text/plain"
+    assert result["name"] == "resume.txt"
+    assert "张三" in result["text"]
+    assert "13800138000" in result["text"]
