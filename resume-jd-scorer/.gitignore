@@ -9,6 +9,8 @@ frontend/dist/
 
 # Data
 data/evaluations.json
+data/jds.json
+data/resumes.json
 
 # Environment
 .env

@@ -2,49 +2,19 @@
   <div class="app">
     <header class="app-header">
       <h1>简历 JD 评估器</h1>
-      <button v-if="evaluation" class="save-btn" :disabled="loading.save" @click="save">
-        {{ loading.save ? '保存中...' : '保存到历史' }}
-      </button>
+      <nav class="app-nav">
+        <router-link to="/evaluate" active-class="active">评估</router-link>
+        <router-link to="/jds" active-class="active">JD 管理</router-link>
+        <router-link to="/resumes" active-class="active">简历管理</router-link>
+      </nav>
     </header>
     <main class="app-body">
-      <HistorySidebar />
-      <div class="input-section">
-        <InputPanel />
-      </div>
-      <div class="result-section">
-        <ResultPanel />
-        <QuestionList />
-      </div>
+      <router-view />
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { evaluation, jdText, resumeFilename, resumeText, loading } from './stores/evaluation'
-import { saveHistory } from './api'
-import HistorySidebar from './components/HistorySidebar.vue'
-import InputPanel from './components/InputPanel.vue'
-import QuestionList from './components/QuestionList.vue'
-import ResultPanel from './components/ResultPanel.vue'
-
-async function save() {
-  if (!evaluation.value) return
-  loading.save = true
-  try {
-    await saveHistory({
-      candidate_name: '',
-      resume_filename: resumeFilename.value,
-      jd_text: jdText.value,
-      resume_text: resumeText.value,
-      result: evaluation.value,
-    })
-    alert('保存成功')
-  } catch (e) {
-    alert('保存失败')
-  } finally {
-    loading.save = false
-  }
-}
 </script>
 
 <style>
@@ -78,37 +48,63 @@ body {
   font-size: 18px;
 }
 
-.save-btn {
-  padding: 6px 16px;
-  background: #1890ff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.app-nav {
+  display: flex;
+  gap: 8px;
 }
 
-.save-btn:disabled {
-  background: #91caff;
+.app-nav a {
+  padding: 6px 14px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.app-nav a:hover {
+  background: #f5f5f5;
+}
+
+.app-nav a.active {
+  background: #1890ff;
+  color: white;
 }
 
 .app-body {
   flex: 1;
-  display: flex;
   overflow: hidden;
 }
 
-.input-section,
-.result-section {
-  flex: 1;
-  overflow-y: auto;
-  min-width: 0;
+.btn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.input-section {
-  border-right: 1px solid #f0f0f0;
+.btn-primary {
+  background: #1890ff;
+  color: white;
 }
 
-.result-section {
+.btn-primary:disabled {
+  background: #91caff;
+}
+
+.btn-success {
+  background: #52c41a;
+  color: white;
+}
+
+.btn-danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+.btn-secondary {
   background: #fafafa;
+  border: 1px solid #d9d9d9;
+  color: #333;
 }
 </style>

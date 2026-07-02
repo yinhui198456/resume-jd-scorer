@@ -49,3 +49,21 @@ export interface HistoryRecord {
   resume_text: string
   result: EvaluationResult
 }
+
+export interface JDRecord {
+  id?: string
+  created_at?: string
+  name: string
+  content: string
+  tags: string[]
+}
+
+export interface ResumeRecord {
+  id?: string
+  created_at?: string
+  name: string
+  content: string
+  filename: string
+  contact?: string
+  work_years?: string
+}

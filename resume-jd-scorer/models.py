@@ -108,3 +108,54 @@ class HistoryRecord(BaseModel):
     resume_filename: str = Field(default="", description="简历文件名")
     result: Optional[EvaluationResult] = Field(default=None, description="评估结果")
     created_at: Optional[str] = Field(default=None, description="创建时间")
+
+
+class JDRecord(BaseModel):
+    id: Optional[str] = Field(default=None, description="JD ID")
+    name: str = Field(min_length=1, max_length=200, description="JD 名称/标题")
+    content: str = Field(min_length=1, max_length=20000, description="JD 文本内容")
+    tags: list[str] = Field(default_factory=list, description="标签列表")
+    created_at: Optional[str] = Field(default=None, description="创建时间")
+
+
+class JDCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=200, description="JD 名称/标题")
+    content: str = Field(min_length=1, max_length=20000, description="JD 文本内容")
+    tags: list[str] = Field(default_factory=list, description="标签列表")
+
+
+class JDUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, max_length=200, description="JD 名称/标题")
+    content: Optional[str] = Field(default=None, max_length=20000, description="JD 文本内容")
+    tags: Optional[list[str]] = Field(default=None, description="标签列表")
+
+
+class ResumeRecord(BaseModel):
+    id: Optional[str] = Field(default=None, description="简历 ID")
+    name: str = Field(min_length=1, max_length=200, description="简历名称/候选人姓名")
+    content: str = Field(min_length=1, max_length=20000, description="简历解析后的文本")
+    filename: str = Field(default="", description="原始文件名")
+    contact: Optional[str] = Field(default=None, description="联系方式")
+    work_years: Optional[str] = Field(default=None, description="工作年限")
+    created_at: Optional[str] = Field(default=None, description="创建时间")
+
+
+class ResumeCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=200, description="简历名称/候选人姓名")
+    content: str = Field(min_length=1, max_length=20000, description="简历解析后的文本")
+    filename: str = Field(default="", description="原始文件名")
+    contact: Optional[str] = Field(default=None, description="联系方式")
+    work_years: Optional[str] = Field(default=None, description="工作年限")
+
+
+class ResumeUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, max_length=200, description="简历名称/候选人姓名")
+    content: Optional[str] = Field(default=None, max_length=20000, description="简历解析后的文本")
+    filename: Optional[str] = Field(default=None, description="原始文件名")
+    contact: Optional[str] = Field(default=None, description="联系方式")
+    work_years: Optional[str] = Field(default=None, description="工作年限")
+
+
+class PairEvaluationRequest(BaseModel):
+    jd_id: str = Field(min_length=1, description="JD ID")
+    resume_id: str = Field(min_length=1, description="简历 ID")
