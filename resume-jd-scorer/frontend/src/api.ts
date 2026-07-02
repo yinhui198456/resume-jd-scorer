@@ -17,11 +17,7 @@ export async function evaluate(jdText: string, resumeText: string): Promise<Eval
 export async function parseFile(file: File): Promise<ParseResponse> {
   const formData = new FormData()
   formData.append('file', file)
-  const { data } = await api.post<ParseResponse>('/parse', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
+  const { data } = await api.post<ParseResponse>('/parse', formData)
   return data
 }
 

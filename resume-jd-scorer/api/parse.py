@@ -19,7 +19,7 @@ MAX_UPLOAD_SIZE = 10 * 1024 * 1024
 
 @router.post("/parse")
 def parse_upload(file: UploadFile = File(...)):
-    content = file.file.read()
+    content = file.file.read(MAX_UPLOAD_SIZE + 1)
     if len(content) > MAX_UPLOAD_SIZE:
         return {"success": False, "type": None, "name": None, "text": None, "error": "文件大小超过 10MB 限制"}
     suffix = Path(file.filename or "resume.bin").suffix
