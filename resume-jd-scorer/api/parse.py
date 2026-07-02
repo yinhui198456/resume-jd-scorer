@@ -14,12 +14,16 @@ from parse_file import parse_resume
 
 router = APIRouter()
 
+MAX_UPLOAD_SIZE = 10 * 1024 * 1024
+
 
 @router.post("/parse")
 def parse_upload(file: UploadFile = File(...)):
+    content = file.file.read()
+    if len(content) > MAX_UPLOAD_SIZE:
+        return {"success": False, "type": None, "name": None, "text": None, "error": "文件大小超过 10MB 限制"}
     suffix = Path(file.filename or "resume.bin").suffix
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        content = file.file.read()
         tmp.write(content)
         tmp_path = tmp.name
 

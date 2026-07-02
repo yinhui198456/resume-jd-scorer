@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -12,6 +13,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 STATIC_DIR = Path(__file__).parent / "frontend" / "dist"
+
+_DEFAULT_ORIGINS = ["http://localhost:5173"]
+_CORS_RAW = os.environ.get("CORS_ALLOW_ORIGINS", "")
+allow_origins = [o.strip() for o in _CORS_RAW.split(",") if o.strip()] or _DEFAULT_ORIGINS
 
 
 @asynccontextmanager
@@ -28,7 +33,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -4,9 +4,6 @@ import type { EvaluationResponse, ParseResponse, HistoryRecord } from './types'
 const api = axios.create({
   baseURL: '/api',
   timeout: 120000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 })
 
 export async function evaluate(jdText: string, resumeText: string): Promise<EvaluationResponse> {

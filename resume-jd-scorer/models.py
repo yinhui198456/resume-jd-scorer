@@ -61,7 +61,7 @@ class EvaluationResult(BaseModel):
     )
     follow_up_questions: list[FollowUpQuestion] = Field(
         default_factory=list,
-        max_length=6,
+        max_length=20,
         description="面试追问问题列表"
     )
     summary: str = Field(min_length=1, description="一段话总结评估结论")
@@ -78,11 +78,33 @@ class EvaluationResult(BaseModel):
 
 
 class EvaluationRequest(BaseModel):
-    jd_text: str = Field(min_length=1, description="职位描述文本")
-    resume_text: str = Field(min_length=1, description="简历文本")
+    jd_text: str = Field(min_length=1, max_length=20000, description="职位描述文本")
+    resume_text: str = Field(min_length=1, max_length=20000, description="简历文本")
 
 
 class EvaluationResponse(BaseModel):
     success: bool
     result: Optional[EvaluationResult] = None
     error: Optional[str] = None
+
+
+class AnswersRequest(BaseModel):
+    jd_text: str = Field(min_length=1, max_length=20000, description="职位描述文本")
+    resume_text: str = Field(min_length=1, max_length=20000, description="简历文本")
+    questions: list[str] = Field(min_length=1, description="面试问题列表")
+
+
+class AnswersResponse(BaseModel):
+    answers: list[str] = Field(default_factory=list, description="建议答案列表")
+    success: bool = Field(default=True, description="是否成功")
+    error: Optional[str] = Field(default=None, description="错误信息")
+
+
+class HistoryRecord(BaseModel):
+    id: Optional[str] = Field(default=None, description="记录ID")
+    jd_text: Optional[str] = Field(default=None, max_length=20000, description="职位描述文本")
+    resume_text: Optional[str] = Field(default=None, max_length=20000, description="简历文本")
+    candidate_name: str = Field(default="未知候选人", description="候选人姓名")
+    resume_filename: str = Field(default="", description="简历文件名")
+    result: Optional[EvaluationResult] = Field(default=None, description="评估结果")
+    created_at: Optional[str] = Field(default=None, description="创建时间")

@@ -32,7 +32,7 @@ class HistoryStore:
     def load(self) -> list[dict[str, Any]]:
         if not self.path.exists():
             return []
-        with open(self.path, "r+", encoding="utf-8") as f:
+        with open(self.path, "r", encoding="utf-8") as f:
             fcntl.flock(f.fileno(), fcntl.LOCK_SH)
             try:
                 f.seek(0)
