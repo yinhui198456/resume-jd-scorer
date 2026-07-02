@@ -45,13 +45,18 @@ class HistoryStore:
             finally:
                 fcntl.flock(f.fileno(), fcntl.LOCK_UN)
         records = data.get("records", [])
-        records.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+        records.sort(key=lambda r: r.get("created_at") or "", reverse=True)
         return records[:MAX_RECORDS]
 
     def save(self, record: dict[str, Any]) -> dict[str, Any]:
         complete = dict(record)
         complete.setdefault("id", str(uuid.uuid4()))
         complete.setdefault("created_at", datetime.now(timezone.utc).isoformat())
+
+        # Ensure file exists before opening r+
+        if not self.path.exists():
+            with open(self.path, "w", encoding="utf-8") as f:
+                json.dump({"version": 1, "records": []}, f, ensure_ascii=False, indent=2)
 
         with open(self.path, "r+", encoding="utf-8") as f:
             fcntl.flock(f.fileno(), fcntl.LOCK_EX)
@@ -69,8 +74,9 @@ class HistoryStore:
                 f.truncate()
 
                 records = data.get("records", [])
+                records = [r for r in records if r.get("created_at")]
                 records.insert(0, complete)
-                records.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+                records.sort(key=lambda r: r.get("created_at") or "", reverse=True)
                 data["records"] = records[:MAX_RECORDS]
                 json.dump(data, f, ensure_ascii=False, indent=2)
             finally:
